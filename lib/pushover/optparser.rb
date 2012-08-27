@@ -10,7 +10,7 @@ module Pushover
       on("-t", "--token TOKEN", "Set your identity token.") { |o| @options[:token] = o}
       on("-a", "--app-key APPKEY", "Set the receiving application key.") { |o| @options[:appkey] = o}
       on("-m", "--message MESSAGE", "The message to be sent.") { |o| @options[:message] = o}
-#      on("-T", "--title TITLE", "Set the title of the notification (optional).") { |o| @options[:title] = o}
+      on("-T", "--title [TITLE]", "Set the title of the notification (optional).") { |o| @options[:title] = o}
     end
 
     # This will build an on/off option with a default value set to false.
