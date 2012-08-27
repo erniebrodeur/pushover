@@ -4,8 +4,8 @@ require File.expand_path('../lib/pushover/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Ernie Brodeur"]
   gem.email         = ["ebrodeur@ujami.net"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = "App (and CLI) to interface with pushover.net"
+  gem.summary       = "This gem will provide both an API and CLI interface to pushover.net."
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
