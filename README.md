@@ -1,24 +1,39 @@
 # Pushover
 
-TODO: Write a gem description
+This gem provides a CLI and an API interface to http://pushover.net
+
+Currently it's a work in process and I haven't built out the CLI yet, that will happen shortly.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'pushover'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+To install:
 
     $ gem install pushover
 
+To use inside of an application, add this to the your gemfile:
+
+		$ gem 'pushover'
+
+and run bundle to make it available:
+
+		$ Bundle
+
 ## Usage
 
-TODO: Write usage instructions here
+Progmatic usage:
+
+```ruby
+require 'pushover'
+
+Pushover.notification('your_token', 'app_token', 'message', 'title')
+```
+
+Title is currently optional, it doesn't do more then this yet.
+
+CLI usage:
+
+		$ pushover -a apitoken -t token -m 'message goes in here' -t 'title is optional.'
+
 
 ## Contributing
 
