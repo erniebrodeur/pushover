@@ -2,5 +2,12 @@
 
 require 'pushover'
 
-require 'pry'
-binding.pry
+include Pushover
+Options.parse!
+
+response = Pushover.notification Options[:token], Options[:appkey], Options[:message]
+if response.code == 200
+	puts "Message sent successfully!"
+else
+	puts "#{response.code}: #{response.body}"
+end
