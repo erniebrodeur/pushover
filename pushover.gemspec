@@ -14,4 +14,5 @@ Gem::Specification.new do |gem|
   gem.name          = "pushover"
   gem.require_paths = ["lib"]
   gem.version       = Pushover::VERSION
+  gem.add_development_dependency('pry')
 end

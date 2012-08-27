@@ -1,5 +1,8 @@
-#require "pushover/version"
 require "net/https"
+
+require "pushover/version"
+require "pushover/config"
+require "pushover/optparser"
 
 module Pushover
 	# push a message to across pushover, must supply all variables.
