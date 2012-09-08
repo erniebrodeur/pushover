@@ -22,13 +22,22 @@ and run bundle to make it available:
 
 Progmatic usage:
 
-```ruby
-require 'pushover'
+    require 'pushover'
 
-Pushover.notification('your_token', 'app_token', 'message', 'title')
-```
+    Pushover.notification('message', 'title', user:'USER_TOKEN', token:'APP_TOKEN')
+
 
 Title is currently optional, it doesn't do more then this yet.
+
+Optional #configuration method:
+
+		Pushover.configure do |config|
+		  config.user='USER_TOKEN'
+		  config.token='APP_TOKEN'
+		end
+
+		Pushover.notification('message', 'title')
+
 
 CLI usage:
 
