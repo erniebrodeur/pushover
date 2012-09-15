@@ -2,6 +2,10 @@ module Pushover
 	# Stores a application definition in the config file.
 	module App
 		# an instance of an application.
+		# @!attribute name
+		# 	@return [String] the name of the application.
+		# @!attribute api_key
+		#   @return [String] the api_key of the application.
 		class App
 			attr_accessor :name
 			attr_accessor :api_key

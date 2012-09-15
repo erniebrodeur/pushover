@@ -2,6 +2,10 @@ module Pushover
 	# The user module, saves any user information provided.
 	module User
 		# The User class, for a single instance of it.
+		# @!attribute name
+		# 	@return [String] the name of the user.
+		# @!attribute token
+		#   @return [String] the token of the user.
 		class User
 			attr_accessor :name
 			attr_accessor :token
@@ -33,3 +37,4 @@ module Pushover
 		end
 	end
 end
+
