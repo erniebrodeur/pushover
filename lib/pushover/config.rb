@@ -3,13 +3,17 @@ require 'fileutils'
 module Pushover
   # This is an extended [Hash] that adds some saving features via yajl.
   class ConfigBlob < Hash
-    # A the directory to save any needed files to.
-    BaseDir = "#{Dir.home}/.config/pushover"
-    # The file to save the default config to.
-    SaveFile = "#{BaseDir}/config.json"
+    attr_accessor :save_file
+
+    # @return [String] the dirname of the save file.
+    def save_dir
+      File.dirname save_file
+    end
 
     def initialize(load = true)
-      FileUtils.mkdir_p BaseDir if !Dir.exist? BaseDir
+      @save_file = "#{Dir.home}/.config/pushover/config.json"
+
+      FileUtils.mkdir_p save_dir if !Dir.exist? save_dir
       self.load if load
     end
 
@@ -17,7 +21,7 @@ module Pushover
     def save
       if any?
         # I do this the long way because I want an immediate sync.
-        f = open(file, 'w')
+        f = open(save_file, 'w')
         f.write Yajl.dump self
         f.sync
         f.close
@@ -26,14 +30,14 @@ module Pushover
 
     # Save the config, removing the existing one if neccesary.
     def save!
-      FileUtils.rm SaveFile if File.file? SaveFile
+      FileUtils.rm save_file if File.file? save_file
       save
     end
 
     # Load the config file if it is available.
     def load
-      if File.exist?(SaveFile) && File.stat(SaveFile).size > 0
-        h = Yajl.load open(SaveFile, 'r').read
+      if File.exist?(save_file) && File.stat(save_file).size > 0
+        h = Yajl.load open(save_file, 'r').read
         h.each { |k,v| self[k.to_sym] = v}
       end
     end
