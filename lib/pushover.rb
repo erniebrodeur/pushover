@@ -7,6 +7,7 @@ require "pushover/user"
 require "pushover/config"
 require "pushover/optparser"
 
+# The primary pushover namespace.
 module Pushover
 	# push a message to across pushover, must supply all variables.
 	def self.notification(token, application, message, title = nil)

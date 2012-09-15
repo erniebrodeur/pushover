@@ -1,5 +1,7 @@
 module Pushover
+	# The user module, saves any user information provided.
 	module User
+		# The User class, for a single instance of it.
 		class User
 			attr_accessor :name
 			attr_accessor :token

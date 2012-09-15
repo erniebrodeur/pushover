@@ -1,6 +1,9 @@
 require 'optparse'
 
 module Pushover
+  # override the built-in [OptionParser], adding some nifty features.
+  # Options[] is a hash value designed to collect the contents added to @options.
+
   class OptionParser < ::OptionParser
     def initialize
       super
@@ -22,6 +25,8 @@ module Pushover
       end
     end
 
+    # Build out the banner and calls the built in parse!
+    # Loads any saved options automatically.
     def parse!
       @banner = Pushover::VERSION
       super
@@ -38,20 +43,26 @@ module Pushover
       end
     end
 
+    # Entry point to the options hash
+    # @return will return the value of key if provided, else the entire [Hash]
     def [](k = nil)
       return @options[k] if k
       return @options if @options.any?
       nil
     end
 
+    # Set a value in the option array, used as a way to store the results of the parsed value.
     def []=(k,v)
       @options[k] = v
     end
 
+    # Check to see if the option hash has any k/v paris.
+    # @return [Boolean] true if any pairs at all, false otherwise.
     def empty?
       @options.empty?
     end
   end
 
+  # Add a built in Options to the Pushover namespace, purely a convience thing.
   Options = OptionParser.new
 end

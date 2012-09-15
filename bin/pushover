@@ -21,8 +21,8 @@ puts "Try pushover -h for help." if Options.empty? && ARGV.empty?
 
 if ARGV
 	if !Options[:appkey]
-			puts "Must supply the api_key or keyname via --(a)pp"
-			exit
+		puts "Must supply the api_key or keyname via --(a)pp"
+		exit
 	end
 
 	if !Options[:user]
@@ -40,4 +40,3 @@ if ARGV
 		puts "#{response.code}: #{response.body}"
 	end
 end
-

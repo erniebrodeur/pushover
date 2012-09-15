@@ -16,7 +16,7 @@ To use inside of an application, add this to the your gemfile:
 
 and run bundle to make it available:
 
-		$ Bundle
+		$ bundle
 
 ## Usage
 
@@ -31,7 +31,7 @@ Pushover.notification('your_token', 'app_token', 'message', 'title')
 ### CLI:
 
 To send a message without any saved information.
-	
+
 		$ pushover -u user_token -a app_key message is the rest of the cli.
 
 You can also save and use stored information.
@@ -39,7 +39,7 @@ You can also save and use stored information.
 User:
 
 		$ pushover -u user_token --save-user username
-		
+
 Application:
 
 		$ pushover -a app_key --save-user newapp
