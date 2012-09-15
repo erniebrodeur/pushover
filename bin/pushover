@@ -17,7 +17,9 @@ if Options[:save_user]
 	exit
 end
 
-if Options[:message]
+puts "Try pushover -h for help." if Options.empty? && ARGV.empty?
+
+if ARGV
 	if !Options[:appkey]
 			puts "Must supply the api_key or keyname via --(a)pp"
 			exit
@@ -31,7 +33,7 @@ if Options[:message]
 	api_key = Pushover::App.find Options[:appkey]
 	user = Pushover::User.find Options[:user]
 
-	response = Pushover.notification user, api_key, Options[:message]
+	response = Pushover.notification user, api_key, ARGV.join(" ")
 	if response.code == 200
 		puts "Message sent successfully!"
 	else
@@ -39,4 +41,3 @@ if Options[:message]
 	end
 end
 
-puts "Try pushover -h for help." if Options.empty?
