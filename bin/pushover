@@ -16,7 +16,10 @@ if Options[:save_user]
 	Pushover::User.add Options[:save_user][0], Options[:save_user][1]
 	exit
 end
-
+if Options[:config_file]
+	puts "Selecting config file: #{Options[:config_file]}"
+	Pushover::Config.save_file = Options[:config_file]
+end
 puts "Try pushover -h for help." if Options.empty? && ARGV.empty?
 
 if ARGV

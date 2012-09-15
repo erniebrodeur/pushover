@@ -13,6 +13,7 @@ module Pushover
       on("-u", "--user USER", "Which user, can be a saved name or token.") { |o| @options[:user] = o}
       on("-a", "--app APPKEY", "Which app to notify, can be a saved name or apikey.") { |o| @options[:appkey] = o}
       on("-T", "--title [TITLE]", "Set the title of the notification (optional).") { |o| @options[:title] = o}
+      on("-c", "--config_file [FILE]", "Set the target config file.") {|o| @options[:config_file] = o}
       on("--save-app NAME", "Saves the application to the config file under NAME.") { |o| @options[:save_app] = [@options[:appkey], o]}
       on("--save-user NAME", "Saves the user to the config file under NAME.") { |o| @options[:save_user] = [@options[:user], o]}
     end
