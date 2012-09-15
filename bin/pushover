@@ -5,14 +5,26 @@ require 'pushover'
 include Pushover
 Options.parse!
 
-if Options[:app]
+if Options[:save_app]
 	puts "Saving #{Options[:app][0]} to #{Options[:app][1]}."
-	Pushover.add_app Options[:app][0], Options[:app][1]
-else
-	response = Pushover.notification Options[:token], Options[:appkey], Options[:message]
+	Pushover::App.add Options[:app][0], Options[:app][1]
+end
+
+if Options[:message]
+
+	if !Options[:appkey]
+		puts "Must supply the api_key or keyname via --(a)pp"
+		exit
+	end
+
+	api_key = Pushover::App.find Options[:appkey]
+
+	response = Pushover.notification Options[:token], api_key, Options[:message]
 	if response.code == 200
 		puts "Message sent successfully!"
 	else
 		puts "#{response.code}: #{response.body}"
 	end
 end
+
+puts "Try pushover -h for help." if Options.empty?

@@ -8,10 +8,10 @@ module Pushover
 
       on("-V", "--version", "Print version") { |version| @options[:version] = true}
       on("-t", "--token TOKEN", "Set your identity token.") { |o| @options[:token] = o}
-      on("-a", "--app-key APPKEY", "Set the receiving application key.") { |o| @options[:appkey] = o}
+      on("-a", "--app APPKEY", "Set the receiving application key.") { |o| @options[:appkey] = o}
       on("-m", "--message MESSAGE", "The message to be sent.") { |o| @options[:message] = o}
       on("-T", "--title [TITLE]", "Set the title of the notification (optional).") { |o| @options[:title] = o}
-      on("--save-app NAME", "Saves the application to the config file under NAME.") { |o| @options[:app] = [@options[:appkey], o]}
+      on("--save-app NAME", "Saves the application to the config file under NAME.") { |o| @options[:save_app] = [@options[:appkey], o]}
     end
 
     # This will build an on/off option with a default value set to false.
@@ -34,7 +34,7 @@ module Pushover
       # we need to mash in our config array.  To do this we want to make config
       # options that don't overwrite cli options.
       Config.each do |k,v|
-        @options[k] = v if !@options[k]
+        @options[k] = v if !@options[k] && ["applications", "users"].include?(k)
       end
     end
 
@@ -46,6 +46,10 @@ module Pushover
 
     def []=(k,v)
       @options[k] = v
+    end
+
+    def empty?
+      @options.empty?
     end
   end
 
