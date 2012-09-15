@@ -1,18 +1,14 @@
 module Pushover
-	module App
-		class App
+	module User
+		class User
 			attr_accessor :name
-			attr_accessor :api_key
+			attr_accessor :token
 
-			def initialize(api_key, name)
+			def initialize(token, name)
 				@name = name
-				@api_key = api_key
-				Pushover::Config[:applications] = {} if !Pushover::Config[:applications]
-				if name
-					Pushover::Config[:applications][name] = api_key
-				else
-					Pushover::Config[:applications][api_key] = api_key
-				end
+				@token = token
+				Pushover::Config[:users] = {} if !Pushover::Config[:users]
+				Pushover::Config[:users][name] = token
 			end
 
 		end
@@ -21,16 +17,16 @@ module Pushover
 		# @param [String] word the search token, can be an apikey or appname.
 		# @return [String] return the apikey (if it can find one) or the word itself.
 		def self.find(word)
-			return Config[:applications][word] if Config[:applications] && Config[:applications].include?(word)
+			return Config[:users][word] if Config[:users] && Config[:users].include?(word)
 			word
 		end
 
 		# Add an application to the config file and save it.
-		# @param [String] api_key is the api_key to be used.
+		# @param [String] token is the token to be used.
 		# @param [String] name is the short name that can be referenced later.
 		# @return [Boolean] return the results of the save attempt.
-		def self.add(api_key, name)
-			App.new api_key, name
+		def self.add(token, name)
+			User.new token, name
 			Pushover::Config.save!
 		end
 	end

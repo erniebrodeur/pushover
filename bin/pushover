@@ -6,20 +6,32 @@ include Pushover
 Options.parse!
 
 if Options[:save_app]
-	puts "Saving #{Options[:app][0]} to #{Options[:app][1]}."
-	Pushover::App.add Options[:app][0], Options[:app][1]
+	puts "Saving application #{Options[:save_app][0]} to #{Options[:save_app][1]}."
+	Pushover::App.add Options[:save_app][0], Options[:save_app][1]
+	exit
+end
+
+if Options[:save_user]
+	puts "Saving user #{Options[:save_user][0]} to #{Options[:save_user][1]}."
+	Pushover::User.add Options[:save_user][0], Options[:save_user][1]
+	exit
 end
 
 if Options[:message]
-
 	if !Options[:appkey]
-		puts "Must supply the api_key or keyname via --(a)pp"
+			puts "Must supply the api_key or keyname via --(a)pp"
+			exit
+	end
+
+	if !Options[:user]
+		puts "Must supply the username or token via --(u)ser."
 		exit
 	end
 
 	api_key = Pushover::App.find Options[:appkey]
+	user = Pushover::User.find Options[:user]
 
-	response = Pushover.notification Options[:token], api_key, Options[:message]
+	response = Pushover.notification user, api_key, Options[:message]
 	if response.code == 200
 		puts "Message sent successfully!"
 	else

@@ -3,6 +3,7 @@ require "yajl"
 
 require "pushover/version"
 require "pushover/app"
+require "pushover/user"
 require "pushover/config"
 require "pushover/optparser"
 

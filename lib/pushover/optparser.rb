@@ -7,11 +7,12 @@ module Pushover
       @options = {}
 
       on("-V", "--version", "Print version") { |version| @options[:version] = true}
-      on("-t", "--token TOKEN", "Set your identity token.") { |o| @options[:token] = o}
-      on("-a", "--app APPKEY", "Set the receiving application key.") { |o| @options[:appkey] = o}
+      on("-u", "--user USER", "Which user, can be a saved name or token.") { |o| @options[:user] = o}
+      on("-a", "--app APPKEY", "Which app to notify, can be a saved name or apikey.") { |o| @options[:appkey] = o}
       on("-m", "--message MESSAGE", "The message to be sent.") { |o| @options[:message] = o}
       on("-T", "--title [TITLE]", "Set the title of the notification (optional).") { |o| @options[:title] = o}
       on("--save-app NAME", "Saves the application to the config file under NAME.") { |o| @options[:save_app] = [@options[:appkey], o]}
+      on("--save-user NAME", "Saves the user to the config file under NAME.") { |o| @options[:save_user] = [@options[:user], o]}
     end
 
     # This will build an on/off option with a default value set to false.
