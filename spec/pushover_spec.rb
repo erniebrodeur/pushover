@@ -1,4 +1,5 @@
 require 'pushover'
 
-describe Pushover, "Pushover" do
+describe "Pushover" do
+	it "can send a notification"
 end
