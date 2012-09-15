@@ -29,7 +29,7 @@ module Pushover
     end
 
     def load
-      if File.exist? self.file
+      if File.exist?(self.file) && File.stat(self.file).size > 0
         h = Yajl.load open(file, 'r').read
         h.each { |k,v| self[k.to_sym] = v}
       end

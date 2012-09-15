@@ -1,6 +1,8 @@
 require "net/https"
+require "yajl"
 
 require "pushover/version"
+require "pushover/app"
 require "pushover/config"
 require "pushover/optparser"
 

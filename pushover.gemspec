@@ -15,4 +15,5 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Pushover::VERSION
   gem.add_development_dependency('pry')
+  gem.add_runtime_dependency('yajl-ruby')
 end
