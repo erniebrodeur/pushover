@@ -8,7 +8,7 @@ Currently it's a work in process and I haven't built out the CLI yet, that will 
 
 To install:
 
-    $ gem install pushover
+		$ gem install pushover
 
 To use inside of an application, add this to the your gemfile:
 
@@ -20,7 +20,7 @@ and run bundle to make it available:
 
 ## Usage
 
-Progmatic usage:
+### Progrmatic:
 
 ```ruby
 require 'pushover'
@@ -28,12 +28,27 @@ require 'pushover'
 Pushover.notification('your_token', 'app_token', 'message', 'title')
 ```
 
-Title is currently optional, it doesn't do more then this yet.
+### CLI:
 
-CLI usage:
+To send a message without any saved information.
+	
+		$ pushover -u user_token -a app_key message is the rest of the cli.
 
-		$ pushover -a apitoken -t token -m 'message goes in here' -t 'title is optional.'
+You can also save and use stored information.
 
+User:
+
+		$ pushover -u user_token --save-user username
+		
+Application:
+
+		$ pushover -a app_key --save-user newapp
+
+This will allow you to do:
+
+		$ pushover -a new_app -u username message body.
+
+Delete coming soon.
 
 ## Contributing
 
