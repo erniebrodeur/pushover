@@ -1,6 +1,15 @@
 describe "CLI Interface" do
+	# the save file to be used.
+	Save_file = 'spec/test_config'
+	# the exact string to execute the test version of pushover.
+	Exec = "bundle exec bin/pushover"
 	describe "config file" do
-		it "Can select the config file"
+		it "Can select the config file (short form)" do
+			output = `#{Exec} -c #{Save_file}`
+			output.include? Save_file
+		end
+		it "Can select the config file (long form)" do
+		end
 	end
 	it "Can save an app."
 	it "Can save a user."
@@ -18,5 +27,4 @@ describe "CLI Interface" do
 	end
 	it "provides the proper version number"
 end
-
 
