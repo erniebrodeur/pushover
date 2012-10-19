@@ -5,6 +5,12 @@ require 'pushover'
 include Pushover
 Options.parse!
 
+# Order is important.
+if Options[:config_file]
+	puts "Selecting config file: #{Options[:config_file]}"
+	Pushover::Config.save_file = Options[:config_file]
+end
+
 if Options[:save_app]
 	puts "Saving application #{Options[:save_app][0]} to #{Options[:save_app][1]}."
 	Pushover::App.add Options[:save_app][0], Options[:save_app][1]
@@ -15,10 +21,6 @@ if Options[:save_user]
 	puts "Saving user #{Options[:save_user][0]} to #{Options[:save_user][1]}."
 	Pushover::User.add Options[:save_user][0], Options[:save_user][1]
 	exit
-end
-if Options[:config_file]
-	puts "Selecting config file: #{Options[:config_file]}"
-	Pushover::Config.save_file = Options[:config_file]
 end
 puts "Try pushover -h for help." if Options.empty? && ARGV.empty?
 
