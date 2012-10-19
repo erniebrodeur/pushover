@@ -1,18 +1,30 @@
 describe "CLI Interface" do
 	# the save file to be used.
-	Save_file = 'spec/test_config'
+	SaveFile = 'spec/test_config'
 	# the exact string to execute the test version of pushover.
 	Exec = "bundle exec bin/pushover"
-	describe "config file" do
-		it "Can select the config file (short form)" do
-			output = `#{Exec} -c #{Save_file}`
-			output.include? Save_file
+	ExecConfig = Exec + " -c #{SaveFile}"
+	describe "Can select the config file" do
+		it "short form (-c)" do
+			output = `#{ExecConfig}`
+			output.include? "Selecting config file: #{SaveFile}"
 		end
-		it "Can select the config file (long form)" do
+
+		it "long form (--config_file)" do
+			output = `#{Exec} -c #{SaveFile}`
+			output.include? "Selecting config file: #{SaveFile}"
 		end
 	end
-	it "Can save an app."
-	it "Can save a user."
+	describe "Saving" do
+		it "Application." do
+			output = `#{ExecConfig} --app 'test_app_api_key' --save-app test_app`
+			output.include?("Save successful").should be_true
+		end
+		it "User." do
+			output = `#{ExecConfig} --user 'test_user_key' --save-app test_user`
+			output.include?("Save successful").should be_true
+		end
+	end
 	describe "Sending a message" do
 		it "With no saved info."
 		context "With saved information" do
