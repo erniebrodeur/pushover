@@ -2,7 +2,7 @@ require 'pushover'
 
 describe "Config" do
 	before(:all) do
-		Pushover::Config.save_file = "test.save"
+		Pushover::Config.save_file = "config_spec.tmp"
 		Pushover::Config.clear
 	 	Pushover::Config[:test] = true
 	 	Pushover::Config.save!
@@ -13,7 +13,7 @@ describe "Config" do
 	end
 
 	it "should have a save_file" do
-		Pushover::Config.save_file.should eq("test.save")
+		Pushover::Config.save_file.should eq("config_spec.tmp")
 	end
 
 	it "save_dir should be the basename of save_file" do
