@@ -4,7 +4,7 @@ This gem provides a CLI and an API interface to http://pushover.net
 
 It's main usage as a CLI, see below for specifics.
 
-Some features:
+Some CLI features:
 
   * Mulitple users/applications can be stored.
   * Do not need to supply either, will find the first one available.
