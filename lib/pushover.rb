@@ -10,27 +10,31 @@ require "pushover/optparser"
 # The primary pushover namespace.
 module Pushover
 
-	def params
-		Pushover.parameters
-	end
+  # An alias for paramaters.
+  alias_method :params, :parameters
 
-	extend self
+  extend self
 
-	attr_accessor :token, :user
+  # A [String] of the api key currently being used.
+  attr_accessor :app
+  # A [String] of the user token currently being used.
+  attr_accessor :user
 
-	# push a message to across pushover, must supply all variables.
-	def notification(message, title = nil, tokens={})
-		url = URI.parse("https://api.pushover.net/1/messages.json")
-		req = Net::HTTP::Post.new(url.path)
-		req.set_form_data((params.merge(tokens.merge({:message => message, :title => title}))))
-		res = Net::HTTP.new(url.host, url.port)
-		res.use_ssl = true
-		res.verify_mode = OpenSSL::SSL::VERIFY_PEER
-		res.start {|http| http.request(req) }
-	end
+  # push a message to across pushover, must supply all variables.
+  # @param [String] message The message to be sent
+  # @param [optional, String] title The title of the message
+  def notification(message, title = nil, tokens={})
+    url = URI.parse("https://api.pushover.net/1/messages.json")
+    req = Net::HTTP::Post.new(url.path)
+    req.set_form_data((params.merge(tokens.merge({:message => message, :title => title}))))
+    res = Net::HTTP.new(url.host, url.port)
+    res.use_ssl = true
+    res.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    res.start {|http| http.request(req) }
+  end
 
-	# Adds a rails style configure method
-	def configure
+  # Adds a rails style configure method
+  def configure
     yield self
     parameters
   end
@@ -47,8 +51,9 @@ module Pushover
     parameters.values.all?
   end
 
+  # A [Array] of keys available in Pushover.
   def keys
-    keys ||= [:token, :user]
+    keys ||= [:app, :user]
   end
 
   private

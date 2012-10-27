@@ -1,28 +1,20 @@
 # Pushover
 
-This gem provides a CLI and an API interface to http://pushover.net
-
-It's main usage as a CLI, see below for specifics.
-
-Some CLI features:
-
-  * Multiple users/applications can be stored.
-  * Do not need to supply either, will find the first one available.
-  * Supplying on the CLI will always override the stored variables.
+This gem provides a CLI and an API interface to http://pushover.net.
 
 ## Installation
 
 To install:
 
-		$ gem install pushover
+		% gem install pushover
 
 To use inside of an application, add this to the your gemfile:
 
-		$ gem 'pushover'
+		% gem 'pushover'
 
 and run bundle to make it available:
 
-		$ bundle
+		% bundle
 
 ## Usage
 
@@ -45,27 +37,39 @@ Optional #configuration method:
 
 ### CLI:
 
-To send a message.  This will override any saved information available.
+To send a message, this will not check the save file.
 
-		$ pushover -u user_token -a app_key message is the rest of the cli.
+		% pushover -u user_token -a app_key message is the rest of the cli.
+
+#### Saving user and application.
 
 You can also save and use stored information.  The username/application are titles.  They can be anything you want to reference them.
 
 User:
 
-		$ pushover -u user_token --save-user username
+		% pushover -u user_token --save-user email@somewhere.net
 
 Application:
 
-		$ pushover -a app_key --save-user application
-
-This will allow you to do:
-
-		$ pushover -a new_app -u username message body.
-
-If you don't supply any credentials, and it has them saved, it will use the first set saved.  This allows for a completely lazy mode ```pushover message body here``` for sending without having to constantly specify credentials.
+		% pushover -a app_key --save-app myApp
 
 Delete coming soon.
+
+Now, you can use these to send messages instead of having to remeber the key:
+
+		% pushover -a myApp -u email@somewhere.net Hello from somewhere!
+
+If you don't supply the application or user name, it will use the first one in the save file.
+
+		% pushover so now I can just send an app.
+
+#### Optional components
+
+Title is optional and can be supplied with ```--(t)itle "Here is a long title"```.
+
+Config file can be specified on the cli with ```--(c)config_file```
+
+Priority and devices coming soon.
 
 ## Testing
 
