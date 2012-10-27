@@ -20,7 +20,7 @@ and run bundle to make it available:
 
 ## Usage
 
-### Progrmatic:
+### API:
 
 ```ruby
 require 'pushover'
@@ -49,6 +49,12 @@ This will allow you to do:
 		$ pushover -a new_app -u username message body.
 
 Delete coming soon.
+
+## Testing
+
+Testing, like this utility, is a work in progress.  I'm in the process of lifting some of the code into another library (config, options), so I will likely not be making more tests for those pieces.
+
+The app testing itself requires you to use your own credentials, that way you get the spam from pushover and not me.  I haven't figured out how to do this just yet.
 
 ## Contributing
 
