@@ -20,10 +20,8 @@ describe "Config" do
 		Pushover::Config.save_dir.should eq(File.dirname Pushover::Config.save_file)
 	end
 
-	it "should save if not empty" do
-	 	File.exists?(Pushover::Config.save_file).should be(true)
-	end
-
+	it "should save if not empty"
+	it "should make a backup"
 	it "should load" do
 		Pushover::Config.load
 		Pushover::Config[:test].should eq(true)
