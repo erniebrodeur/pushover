@@ -26,22 +26,29 @@ if Options[:save_user]
 end
 puts "Try pushover -h for help." if Options.empty? && ARGV.empty?
 
-if ARGV
-	if !App.current_app
-		puts "Must supply the api_key or keyname via --(a)pp"
-		exit
-	end
+bail = false
+message = ARGV.join(" ")
 
-	if !User.current_user
-		puts "Must supply the username or token via --(u)ser."
-		exit
-	end
+if !message
+	puts "Must supply a message to be sent."
+	bail = true
+end
 
-	response = Pushover.notification User.current_user[1], App.current_app[1], ARGV.join(" ") + "\n"
+if !App.current_app?
+	puts "Couldn't find an app via the cli or save file."
+	bail = true
+end
 
-	if response.code == "200" || response.code == "406"
-		puts "Message sent successfully!"
-	else
-		puts "#{response.inspect}"
-	end
+if !User.current_user?
+	puts "Couldn't find a user via the cli or save file."
+	bail = true
+end
+exit if bail
+title = nil
+response = Pushover.notification message, title, user:User.current_user, token:App.current_app
+
+if response.code == "200"
+	puts "Message sent successfully!"
+else
+	puts "#{response.code} #{response.message}:#{response.body}"
 end

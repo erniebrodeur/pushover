@@ -28,11 +28,20 @@ and run bundle to make it available:
 
 ### API:
 
-```ruby
-require 'pushover'
+    require 'pushover'
 
-Pushover.notification('your_token', 'app_token', 'message', 'title')
-```
+To send with the very minimum amount of information.
+
+    Pushover.notification('message', 'title', user:'USER_TOKEN', token:'APP_TOKEN')
+
+Optional #configuration method:
+
+		Pushover.configure do |config|
+		  config.user='USER_TOKEN'
+		  config.token='APP_TOKEN'
+		end
+
+		Pushover.notification('message', 'title')
 
 ### CLI:
 
@@ -59,6 +68,8 @@ If you don't supply any credentials, and it has them saved, it will use the firs
 Delete coming soon.
 
 ## Testing
+
+CLI usage:
 
 Testing, like this utility, it is a work in progress.  I'm in the process of lifting some of the code into another library (config, options), so I will likely not be making more tests for those pieces.
 

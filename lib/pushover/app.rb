@@ -54,6 +54,7 @@ module Pushover
 			if !@current_app
 				@current_app = Config[:applications].first
 			end
+			@current_app
 		end
 
 		# Will return true if we can find an application either via the cli or save file.
