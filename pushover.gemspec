@@ -4,6 +4,8 @@ require File.expand_path('../lib/pushover/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Ernie Brodeur"]
   gem.email         = ["ebrodeur@ujami.net"]
+  gem.date          = Time.now.strftime('%Y-%m-%d')
+  gem.platform      = Gem::Platform::RUBY
   gem.description   = "App (and CLI) to interface with pushover.net"
   gem.summary       = "This gem will provide both an API and CLI interface to pushover.net."
   gem.homepage      = "https://github.com/erniebrodeur/pushover"
@@ -13,8 +15,8 @@ Gem::Specification.new do |gem|
   gem.name          = "pushover"
   gem.require_paths = ["lib"]
   gem.version       = Pushover::VERSION
-  gem.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Pushover", "--main", "README.rdoc", "--encoding=UTF-8"]
-  gem.has_rdoc = true
+  gem.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Pushover", "--main", "README.md", "--encoding=UTF-8"]
+  gem.has_rdoc = 'yard'
   gem.add_development_dependency('pry')
   gem.add_runtime_dependency('yajl-ruby')
 end
