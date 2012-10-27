@@ -20,7 +20,7 @@ module Pushover
 
 	# push a message to across pushover, must supply all variables.
 	def notification(message, title = nil, tokens={})
-		url = URI.parse("https://api.pushover.net/1/messages")
+		url = URI.parse("https://api.pushover.net/1/messages.json")
 		req = Net::HTTP::Post.new(url.path)
 		req.set_form_data((params.merge(tokens.merge({:message => message, :title => title}))))
 		res = Net::HTTP.new(url.host, url.port)
