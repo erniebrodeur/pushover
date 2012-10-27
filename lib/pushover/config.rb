@@ -17,6 +17,7 @@ module Pushover
       self.load if load
     end
 
+    # Clear the config file (not implemented)
     def clear
     end
 
@@ -31,11 +32,12 @@ module Pushover
       end
     end
 
+    # Backup our save file, will remove original in the process.
     def backupSave
       FileUtils.mv @save_file, "#{@save_file}.bak" if File.file? @save_file
     end
 
-    # Save the config, removing the existing one if neccesary.
+    # Save the config, removing the existing one if necessary.
     def save!(backup = true)
       if backup
         backupSave
@@ -55,6 +57,6 @@ module Pushover
     end
   end
 
-  # A convience instance of config, provides Pushover.Config.
+  # A convenience instance of config, provides Pushover.Config.
   Config = ConfigBlob.new
 end

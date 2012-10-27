@@ -29,7 +29,7 @@ module Pushover
     # Build out the banner and calls the built in parse!
     # Loads any saved options automatically.
     def parse!
-      @banner = "Send notifcations over to pushover.net.\n\n"
+      @banner = "Send notifications over to pushover.net.\n\n"
       super
 
       if @options[:version]
@@ -57,13 +57,13 @@ module Pushover
       @options[k] = v
     end
 
-    # Check to see if the option hash has any k/v paris.
+    # Check to see if the option hash has any k/v pairs.
     # @return [Boolean] true if any pairs at all, false otherwise.
     def empty?
       @options.empty?
     end
   end
 
-  # Add a built in Options to the Pushover namespace, purely a convience thing.
+  # Add a built in Options to the Pushover namespace, purely a convenience thing.
   Options = OptionParser.new
 end

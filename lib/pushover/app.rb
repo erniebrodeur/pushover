@@ -56,8 +56,9 @@ module Pushover
 			end
 		end
 
+		# Will return true if we can find an application either via the cli or save file.
 		def current_app?
-			return true if @current_app == true
+			return true if current_app
 			return nil
 		end
 	end

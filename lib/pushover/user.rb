@@ -53,8 +53,9 @@ module Pushover
 			end
 		end
 
+		# Will return true if it can find a user either via the cli or save file.
 		def current_user?
-			return true if @current_user == true
+			return true if current_user
 			return nil
 		end
 	end
