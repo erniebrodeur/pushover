@@ -6,7 +6,7 @@ It's main usage as a CLI, see below for specifics.
 
 Some CLI features:
 
-  * Mulitple users/applications can be stored.
+  * Multiple users/applications can be stored.
   * Do not need to supply either, will find the first one available.
   * Supplying on the CLI will always override the stored variables.
 
@@ -36,11 +36,11 @@ Pushover.notification('your_token', 'app_token', 'message', 'title')
 
 ### CLI:
 
-To send a message without any saved information.
+To send a message.  This will override any saved information available.
 
 		$ pushover -u user_token -a app_key message is the rest of the cli.
 
-You can also save and use stored information.
+You can also save and use stored information.  The username/application are titles.  They can be anything you want to reference them.
 
 User:
 
@@ -48,7 +48,7 @@ User:
 
 Application:
 
-		$ pushover -a app_key --save-user newapp
+		$ pushover -a app_key --save-user application
 
 This will allow you to do:
 
