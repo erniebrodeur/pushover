@@ -2,7 +2,13 @@
 
 This gem provides a CLI and an API interface to http://pushover.net
 
-Currently it's a work in process and I haven't built out the CLI yet, that will happen shortly.
+It's main usage as a CLI, see below for specifics.
+
+Some features:
+
+  * Mulitple users/applications can be stored.
+  * Do not need to supply either, will find the first one available.
+  * Supplying on the CLI will always override the stored variables.
 
 ## Installation
 
@@ -48,11 +54,13 @@ This will allow you to do:
 
 		$ pushover -a new_app -u username message body.
 
+If you don't supply any credentials, and it has them saved, it will use the first set saved.  This allows for a completely lazy mode ```pushover message body here``` for sending without having to constantly specify credentials.
+
 Delete coming soon.
 
 ## Testing
 
-Testing, like this utility, is a work in progress.  I'm in the process of lifting some of the code into another library (config, options), so I will likely not be making more tests for those pieces.
+Testing, like this utility, it is a work in progress.  I'm in the process of lifting some of the code into another library (config, options), so I will likely not be making more tests for those pieces.
 
 The app testing itself requires you to use your own credentials, that way you get the spam from pushover and not me.  I haven't figured out how to do this just yet.
 

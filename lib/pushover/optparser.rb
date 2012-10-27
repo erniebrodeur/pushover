@@ -29,7 +29,7 @@ module Pushover
     # Build out the banner and calls the built in parse!
     # Loads any saved options automatically.
     def parse!
-      @banner = Pushover::VERSION
+      @banner = "Send notifcations over to pushover.net.\n\n"
       super
 
       if @options[:version]

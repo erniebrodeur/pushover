@@ -13,37 +13,35 @@ end
 
 if Options[:save_app]
 	puts "Saving application #{Options[:save_app][0]} to #{Options[:save_app][1]}."
-	Pushover::App.add Options[:save_app][0], Options[:save_app][1]
+	App.add Options[:save_app][0], Options[:save_app][1]
 	puts "Save successful."
 	exit
 end
 
 if Options[:save_user]
 	puts "Saving user #{Options[:save_user][0]} to #{Options[:save_user][1]}."
-	Pushover::User.add Options[:save_user][0], Options[:save_user][1]
+	User.add Options[:save_user][0], Options[:save_user][1]
 	puts "Save successful."
 	exit
 end
 puts "Try pushover -h for help." if Options.empty? && ARGV.empty?
 
 if ARGV
-	if !Options[:appkey]
+	if !App.current_app
 		puts "Must supply the api_key or keyname via --(a)pp"
 		exit
 	end
 
-	if !Options[:user]
+	if !User.current_user
 		puts "Must supply the username or token via --(u)ser."
 		exit
 	end
 
-	api_key = Pushover::App.find Options[:appkey]
-	user = Pushover::User.find Options[:user]
+	response = Pushover.notification User.current_user[1], App.current_app[1], ARGV.join(" ") + "\n"
 
-	response = Pushover.notification user, api_key, ARGV.join(" ")
-	if response.code == 200
+	if response.code == "200" || response.code == "406"
 		puts "Message sent successfully!"
 	else
-		puts "#{response.code}: #{response.body}"
+		puts "#{response.inspect}"
 	end
 end
