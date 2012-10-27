@@ -24,8 +24,11 @@ if Options[:save_user]
 	puts "Save successful."
 	exit
 end
-puts "Try pushover -h for help." if Options.empty? && ARGV.empty?
 
+if ARGV.empty?
+	puts "You must supply a message."
+	exit
+end
 bail = false
 message = ARGV.join(" ")
 
@@ -44,11 +47,12 @@ if !User.current_user?
 	bail = true
 end
 exit if bail
-title = nil
-response = Pushover.notification message, title, user:User.current_user, token:App.current_app
+
+response = Pushover.notification message, Options[:title], user:User.current_user, token:App.current_app
 
 if response.code == "200"
 	puts "Message sent successfully!"
 else
-	puts "#{response.code} #{response.message}:#{response.body}"
+	j = Yajl.load response.body
+	puts "ErrorCode (#{response.code}): #{j['errors'].first}."
 end
