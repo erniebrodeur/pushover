@@ -13,7 +13,6 @@ module Pushover
     def initialize(load = true)
       @save_file = "#{Dir.home}/.config/pushover/config.json"
 
-      FileUtils.mkdir_p save_dir if !Dir.exist? save_dir
       self.load if load
     end
 
@@ -23,6 +22,7 @@ module Pushover
 
     # Save the config, will raise an exception if the file exists.
     def save
+      FileUtils.mkdir_p save_dir if !Dir.exist? save_dir
       if any?
         # I do this the long way because I want an immediate sync.
         f = open(@save_file, 'w')
