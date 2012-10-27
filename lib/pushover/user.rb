@@ -51,6 +51,7 @@ module Pushover
 			if !@current_user
 				@current_user = Config[:users].first
 			end
+			@current_user
 		end
 
 		# Will return true if it can find a user either via the cli or save file.
