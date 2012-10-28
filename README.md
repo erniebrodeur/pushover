@@ -19,27 +19,46 @@ and run bundle to make it available:
 ## Usage
 
 ### API:
-
-    require 'pushover'
+```ruby
+require 'pushover'
+```
 
 To send with the very minimum amount of information.
 
-    Pushover.notification('message', 'title', user:'USER_TOKEN', token:'APP_TOKEN')
+```ruby
+Pushover.notification('message', 'title', user:'USER_TOKEN', token:'APP_TOKEN')
+```
 
 Optional #configuration method:
+```ruby
+Pushover.configure do |config|
+  config.user='USER_TOKEN'
+  config.token='APP_TOKEN'
+end
 
-		Pushover.configure do |config|
-		  config.user='USER_TOKEN'
-		  config.token='APP_TOKEN'
-		end
-
-		Pushover.notification('message', 'title')
-
+Pushover.notification('message', 'title')
+```
 ### CLI:
 
-To send a message, this will not check the save file.
+To get help do, try ```--(h)elp```
+
+
+		% pushover --h
+
+To send a message.
 
 		% pushover -u user_token -a app_key message is the rest of the cli.
+
+#### Optional parameters
+
+* Title: Title of your notifcation
+* Config_file: the file to use for stored credentials.
+* Priority: Priority of the message, as an integer (for now).
+	* -1: low
+	*  0: normal
+	*	1: high
+* Device: specific device to send the notification to.
+
 
 #### Saving user and application.
 
@@ -63,13 +82,7 @@ If you don't supply the application or user name, it will use the first one in t
 
 		% pushover so now I can just send an app.
 
-#### Optional components
-
-Title is optional and can be supplied with ```--(t)itle "Here is a long title"```.
-
-Config file can be specified on the cli with ```--(c)config_file```
-
-Priority and devices coming soon.
+Anytime you supply token's directly to the cli, it will ignore any saved information and try them.  This allows you to use it as a once-off tool while keeping credentials stored.
 
 ## Testing
 

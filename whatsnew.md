@@ -1,4 +1,6 @@
 Unreleased:
+	* Added priority and device specification.
+	* Moved all the variables, including message, into the configure block.
   * Documentation push, 100% passage and updated for yardoc.
   * Updated the gemspec with some more information.
   * Better output for error messages.
