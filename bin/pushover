@@ -48,7 +48,16 @@ if !User.current_user?
 end
 exit if bail
 
-response = Pushover.notification message, Options[:title], user:User.current_user, token:App.current_app
+Pushover.configure do |c|
+	c.user 			= User.current_user
+	c.token	 		= App.current_app
+	c.message 	= message
+	c.title 		= Options[:title]
+	c.priority 	= Options[:priority]
+	c.device 		= Options[:device]
+end
+
+response = Pushover.notification
 
 if response.code == "200"
 	puts "Message sent successfully!"

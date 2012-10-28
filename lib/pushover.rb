@@ -10,23 +10,33 @@ require "pushover/optparser"
 # The primary pushover namespace.
 module Pushover
 
-  # An alias for paramaters.
-  alias_method :params, :parameters
-
   extend self
 
-  # A [String] of the api key currently being used.
-  attr_accessor :app
-  # A [String] of the user token currently being used.
+  # [String] The api key to be used for the notifcation.
+  attr_accessor :token
+  # [String] of the user token currently being used.
   attr_accessor :user
+  # [String] message the message to be sent.
+  attr_accessor :message
+  # [optional,String] Title of the message.
+  attr_accessor :title
+  # [optional,Fixnum] priority The priority of the message, from -1 to 1.
+  attr_accessor :priority
+  # [optional,String] device to recieve the message.
+  attr_accessor :device
 
-  # push a message to across pushover, must supply all variables.
+  # push a message to  pushover, must supply all variables.
   # @param [String] message The message to be sent
   # @param [optional, String] title The title of the message
-  def notification(message, title = nil, tokens={})
+  # @param [optional, Fixnum] priority of the message to be sent, from -1 to 1.
+  # @param [optional, String] device The specific device to be notified.
+  # @param [optional, String] app api key.
+  # @param [optional, String] user the user token.
+  # @return [String] the response from pushover.net, in json.
+  def notification(tokens={})
     url = URI.parse("https://api.pushover.net/1/messages.json")
     req = Net::HTTP::Post.new(url.path)
-    req.set_form_data((params.merge(tokens.merge({:message => message, :title => title}))))
+    req.set_form_data(params.merge tokens)
     res = Net::HTTP.new(url.host, url.port)
     res.use_ssl = true
     res.verify_mode = OpenSSL::SSL::VERIFY_PEER
@@ -45,6 +55,7 @@ module Pushover
     keys.each { |k| @values.merge! k => get_var("@#{k}") }
     @values
   end
+  alias_method :params, :parameters
 
   # Returns true or false if all parameters are set.
   def parameters?
@@ -53,7 +64,7 @@ module Pushover
 
   # A [Array] of keys available in Pushover.
   def keys
-    keys ||= [:app, :user]
+    keys ||= [:token, :user, :message, :title, :priority, :device]
   end
 
   private
