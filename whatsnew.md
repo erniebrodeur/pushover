@@ -1,4 +1,8 @@
 Unreleased:
+  * Switched the order of App and it's derivatives so that it's name, api_key to make it more human readable.
+   * Ditto for User.
+  * Merged in me bones.
+  * Using bini's logic whenever possible now instead of reinventing the wheel.
 	* Added priority and device specification.
 	* Moved all the variables, including message, into the configure block.
   * Documentation push, 100% passage and updated for yardoc.

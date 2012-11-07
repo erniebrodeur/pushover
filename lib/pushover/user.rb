@@ -10,7 +10,7 @@ module Pushover
 			attr_accessor :name
 			attr_accessor :token
 
-			def initialize(token, name)
+			def initialize(name, token)
 				@name = name
 				@token = token
 				Bini.config[:users] = {} if !Bini.config[:users]
@@ -33,9 +33,13 @@ module Pushover
 		# @param [String] token is the token to be used.
 		# @param [String] name is the short name that can be referenced later.
 		# @return [Boolean] return the results of the save attempt.
-		def add(token, name)
-			User.new token, name
+		def add(name, token)
+			User.new name, token
 			Bini.config.save!
+		end
+
+		def remove(name)
+			Bini.config[:users].delete name if Bini.config[:users]
 		end
 
 		# Return the current user selected, or the first one saved.

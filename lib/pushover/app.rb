@@ -10,7 +10,7 @@ module Pushover
 			attr_accessor :name
 			attr_accessor :api_key
 
-			def initialize(api_key, name)
+			def initialize(name, api_key)
 				@name = name
 				@api_key = api_key
 				Bini.config[:applications] = {} if !Bini.config[:applications]
@@ -36,11 +36,14 @@ module Pushover
 		# @param [String] api_key is the api_key to be used.
 		# @param [String] name is the short name that can be referenced later.
 		# @return [Boolean] return the results of the save attempt.
-		def add(api_key, name)
-			App.new api_key, name
+		def add(name, api_key)
+			App.new name, api_key
 			Bini.config.save!
 		end
 
+		def remove(name)
+			Bini.config[:applications].delete name if Bini.config[:applications]
+		end
 		# Return the current app selected, or the first one saved.
 		def current_app
 			return @current_app if @current_app

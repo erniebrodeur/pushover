@@ -1,9 +1,23 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in pushover.gemspec
 gemspec
 
 group :development do
-  gem 'pry'
-  gem 'pry-debugger'
+	gem "guard"
+	gem "guard-bundler"
+	gem "guard-rspec"
+	gem "guard-yard"
+	gem "guard-shell"
+	gem "pry"
+  gem "pry-debugger"
+	gem 'libnotify', 	:require => false
+	gem 'growl', 			:require => false
+	gem 'rb-inotify', :require => false
+  gem 'rb-fsevent', :require => false
+  gem 'rb-fchange', :require => false
+end
+
+group :test do
+	gem "rspec"
+	gem "rake"
 end
