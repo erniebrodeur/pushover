@@ -2,13 +2,13 @@ require 'pushover'
 
 describe "application" do
 	before(:each) do
-		Pushover::Config.save_file = "test.save"
-		Pushover::Config.clear
+		Bini.config.file = "test.save"
+		Bini.config.clear
 	end
 
 	it "can add a application to the Config[:application] hash." do
 		Pushover::App.add "bar", "foo"
-		Pushover::Config[:applications]["foo"].should eq("bar")
+		Bini.config[:applications]["foo"].should eq("bar")
 	end
 
 	it "can remove a application from the hash."

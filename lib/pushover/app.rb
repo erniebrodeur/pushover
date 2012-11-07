@@ -13,11 +13,11 @@ module Pushover
 			def initialize(api_key, name)
 				@name = name
 				@api_key = api_key
-				Config[:applications] = {} if !Config[:applications]
+				Bini.config[:applications] = {} if !Bini.config[:applications]
 				if name
-					Config[:applications][name] = api_key
+					Bini.config[:applications][name] = api_key
 				else
-					Config[:applications][api_key] = api_key
+					Bini.config[:applications][api_key] = api_key
 				end
 			end
 		end
@@ -28,7 +28,7 @@ module Pushover
 		# @param [String] word the search token, can be an apikey or appname.
 		# @return [String] return the apikey (if it can find one) or the word itself.
 		def find(word)
-			return Config[:applications][word] if Config[:applications][word]
+			return Bini.config[:applications][word] if Bini.config[:applications][word]
 			word
 		end
 
@@ -38,7 +38,7 @@ module Pushover
 		# @return [Boolean] return the results of the save attempt.
 		def add(api_key, name)
 			App.new api_key, name
-			Pushover::Config.save!
+			Bini.config.save!
 		end
 
 		# Return the current app selected, or the first one saved.
@@ -52,7 +52,7 @@ module Pushover
 
 			# no?  do we have anything we can return?
 			if !@current_app
-				@current_app = Config[:applications].first
+				@current_app = Bini.config[:applications].first
 			end
 			@current_app
 		end

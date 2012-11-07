@@ -1,14 +1,17 @@
 require "net/https"
 require "yajl"
+require 'bini'
+require 'bini/config'
+require 'bini/optparser'
 
 require "pushover/version"
 require "pushover/app"
 require "pushover/user"
-require "pushover/config"
-require "pushover/optparser"
-
 # The primary pushover namespace.
 module Pushover
+  # lets save our config to it's own dir, just because.
+  Bini.config.file = "#{Dir.home}/.config/pushover/credentials.yaml"
+  Bini.config.load
 
   extend self
 

@@ -13,8 +13,8 @@ module Pushover
 			def initialize(token, name)
 				@name = name
 				@token = token
-				Config[:users] = {} if !Config[:users]
-				Config[:users][name] = token
+				Bini.config[:users] = {} if !Bini.config[:users]
+				Bini.config[:users][name] = token
 			end
 
 		end
@@ -25,7 +25,7 @@ module Pushover
 		# @param [String] word the search token, can be an apikey or appname.
 		# @return [String] return the apikey (if it can find one) or the word itself.
 		def find(word)
-			return Config[:users][word] if Config[:users][word]
+			return Bini.config[:users][word] if Bini.config[:users][word]
 			word
 		end
 
@@ -35,7 +35,7 @@ module Pushover
 		# @return [Boolean] return the results of the save attempt.
 		def add(token, name)
 			User.new token, name
-			Pushover::Config.save!
+			Bini.config.save!
 		end
 
 		# Return the current user selected, or the first one saved.
@@ -49,7 +49,7 @@ module Pushover
 
 			# no?  do we have anything we can return?
 			if !@current_user
-				@current_user = Config[:users].first
+				@current_user = Bini.config[:users].first
 			end
 			@current_user
 		end

@@ -26,6 +26,6 @@ Gem::Specification.new do |gem|
   gem.has_rdoc = 'yard'
 
   # dependencies.
-  gem.add_development_dependency('pry')
-  gem.add_runtime_dependency('yajl-ruby')
+  gem.add_runtime_dependency 'yajl-ruby'
+  gem.add_runtime_dependency 'bini'
 end

@@ -2,7 +2,17 @@
 
 require 'pushover'
 
+include Bini
 include Pushover
+Options.on("-u", "--user USER", "Which user, can be a saved name or token.") { |o| Options[:user] = o}
+Options.on("-a", "--app APPKEY", "Which app to notify, can be a saved name or apikey.") { |o| Options[:appkey] = o}
+Options.on("-t", "--title [TITLE]", "Set the title of the notification (optional).") { |o| Options[:title] = o}
+Options.on("-p", "--priority [PRIORITY]", OptionParser::DecimalInteger , "Set the priority of the notification from -1 to 1 (optional).") { |o| Options[:priority] = o}
+Options.on("-d", "--device [DEVICE]", "Specify the device to send the notifcation to. (optional).") { |o| Options[:device] = o}
+Options.on("-c", "--config_file [FILE]", "Set the target config file.") {|o| Options[:config_file] = o}
+Options.on("--save-app NAME", "Saves the application to the config file under NAME.") { |o| Options[:save_app] = [Options[:appkey], o]}
+Options.on("--save-user NAME", "Saves the user to the config file under NAME.") { |o| Options[:save_user] = [Options[:user], o]}
+
 Options.parse!
 
 # Order is important.
