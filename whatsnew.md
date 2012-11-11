@@ -1,8 +1,9 @@
-0.4.0:
+0.5.0:
   * Switched the order of App and it's derivatives so that it's name, api_key to make it more human readable.
    * Ditto for User.
   * Merged in me bones.
   * Using bini's logic whenever possible now instead of reinventing the wheel.
+0.4.0:
 	* Added priority and device specification.
 	* Moved all the variables, including message, into the configure block.
   * Updated the gemspec with some more information.
