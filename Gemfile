@@ -3,13 +3,14 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-	gem "guard"
-	gem "guard-bundler"
-	gem "guard-rspec"
-	gem "guard-yard"
-	gem "guard-shell"
 	gem "pry"
   gem "pry-debugger"
+  gem "redcarpet"
+  gem "guard"
+  gem "guard-bundler"
+  gem "guard-rspec"
+  gem "guard-yard"
+  gem "guard-shell"
 	gem 'libnotify', 	:require => false
 	gem 'growl', 			:require => false
 	gem 'rb-inotify', :require => false
