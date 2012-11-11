@@ -58,16 +58,16 @@ if !User.current_user?
 end
 exit if bail
 
+# I do both just as an example, you can configure it this way and have it
+# pre-configured:
 Pushover.configure do |c|
 	c.user 			= User.current_user
 	c.token	 		= App.current_app
-	c.message 	= message
-	c.title 		= Options[:title]
-	c.priority 	= Options[:priority]
-	c.device 		= Options[:device]
 end
 
-response = Pushover.notification
+# Or in real time, which will also overwrite the .configure block.
+response = Pushover.notification message:message, title:Options[:title],
+	priority:Options[:priority], device:Options[:device]
 
 if response.code == "200"
 	puts "Message sent successfully!"
@@ -75,3 +75,4 @@ else
 	j = Yajl.load response.body
 	puts "ErrorCode (#{response.code}): #{j['errors'].first}."
 end
+
