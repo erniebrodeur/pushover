@@ -50,12 +50,12 @@ module Pushover
 
 			# did something get supplied on the cli? try to find it.
 			if Options[:appkey]
-				@current_app = Pushover::App.find Options[:appkey]
+				@current_app = find Options[:appkey]
 			end
 
 			# no?  do we have anything we can return?
 			if !@current_app
-				@current_app = Bini.config[:applications].first
+				@current_app = find Bini.config[:applications].first[0]
 			end
 			@current_app
 		end

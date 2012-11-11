@@ -21,7 +21,7 @@ module Pushover
 
 		extend self
 
-		# Find the apikey in the applications, or pass on the word to try direct access.
+		# Find the token in the users, or pass on the word to try direct access.
 		# @param [String] word the search token, can be an apikey or appname.
 		# @return [String] return the apikey (if it can find one) or the word itself.
 		def find(word)
@@ -48,12 +48,12 @@ module Pushover
 
 			# did something get supplied on the cli? try to find it.
 			if Options[:user]
-				@current_user = Pushover::User.find Options[:user]
+				@current_user = find Options[:user]
 			end
 
 			# no?  do we have anything we can return?
 			if !@current_user
-				@current_user = Bini.config[:users].first
+				@current_user = find Bini.config[:users].first[0]
 			end
 			@current_user
 		end
