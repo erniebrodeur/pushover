@@ -1,3 +1,7 @@
+unreleased:
+  * Webmock based testing for Pushover#notification.
+  * Added intergration to http://travis-ci.org
+
 0.5.0:
   * Switched the order of App and it's derivatives so that it's name, api_key to make it more human readable.
    * Ditto for User.
