@@ -6,7 +6,7 @@ describe "user" do
 		Bini.config.clear
 	end
 
-	it "can add a user to the Config[:application] hash." do
+	it "can add a user to the Config[:users] hash." do
 		User.add "foo", "bar"
 		Bini.config[:users]["foo"].should eq("bar")
 	end
@@ -22,5 +22,3 @@ describe "user" do
 		User.find("foo").should eq("bar")
 	end
 end
-
-
