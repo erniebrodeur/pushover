@@ -1,6 +1,4 @@
-require 'pushover'
-
-include Pushover
+require 'spec_helper'
 
 describe "application" do
 	before(:each) do
