@@ -25,7 +25,7 @@ module Pushover
 		# @param [String] word the search token, can be an apikey or appname.
 		# @return [String] return the apikey (if it can find one) or the word itself.
 		def find(word)
-			return Bini.config[:users][word] if Bini.config[:users][word]
+			return Bini.config[:users][word] if Bini.config[:users] && Bini.config[:users][word]
 			word
 		end
 
@@ -44,23 +44,26 @@ module Pushover
 
 		# Return the current user selected, or the first one saved.
 		def current_user
-			return @current_user if @current_user
-
 			# did something get supplied on the cli? try to find it.
-			if Options[:user]
-				@current_user = find Options[:user]
+			if Bini::Options[:token]
+				@current_user = find Bini::Options[:token]
 			end
 
 			# no?  do we have anything we can return?
 			if !@current_user
-				@current_user = find Bini.config[:users].first[0]
+				@current_user = find Bini.config[:users].first[0] if Bini.config[:users]
 			end
 			@current_user
 		end
 
+		# Set the current_user to whatever you want it to be.
+		def current_user=(user)
+			@current_user = user
+		end
+
 		# Will return true if it can find a user either via the cli or save file.
 		def current_user?
-			return true if current_user
+			return true if @current_user
 			return nil
 		end
 	end

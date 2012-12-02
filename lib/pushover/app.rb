@@ -14,11 +14,7 @@ module Pushover
 				@name = name
 				@api_key = api_key
 				Bini.config[:applications] = {} if !Bini.config[:applications]
-				if name
-					Bini.config[:applications][name] = api_key
-				else
-					Bini.config[:applications][api_key] = api_key
-				end
+				Bini.config[:applications][name] = api_key
 			end
 		end
 
@@ -28,7 +24,7 @@ module Pushover
 		# @param [String] word the search token, can be an apikey or appname.
 		# @return [String] return the apikey (if it can find one) or the word itself.
 		def find(word)
-			return Bini.config[:applications][word] if Bini.config[:applications][word]
+			return Bini.config[:applications][word] if Bini.config[:applications] && Bini.config[:applications][word]
 			word
 		end
 
@@ -46,23 +42,25 @@ module Pushover
 		end
 		# Return the current app selected, or the first one saved.
 		def current_app
-			return @current_app if @current_app
-
 			# did something get supplied on the cli? try to find it.
-			if Options[:appkey]
-				@current_app = find Options[:appkey]
+			if Bini::Options[:apikey]
+				@current_app = find Bini::Options[:apikey]
 			end
 
 			# no?  do we have anything we can return?
 			if !@current_app
-				@current_app = find Bini.config[:applications].first[0]
+				@current_app = find Bini.config[:applications].first[0] if Bini.config[:applications]
 			end
 			@current_app
 		end
 
+		def current_app=(app)
+			@current_app = app
+		end
+
 		# Will return true if we can find an application either via the cli or save file.
 		def current_app?
-			return true if current_app
+			return true if @current_app
 			return nil
 		end
 	end

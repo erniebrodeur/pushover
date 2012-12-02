@@ -54,9 +54,9 @@ module Pushover
 
   # List available parameters and values in those params
   def parameters
-    @values = {}
-    keys.each { |k| @values.merge! k => get_var("@#{k}") }
-    @values
+    h = {}
+    keys.each { |k| h[k.to_sym] = Pushover.instance_variable_get("@#{k}") }
+    return h
   end
   alias_method :params, :parameters
 
@@ -65,16 +65,16 @@ module Pushover
     parameters.values.all?
   end
 
+  # Clear all the currently set parameters
+  def clear
+    keys.each do |k|
+      Pushover.instance_variable_set("@#{k}", nil)
+    end
+  end
+
   # A [Array] of keys available in Pushover.
   def keys
     keys ||= [:token, :user, :message, :title, :priority, :device]
   end
-
-  private
-
-  # Helper to clean up recursive method in #parameters
-  def get_var(var)
-    self.instance_variable_get(var)
-  end
-
 end
+
