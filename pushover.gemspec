@@ -10,8 +10,8 @@ Gem::Specification.new do |gem|
   gem.platform      = Gem::Platform::RUBY
 
   # descriptions
-  gem.description   = "App (and CLI) to interface with pushover.net"
-  gem.summary       = "This gem will provide both an API and CLI interface to pushover.net."
+  gem.description   = "Api (and CLI) to interface with pushover.net"
+  gem.summary       = "This gem provides both an API and CLI interface to pushover.net."
   gem.homepage      = "https://github.com/erniebrodeur/pushover"
 
   #files
