@@ -1,4 +1,4 @@
-unreleased:
+0.5.1:
   * SimpleCov and 100% test coverage
   * Webmock based testing for Pushover#notification.
   * Added intergration to http://travis-ci.org
