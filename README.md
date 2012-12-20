@@ -96,14 +96,6 @@ If you don't supply the application or user name, it will use the first one in t
 
 Anytime you supply token's directly to the cli, it will ignore any saved information and try them.  This allows you to use it as a once-off tool while keeping credentials stored.
 
-## Testing
-
-CLI usage:
-
-Testing, like this utility, it is a work in progress.  I'm in the process of lifting some of the code into another library (config, options), so I will likely not be making more tests for those pieces.
-
-The app testing itself requires you to use your own credentials, that way you get the spam from pushover and not me.  I haven't figured out how to do this just yet.
-
 ## Contributing
 
 1. Fork it

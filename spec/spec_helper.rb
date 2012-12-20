@@ -10,8 +10,8 @@ if ENV["COVERAGE"] == 'true'
     add_filter "/spec/"
   end
 end
-require 'webmock/rspec'
 
+require 'webmock/rspec'
 require 'pushover'
 
 include Pushover

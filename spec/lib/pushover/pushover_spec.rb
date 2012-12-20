@@ -45,4 +45,26 @@ describe "Pushover" do
       resp.code.should eq "200"
     end
   end
+
+  describe "extra behavior" do
+    describe "Priority" do
+      it "can be set by number (-1, 0, 1)" do
+        setup_webmocks
+        resp = Pushover.notification message:'a message', token:'good_token', user:'good_user', priority:-1
+        resp.code.should eq "200"
+      end
+      it "can be set by text (low, normal, high)" do
+        setup_webmocks
+        resp = Pushover.notification message:'a message', token:'good_token', user:'good_user', priority:'high'
+        resp.code.should eq "200"
+      end
+    end
+
+    describe "Time" do
+      it "can be set by epoch"
+      it "can be set by a text string"
+      it "can be set rails style (-1.day, -12.months)"
+    end
+  end
 end
+

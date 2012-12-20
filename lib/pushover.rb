@@ -27,6 +27,8 @@ module Pushover
   attr_accessor :priority
   # [optional,String] device to recieve the message.
   attr_accessor :device
+  # [optional,String, Fixnum] time a time stamp im one of three forms (epoch, strfmt, rails)
+  attr_accessor :time
 
   # push a message to  pushover, must supply all variables.
   # @param [String] message The message to be sent
