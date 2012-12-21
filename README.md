@@ -1,18 +1,6 @@
-# Pushover
+# Pushover [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/erniebrodeur/pushover) [![Build Status](https://travis-ci.org/erniebrodeur/pushover.png?branch=master)](https://travis-ci.org/erniebrodeur/pushover)
 
 This gem provides a CLI and an API interface to http://pushover.net.
-
-#### Build Status
-<table border="0">
-  <tr>
-    <td>master</td>
-    <td><a href=http://travis-ci.org/erniebrodeur/pushover?branch=master><img src="https://secure.travis-ci.org/erniebrodeur/pushover.png?branch=master"/></h> </td>
-  </tr>
-  <tr>
-    <td>development</td>
-    <td><a href=http://travis-ci.org/erniebrodeur/pushover?branch=development><img src="https://secure.travis-ci.org/erniebrodeur/pushover.png?branch=development"/></h> </td>
-  </tr>
-</table>
 
 ## Installation
 
