@@ -4,6 +4,7 @@ describe "application" do
 	before(:each) do
 		Bini.config.file = "tmp/test.save"
 		Bini.config.clear
+		Bini::Options.clear
 		App.current_app = nil
 	end
 

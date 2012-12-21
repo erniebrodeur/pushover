@@ -41,33 +41,34 @@ describe "Pushover" do
   describe "#notification" do
     it "can send a notification" do
       setup_webmocks
-      resp = Pushover.notification message:'a message', token:'good_token', user:'good_user'
-      resp.code.should eq "200"
+      Pushover.notification message:'a message', token:'good_token', user:'good_user'
+      WebMock.should have_requested(:post, /.*api.pushover.net.*/).with do |req|
+        puts req.body hash_including(priority:'ajkasdfj')
+      end
     end
   end
 
   describe "extra behavior" do
     describe "Priority" do
-      it "can be set by number" do
-        setup_webmocks
-        Pushover.notification message:'a message', token:'good_token', user:'good_user', priority:-1
-        WebMock.should have_requested(:post, /.*api.pushover.net.*/).with do |req|
-          req.body hash_including(priority:-1)
-        end
-      end
       it "can be set by text" do
         setup_webmocks
+        Pushover.notification message:'a message', token:'good_token', user:'good_user', priority:'low'
+        WebMock.should have_requested(:post, /.*api.pushover.net.*/).with { |req| req.body.include? 'priority=-1'}
+        setup_webmocks
         Pushover.notification message:'a message', token:'good_token', user:'good_user', priority:'high'
-        WebMock.should have_requested(:post, /.*api.pushover.net.*/).with do |req|
-          req.body hash_including(priority:1)
-        end
+        WebMock.should have_requested(:post, /.*api.pushover.net.*/).with { |req| req.body.include? 'priority=1'}
       end
-    end
+      it "falls back to normal" do
+        setup_webmocks
+        Pushover.notification message:'a message', token:'good_token', user:'good_user', priority:'kwkru'
+        WebMock.should have_requested(:post, /api.pushover.net/).with { |req| req.body.include? 'priority=0' }
+      end
 
-    describe "Time" do
-      it "can be set by epoch"
-      it "can be set by a text string"
-      it "can be set rails style (-1.day, -12.months)"
+      describe "Time" do
+        it "can be set by epoch"
+        it "can be set by a text string"
+        it "can be set rails style (-1.day, -12.months)"
+      end
     end
   end
 end

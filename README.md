@@ -65,10 +65,7 @@ To send a message.
 
 * Title: Title of your notifcation
 * Config_file: the file to use for stored credentials.
-* Priority: Priority of the message, as an integer (for now).
-	* -1: low
-	*  0: normal
-	*	1: high
+* Priority: low, normal, high
 * Device: specific device to send the notification to.
 
 

@@ -1,3 +1,5 @@
+0.99.0 (unreleased):
+  * Priority takes a text or interger argument now.
 0.5.1:
   * SimpleCov and 100% test coverage
   * Webmock based testing for Pushover#notification.

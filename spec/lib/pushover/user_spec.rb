@@ -4,6 +4,7 @@ describe "user" do
 	before(:each) do
 		Bini.config.file = "tmp/test.save"
 		Bini.config.clear
+		Bini::Options.clear
 		User.current_user = nil
 	end
 
@@ -44,7 +45,7 @@ describe "user" do
 	describe "#current_user?" do
 		it "Will return true if we have a current_user" do
 			Bini::Options[:token] = 'somethingsilly'
-			User.current_user.should eq 'somethingsilly'
+			User.current_user?.should be_true
 		end
 		it "Will return nil otherwise" do
 			User.current_user?.should be_nil

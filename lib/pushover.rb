@@ -32,17 +32,14 @@ module Pushover
   def priority=(level)
     if level.class == String
       if level =~ /^[lL]/
-        puts "called #{level}"
         @priority = -1
-      elsif level =~ /^[nN]/
-        @priority = 0
       elsif level =~ /^[hH]/
         @priority = 1
+      else
+        @priority = 0
       end
     elsif level.class == Fixnum
       @priority = level
-    else
-      @priority = 0
     end
   end
 
@@ -59,9 +56,10 @@ module Pushover
   # @param [optional, String] user the user token.
   # @return [String] the response from pushover.net, in json.
   def notification(tokens={})
+    tokens.each {|k,v| send("#{k}=", tokens[k])}
     url = URI.parse("https://api.pushover.net/1/messages.json")
     req = Net::HTTP::Post.new(url.path)
-    req.set_form_data(params.merge tokens)
+    req.set_form_data(params)
     res = Net::HTTP.new(url.host, url.port)
     res.use_ssl = true
     res.verify_mode = OpenSSL::SSL::VERIFY_PEER
