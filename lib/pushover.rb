@@ -10,8 +10,8 @@ require "pushover/user"
 # The primary pushover namespace.
 module Pushover
   # lets save our config to it's own dir, just because.
-  Bini.config.file = "#{Dir.home}/.config/pushover/credentials.yaml"
-  Bini.config.load
+  Bini::Config.file = "#{Dir.home}/.config/pushover/credentials.yaml"
+  Bini::Config.load
 
   extend self
 

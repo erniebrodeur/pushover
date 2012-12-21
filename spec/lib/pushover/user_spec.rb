@@ -2,21 +2,21 @@ require 'spec_helper'
 
 describe "user" do
 	before(:each) do
-		Bini.config.file = "tmp/test.save"
-		Bini.config.clear
+		Bini::Config.file = "tmp/test.save"
+		Bini::Config.clear
 		Bini::Options.clear
 		User.current_user = nil
 	end
 
 	it "can add a user to the Config[:users] hash." do
 		User.add "foo", "bar"
-		Bini.config[:users]["foo"].should eq("bar")
+		Bini::Config[:users]["foo"].should eq("bar")
 	end
 
 	it "can remove a user from the hash." do
 		User.add "foo", "bar"
 		User.remove "foo"
-		Bini.config[:users]["foo"].should be_nil
+		Bini::Config[:users]["foo"].should be_nil
 	end
 
 	describe "#find" do
@@ -36,7 +36,7 @@ describe "user" do
 		end
 		it "will grab the first user in the config as a last resort" do
 			User.add "foo", "bar2"
-			Bini.config.save
+			Bini::Config.save
 			Bini::Options[:token] = nil
 			User.current_user.should eq "bar2"
 		end

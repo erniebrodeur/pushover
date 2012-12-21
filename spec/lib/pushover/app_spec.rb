@@ -2,21 +2,21 @@ require 'spec_helper'
 
 describe "application" do
 	before(:each) do
-		Bini.config.file = "tmp/test.save"
-		Bini.config.clear
+		Bini::Config.file = "tmp/test.save"
+		Bini::Config.clear
 		Bini::Options.clear
 		App.current_app = nil
 	end
 
 	it "can add a application to the Config[:application] hash." do
 		App.add "foo", "bar"
-		Bini.config[:applications]["foo"].should eq("bar")
+		Bini::Config[:applications]["foo"].should eq("bar")
 	end
 
 	it "can remove a application from the hash." do
 		App.add "foo", "bar"
 		App.remove "foo"
-		Bini.config[:applications]["foo"].should be_nil
+		Bini::Config[:applications]["foo"].should be_nil
 	end
 
 	describe "#find" do
@@ -36,7 +36,7 @@ describe "application" do
 		end
 		it "will grab the first app in the config as a last resort" do
 			App.add "foo", "bar2"
-			Bini.config.save
+			Bini::Config.save
 			Bini::Options[:apikey] = nil
 			App.current_app.should eq "bar2"
 		end
