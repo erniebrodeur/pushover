@@ -36,6 +36,3 @@ def setup_webmocks
   stub_http_request(:post, "https://api.pushover.net/1/messages.json").to_return(:status => 200,
   :headers => {}, :body => bad_user).with(:body => hash_including({token:'good_token', user:'bad_user'}))
 end
-
-
-

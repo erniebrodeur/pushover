@@ -48,15 +48,19 @@ describe "Pushover" do
 
   describe "extra behavior" do
     describe "Priority" do
-      it "can be set by number (-1, 0, 1)" do
+      it "can be set by number" do
         setup_webmocks
-        resp = Pushover.notification message:'a message', token:'good_token', user:'good_user', priority:-1
-        resp.code.should eq "200"
+        Pushover.notification message:'a message', token:'good_token', user:'good_user', priority:-1
+        WebMock.should have_requested(:post, /.*api.pushover.net.*/).with do |req|
+          req.body hash_including(priority:-1)
+        end
       end
-      it "can be set by text (low, normal, high)" do
+      it "can be set by text" do
         setup_webmocks
-        resp = Pushover.notification message:'a message', token:'good_token', user:'good_user', priority:'high'
-        resp.code.should eq "200"
+        Pushover.notification message:'a message', token:'good_token', user:'good_user', priority:'high'
+        WebMock.should have_requested(:post, /.*api.pushover.net.*/).with do |req|
+          req.body hash_including(priority:1)
+        end
       end
     end
 
@@ -67,4 +71,3 @@ describe "Pushover" do
     end
   end
 end
-

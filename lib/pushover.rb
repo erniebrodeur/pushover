@@ -23,12 +23,32 @@ module Pushover
   attr_accessor :message
   # [optional,String] Title of the message.
   attr_accessor :title
-  # [optional,Fixnum] priority The priority of the message, from -1 to 1.
-  attr_accessor :priority
   # [optional,String] device to recieve the message.
   attr_accessor :device
   # [optional,String, Fixnum] time a time stamp im one of three forms (epoch, strfmt, rails)
   attr_accessor :time
+
+
+  def priority=(level)
+    if level.class == String
+      if level =~ /^[lL]/
+        puts "called #{level}"
+        @priority = -1
+      elsif level =~ /^[nN]/
+        @priority = 0
+      elsif level =~ /^[hH]/
+        @priority = 1
+      end
+    elsif level.class == Fixnum
+      @priority = level
+    else
+      @priority = 0
+    end
+  end
+
+  def priority
+    @priority ||= 0
+  end
 
   # push a message to  pushover, must supply all variables.
   # @param [String] message The message to be sent
@@ -79,4 +99,3 @@ module Pushover
     keys ||= [:token, :user, :message, :title, :priority, :device]
   end
 end
-
