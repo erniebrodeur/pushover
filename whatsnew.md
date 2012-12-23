@@ -1,6 +1,9 @@
 ## 0.99.0 (unreleased):
+  * Added time, we can take an epoch or string.  The string is run through stdlib Time#parse, so effectively takes rfc822, html, xml, and a bunch of random bits.
+  * Added gemnasium to the readme.
+  * Added code climate to the readme.
   * Updated for Bini 0.6.0
-  * Priority takes a text or interger argument now.
+  * Priority takes a text or integer argument now.
 
 ## 0.5.1:
   * SimpleCov and 100% test coverage

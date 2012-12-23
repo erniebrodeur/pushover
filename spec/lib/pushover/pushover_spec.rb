@@ -17,7 +17,13 @@ describe "Pushover" do
 
   describe "#parameters?" do
     it 'will return true only if every key is set to something.' do
-      keys.each {|k| Pushover.send("#{k}=", 'ladeda')}
+      keys.each do |k|
+        if k == :timestamp
+          Pushover.send("timestamp=", '1970-01-01 00:00:01 UTC')
+        else
+          Pushover.send("#{k}=", 'ladeda')
+        end
+      end
       parameters?.should eq true
     end
     it 'will return false otherwise.' do
@@ -63,12 +69,22 @@ describe "Pushover" do
         Pushover.notification message:'a message', token:'good_token', user:'good_user', priority:'kwkru'
         WebMock.should have_requested(:post, /api.pushover.net/).with { |req| req.body.include? 'priority=0' }
       end
+    end
 
-      describe "Time" do
-        it "can be set by epoch"
-        it "can be set by a text string"
-        it "can be set rails style (-1.day, -12.months)"
+    describe "Time" do
+      it "can be set by epoch" do
+        setup_webmocks
+        Pushover.notification message:'a message', token:'good_token', user:'good_user', timestamp:1000
+        Pushover.notification message:'a message', token:'good_token', user:'good_user', timestamp:'1000'
+        WebMock.should have_requested(:post, /api.pushover.net/).with { |req| req.body.include? 'timestamp=1000' }.twice
+      end
+
+      it "can be set by a text string" do
+        setup_webmocks
+        Pushover.notification message:'a message', token:'good_token', user:'good_user', timestamp:'1970-01-01 00:00:01 UTC'
+        WebMock.should have_requested(:post, /api.pushover.net/).with { |req| req.body.include? 'timestamp=1' }
       end
     end
   end
 end
+

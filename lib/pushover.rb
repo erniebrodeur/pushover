@@ -1,5 +1,6 @@
 require "net/https"
 require "yajl"
+require 'time'
 require 'bini'
 require 'bini/config'
 require 'bini/optparser'
@@ -26,8 +27,8 @@ module Pushover
   # [optional,String] device to recieve the message.
   attr_accessor :device
   # [optional,String, Fixnum] time a time stamp im one of three forms (epoch, strfmt, rails)
-  attr_accessor :time
-
+  attr_reader   :timestamp
+  attr_reader   :priority
 
   def priority=(level)
     if level.class == String
@@ -43,8 +44,22 @@ module Pushover
     end
   end
 
-  def priority
-    @priority ||= 0
+  # Stdlib time, seems to take a shitload of options.
+  # rfc822: Tue, 14 Nov 2000 14:55:07 -0500
+  # xml: 1979-08-13T06:30:00.313UTC
+  # Time.parse 'Aug 13, 1979 6:30'
+  # Time.parse '1979/08/13, 6:30:50 UTC'
+  def timestamp=(time_string)
+    if time_string.class == String
+      begin
+        @timestamp = Time.parse(time_string).to_i
+      rescue ArgumentError
+        @timestamp = time_string.to_i
+      end
+    elsif
+      time_string.class == Fixnum
+      @timestamp = time_string
+    end
   end
 
   # push a message to  pushover, must supply all variables.
@@ -94,6 +109,6 @@ module Pushover
 
   # A [Array] of keys available in Pushover.
   def keys
-    keys ||= [:token, :user, :message, :title, :priority, :device]
+    keys ||= [:token, :user, :message, :title, :priority, :device, :timestamp]
   end
 end

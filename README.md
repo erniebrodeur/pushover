@@ -1,4 +1,4 @@
-# Pushover [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/erniebrodeur/pushover) [![Build Status](https://travis-ci.org/erniebrodeur/pushover.png?branch=master)](https://travis-ci.org/erniebrodeur/pushover)
+# Pushover [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/erniebrodeur/pushover) [![Build Status](https://travis-ci.org/erniebrodeur/pushover.png?branch=master)](https://travis-ci.org/erniebrodeur/pushover) [![Dependency Status](https://gemnasium.com/erniebrodeur/pushover.png)](https://gemnasium.com/erniebrodeur/pushover)
 
 This gem provides a CLI and an API interface to http://pushover.net.
 
@@ -51,13 +51,26 @@ To send a message.
 
 #### Optional parameters
 
-* Title: Title of your notifcation
-* Config_file: the file to use for stored credentials.
-* Priority: low, normal, high
-* Device: specific device to send the notification to.
+For the CLI:
+* Config_file: The file to use for stored credentials.
+
+For Pushover:
+* Title:       Title of your notifcation
+* Priority:    low, normal, high (or -1,0,1)
+* Device:      Specific device to send the notification to.
+* Time:        Epoch, or string.  See below.
 
 
-#### Saving user and application.
+#### Time
+Time is tricky, I just pass the string off to the stdlib ```Time.parse```.  Therefore, if it fails I can't do much about it.  Though, it shouldn't fail, it seems to take just a ton of stuff.  You can always handle this yourself and just pass in an epoch (string or fixnum).
+
+##### String examples
+* rfc822: Tue, 14 Nov 2000 14:55:07 -0500
+* xml: 1979-08-13T06:30:00.313UTC
+* 'Aug 13, 1979 6:30'
+* '1979/08/13, 6:30:50 UTC'
+
+#### Saving
 
 You can also save and use stored information.  The username/application are titles.  They can be anything you want to reference them.
 
@@ -69,7 +82,7 @@ Application:
 
 		% pushover -a app_key --save-app myApp
 
-Delete coming soon.
+Delete done in the api, not lifted to the cli.
 
 Now, you can use these to send messages instead of having to remeber the key:
 

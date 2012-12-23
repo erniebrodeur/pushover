@@ -7,6 +7,7 @@ include Pushover
 Options.on("-u", "--user USER", "Which user, can be a saved name or token.") { |o| Options[:user] = o}
 Options.on("-a", "--app APPKEY", "Which app to notify, can be a saved name or apikey.") { |o| Options[:appkey] = o}
 Options.on("-t", "--title [TITLE]", "Set the title of the notification (optional).") { |o| Options[:title] = o}
+Options.on("--time [TIME]", "Set the messages time.") {|o| Options[:timestamp] = o}
 Options.on("-p", "--priority [PRIORITY]", "Set the priority of the notification from (low,normal,high) (optional).") { |o| Options[:priority] = o}
 Options.on("-d", "--device [DEVICE]", "Specify the device to send the notifcation to. (optional).") { |o| Options[:device] = o}
 Options.on("-c", "--config_file [FILE]", "Set the target config file.") {|o| Options[:config_file] = o}
@@ -67,8 +68,10 @@ Pushover.configure do |c|
 end
 
 # Or in real time, which will also overwrite the .configure block.
-response = Pushover.notification message:message, title:Options[:title],
-	priority:Options[:priority], device:Options[:device]
+options = Options[].select { |k,v| v}
+
+options.merge! message:message
+response = Pushover.notification options
 
 if response.code == "200"
 	puts "Message sent successfully!"
