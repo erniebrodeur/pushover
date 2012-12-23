@@ -26,10 +26,11 @@ module Pushover
   attr_accessor :title
   # [optional,String] device to recieve the message.
   attr_accessor :device
+  attr_accessor :url
+  attr_accessor :url_title
   # [optional,String, Fixnum] time a time stamp im one of three forms (epoch, strfmt, rails)
   attr_reader   :timestamp
   attr_reader   :priority
-
   def priority=(level)
     if level.class == String
       if level =~ /^[lL]/
@@ -109,6 +110,6 @@ module Pushover
 
   # A [Array] of keys available in Pushover.
   def keys
-    keys ||= [:token, :user, :message, :title, :priority, :device, :timestamp]
+    keys ||= [:token, :user, :message, :title, :priority, :device, :timestamp, :url, :url_title]
   end
 end

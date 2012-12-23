@@ -1,4 +1,5 @@
 ## 0.99.0 (unreleased):
+  * Added url and a url_title.
   * Added time, we can take an epoch or string.  The string is run through stdlib Time#parse, so effectively takes rfc822, html, xml, and a bunch of random bits.
   * Added gemnasium to the readme.
   * Added code climate to the readme.
