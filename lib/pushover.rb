@@ -32,17 +32,7 @@ module Pushover
   attr_reader   :timestamp
   attr_reader   :priority
   def priority=(level)
-    if level.class == String
-      if level =~ /^[lL]/
-        @priority = -1
-      elsif level =~ /^[hH]/
-        @priority = 1
-      else
-        @priority = 0
-      end
-    elsif level.class == Fixnum
-      @priority = level
-    end
+    @priority = priority_magic level
   end
 
   # Stdlib time, seems to take a shitload of options.
@@ -51,16 +41,7 @@ module Pushover
   # Time.parse 'Aug 13, 1979 6:30'
   # Time.parse '1979/08/13, 6:30:50 UTC'
   def timestamp=(time_string)
-    if time_string.class == String
-      begin
-        @timestamp = Time.parse(time_string).to_i
-      rescue ArgumentError
-        @timestamp = time_string.to_i
-      end
-    elsif
-      time_string.class == Fixnum
-      @timestamp = time_string
-    end
+    @timestamp = timestamp_magic time_string
   end
 
   # push a message to  pushover, must supply all variables.
@@ -72,10 +53,12 @@ module Pushover
   # @param [optional, String] user the user token.
   # @return [String] the response from pushover.net, in json.
   def notification(tokens={})
-    tokens.each {|k,v| send("#{k}=", tokens[k])}
+    tokens[:timestamp] = timestamp_magic tokens[:timestamp] if tokens[:timestamp]
+    tokens[:priority]  = priority_magic tokens[:priority] if tokens[:priority]
+
     url = URI.parse("https://api.pushover.net/1/messages.json")
     req = Net::HTTP::Post.new(url.path)
-    req.set_form_data(params.select {|k,v| v != nil})
+    req.set_form_data(params.merge(tokens).select {|k,v| v != nil})
     res = Net::HTTP.new(url.host, url.port)
     res.use_ssl = true
     res.verify_mode = OpenSSL::SSL::VERIFY_PEER
@@ -112,4 +95,34 @@ module Pushover
   def keys
     keys ||= [:token, :user, :message, :title, :priority, :device, :timestamp, :url, :url_title]
   end
+
+  private
+
+  def timestamp_magic(time_string)
+    if time_string.class == String
+      begin
+        return Time.parse(time_string).to_i
+      rescue ArgumentError
+        return time_string.to_i
+      end
+    elsif
+      time_string.class == Fixnum
+      return time_string
+    end
+  end
+
+  def priority_magic(level)
+    if level.class == String
+      if level =~ /^[lL]/
+        return -1
+      elsif level =~ /^[hH]/
+        return 1
+      else
+        return 0
+      end
+    elsif level.class == Fixnum
+      return level
+    end
+  end
 end
+

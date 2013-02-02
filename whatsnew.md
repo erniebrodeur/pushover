@@ -2,6 +2,7 @@
   * Big one here, properly testing bin/pushover now.
   * Fixed a bug in the bin/pushover so --config_file and --app work as expected.
   * Empty params will no longer be sent to pushover.net
+  * Fixed Pushover#notification, no longer overwrites params with it's arguments.
 
 ## 0.99.0:
   * Added url and a url_title.
@@ -14,7 +15,7 @@
 ## 0.5.1:
   * SimpleCov and 100% test coverage
   * Webmock based testing for Pushover##notification.
-  * Added intergration to http://travis-ci.org
+  * Added integration to http://travis-ci.org
 
 ## 0.5.0:
   * Switched the order of App and it's derivatives so that it's name, api_key to make it more human readable.
