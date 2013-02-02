@@ -5,7 +5,7 @@ require 'pushover'
 include Bini
 include Pushover
 Options.on("-u", "--user USER", "Which user, can be a saved name or token.") { |o| Options[:user] = o}
-Options.on("-a", "--app APPKEY", "Which app to notify, can be a saved name or apikey.") { |o| Options[:appkey] = o}
+Options.on("-a", "--app APPKEY", "Which app to notify, can be a saved name or apikey.") { |o| Options[:token] = o}
 Options.on("-t", "--title [TITLE]", "Set the title of the notification (optional).") { |o| Options[:title] = o}
 Options.on("-p", "--priority [PRIORITY]", "Set the priority of the notification from (low,normal,high) (optional).") { |o| Options[:priority] = o}
 Options.on("-d", "--device [DEVICE]", "Specify the device to send the notifcation to. (optional).") { |o| Options[:device] = o}
@@ -17,34 +17,32 @@ Options.on("--save-app NAME", "Saves the application to the config file under NA
 Options.on("--save-user NAME", "Saves the user to the config file under NAME.") { |o| Options[:save_user] = [Options[:user], o]}
 
 Options.parse!
+bail = false
 
 # Order is important.
 if Options[:config_file]
-	puts "Selecting config file: #{Options[:config_file]}"
-	Pushover::Config.save_file = Options[:config_file]
+	Bini::Config.file = Options[:config_file]
+	puts "Selected config file: #{Options[:config_file]}"
 end
 
 if Options[:save_app]
-	puts "Saving application #{Options[:save_app][0]} to #{Options[:save_app][1]}."
 	App.add Options[:save_app][1], Options[:save_app][0]
-	puts "Save successful."
-	exit
+	puts "Saved application #{Options[:save_app][0]} to #{Options[:save_app][1]}."
+	bail = true
 end
 
 if Options[:save_user]
-	puts "Saving user #{Options[:save_user][0]} to #{Options[:save_user][1]}."
 	User.add Options[:save_user][1], Options[:save_user][0]
-	puts "Save successful."
-	exit
+	puts "Saved user #{Options[:save_user][0]} to #{Options[:save_user][1]}."
+	bail = true
 end
 
 if ARGV.empty?
 	puts "You must supply a message."
-	exit
+	bail = true
 end
-bail = false
-message = ARGV.join(" ")
 
+message = ARGV.join(" ")
 if !message
 	puts "Must supply a message to be sent."
 	bail = true
@@ -60,6 +58,7 @@ if !User.current_user?
 	puts "Couldn't find a user via the cli or save file."
 	bail = true
 end
+
 exit if bail
 
 # I do both just as an example, you can configure it this way and have it
@@ -71,7 +70,7 @@ end
 
 # Or in real time, which will also overwrite the .configure block.
 options = Options[].select { |k,v| v}
-
+options.delete :config_file
 options.merge! message:message
 response = Pushover.notification options
 
@@ -81,3 +80,5 @@ else
 	j = Yajl.load response.body
 	puts "ErrorCode (#{response.code}): #{j['errors'].first}."
 end
+
+
