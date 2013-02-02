@@ -57,7 +57,7 @@ module Pushover
     tokens[:priority]  = priority_magic tokens[:priority] if tokens[:priority]
 
     url = URI.parse("https://api.pushover.net/1/messages.json")
-    req = Net::HTTP::Post.new(url.path)
+    req = Net::HTTP::Post.new(url.path, {'User-Agent' => "Ruby pushover gem: #{Pushover::VERSION}"})
     req.set_form_data(params.merge(tokens).select {|k,v| v != nil})
     res = Net::HTTP.new(url.host, url.port)
     res.use_ssl = true

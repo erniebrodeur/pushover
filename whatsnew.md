@@ -3,6 +3,7 @@
   * Fixed a bug in the bin/pushover so --config_file and --app work as expected.
   * Empty params will no longer be sent to pushover.net
   * Fixed Pushover#notification, no longer overwrites params with it's arguments.
+  * Added a user-agent to the POST's sent to pushover.net
 
 ## 0.99.0:
   * Added url and a url_title.
