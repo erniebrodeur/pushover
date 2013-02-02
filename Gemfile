@@ -22,6 +22,7 @@ group :test do
   gem "rspec"
   gem "rake"
   gem "webmock"
+  gem "childprocess"
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
 end
