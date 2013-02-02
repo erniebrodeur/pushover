@@ -75,7 +75,7 @@ module Pushover
     tokens.each {|k,v| send("#{k}=", tokens[k])}
     url = URI.parse("https://api.pushover.net/1/messages.json")
     req = Net::HTTP::Post.new(url.path)
-    req.set_form_data(params)
+    req.set_form_data(params.select {|k,v| v != nil})
     res = Net::HTTP.new(url.host, url.port)
     res.use_ssl = true
     res.verify_mode = OpenSSL::SSL::VERIFY_PEER
