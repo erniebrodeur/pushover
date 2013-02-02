@@ -1,4 +1,9 @@
-## 0.99.0 (unreleased):
+## 0.99.1 (unreleased):
+  * Big one here, properly testing bin/pushover now.
+  * Fixed a bug in the bin/pushover so --config_file and --app work as expected.
+  * Empty params will no longer be sent to pushover.net
+
+## 0.99.0:
   * Added url and a url_title.
   * Added time, we can take an epoch or string.  The string is run through stdlib Time#parse, so effectively takes rfc822, html, xml, and a bunch of random bits.
   * Added gemnasium to the readme.
