@@ -29,7 +29,7 @@ require 'pushover'
 To send with the very minimum amount of information.
 
 ```ruby
-Pushover.notification('message', 'title', user:'USER_TOKEN', token:'APP_TOKEN')
+Pushover.notification(message: 'message', title: 'title', user: 'USER_TOKEN', token: 'APP_TOKEN')
 ```
 
 Optional #configuration method:
@@ -39,7 +39,7 @@ Pushover.configure do |config|
   config.token='APP_TOKEN'
 end
 
-Pushover.notification('message', 'title')
+Pushover.notification(message: 'message', title: 'title')
 ```
 
 ### CLI:
