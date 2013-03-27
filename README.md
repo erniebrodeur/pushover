@@ -133,7 +133,7 @@ You can also save and use stored information.  The username/application are titl
 
 Delete done in the api, not lifted to the cli.
 
-Now, you can use these to send messages instead of having to remeber the key:
+Now, you can use these to send messages instead of having to remember the key:
 
 		$ pushover -a myApp -u email@somewhere.net Hello from somewhere!
 
@@ -141,7 +141,7 @@ If you don't supply the application or user name, it will use the first one in t
 
 		$ pushover so now I can just send an app.
 
-Anytime you supply token's directly to the cli, it will ignore any saved information and try them.  This allows you to use it as a once-off tool while keeping credentials stored.
+Anytime you supply tokens directly to the cli, it will ignore any saved information and try them.  This allows you to use it as a once-off tool while keeping credentials stored.
 
 ## Contributing
 
