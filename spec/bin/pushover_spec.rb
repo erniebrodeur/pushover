@@ -28,7 +28,7 @@ if ENV["TEST_CLI"] =~ /^t/
         it "sends messages" do
           p = CLIProcess.new "#{CMD} --config_file #{CRED_FILE} a message", 3, 3
           p.run!
-          p.stdout.should include("success"), "#{p.stderr}"
+          p.stdout.should include("Receipt"), "#{p.stderr}"
         end
       end
 

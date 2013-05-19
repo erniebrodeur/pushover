@@ -57,7 +57,7 @@ module Pushover
     tokens[:timestamp] = timestamp_magic tokens[:timestamp] if tokens[:timestamp]
     tokens[:priority]  = priority_magic tokens[:priority] if tokens[:priority]
 
-    HTTParty.post('http://api.pushover.net/1/messages.json', body:tokens)
+    HTTParty.post('https://api.pushover.net/1/messages.json', body:tokens)
   end
 
   # Adds a rails style configure method
