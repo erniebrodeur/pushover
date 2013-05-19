@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe "Pushover" do
+  before :all do
+    Bini.cache_dir = "tmp/cache_dir"
+    Bini.data_dir = "tmp/data_dir"
+    Bini.config_dir = "tmp/config_dir"
+  end
   before :each do
     App.current_app = nil
     User.current_user = nil
@@ -87,7 +92,10 @@ describe "Pushover" do
     end
 
     describe "Sounds" do
-      it "will cache the sounds locally for at least a day"
+      it "will cache the sounds locally for at least a day" do
+        setup_webmocks
+        sounds.should_not be_nil
+      end
       # I think I will
       # rm the sound cache file
       # test sounds list
