@@ -47,10 +47,7 @@ module Pushover
 			# did something get supplied on the cli? try to find it.
 			if Bini::Options[:token]
 				@current_user = find Bini::Options[:token]
-			end
-
-			# no?  do we have anything we can return?
-			if !@current_user
+			elsif !@current_user
 				@current_user = find Bini::Config[:users].first[0] if Bini::Config[:users]
 			end
 			@current_user

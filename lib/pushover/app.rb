@@ -45,10 +45,7 @@ module Pushover
 			# did something get supplied on the cli? try to find it.
 			if Bini::Options[:apikey]
 				@current_app = find Bini::Options[:apikey]
-			end
-
-			# no?  do we have anything we can return?
-			if !@current_app
+			else
 				@current_app = find Bini::Config[:applications].first[0] if Bini::Config[:applications]
 			end
 			@current_app
