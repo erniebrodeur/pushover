@@ -114,7 +114,7 @@ module Pushover
     end
 
     sounds = Yajl.load open(cache_file).read
-    sounds
+    sounds["sounds"]
   end
 
   private

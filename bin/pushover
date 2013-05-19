@@ -40,7 +40,7 @@ end
 
 if Options[:sound_list]
 	puts "Current Sound List:"
-	Pushover.sounds["sounds"].each { |k,v| puts "  #{v}" }
+	Pushover.sounds.each { |k,v| puts "  #{v}" }
 	bail = true
 end
 
@@ -63,7 +63,6 @@ if !App.current_app?
 end
 
 if !User.current_user?
-	puts User.current_user?
 	puts "Couldn't find a user via the cli or save file."
 	bail = true
 end
@@ -71,7 +70,7 @@ end
 
 if Options[:sound]
 	sounds = Pushover.sounds
-	match = sounds["sounds"].select { |k,v| v.downcase.start_with? Options[:sound].downcase}
+	match = sounds.select { |k,v| v.downcase.start_with? Options[:sound].downcase}
 	if !match || match.count == 0
 		puts "No such sound: #{Options[:sound]}."
 		bail = true
@@ -82,7 +81,6 @@ if Options[:sound]
 		bail = true
 	else
 		Options[:sound] = match.first[0]
-		puts Options[:sound]
 	end
 end
 
@@ -104,7 +102,6 @@ if response.code == "200"
 	puts "Message sent successfully!"
 else
 	j = Yajl.load response.body
+	puts j
 	puts "ErrorCode (#{response.code}): #{j['errors'].first}."
 end
-
-
