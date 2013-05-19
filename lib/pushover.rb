@@ -4,6 +4,7 @@ require 'time'
 require 'bini'
 require 'bini/config'
 require 'bini/optparser'
+require 'open-uri'
 
 require "pushover/version"
 require "pushover/app"
@@ -98,6 +99,22 @@ module Pushover
     end.map do |m|
       m[0..-2]
     end
+  end
+
+  def sounds
+    cache_file = "#{Bini.cache_dir}/sounds.json"
+    sounds = {}
+    unless File.exists?(cache_file) && File.stat(cache_file).mtime > Time.at(Time.now.day - 1)
+      content = open("https://api.pushover.net/1/sounds.json?token=#{Pushover::App.current_app}").read
+      FileUtils.mkdir_p Bini.cache_dir
+      f = open(cache_file, 'w')
+      f.write content
+      f.flush
+      f.close
+    end
+
+    sounds = Yajl.load open(cache_file).read
+    sounds
   end
 
   private

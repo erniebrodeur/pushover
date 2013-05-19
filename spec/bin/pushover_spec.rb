@@ -28,7 +28,6 @@ if ENV["TEST_CLI"] =~ /^t/
         it "sends messages" do
           p = CLIProcess.new "#{CMD} --config_file #{CRED_FILE} a message", 3, 3
           p.run!
-          #binding.pry
           p.stdout.should include("success"), "#{p.stderr}"
         end
       end
@@ -53,6 +52,11 @@ if ENV["TEST_CLI"] =~ /^t/
         p.stdout.should include 'Saved'
         open(FAKE_CRED_FILE).read.should include 'default'
       end
+    end
+    describe "sounds" do
+      it "will list sounds"
+      it "will play a sound (based on partial string)"
+      it "will fail if the sound is unavailble"
     end
   end
 end

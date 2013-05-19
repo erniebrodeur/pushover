@@ -15,7 +15,8 @@ Options.on("--url_title [TITLE]", "Supplementary URL title.") { |o| Options[:url
 Options.on("--time [TIME]", "Set the messages time.") {|o| Options[:timestamp] = o}
 Options.on("--save-app NAME", "Saves the application to the config file under NAME.") { |o| Options[:save_app] = [Options[:appkey], o]}
 Options.on("--save-user NAME", "Saves the user to the config file under NAME.") { |o| Options[:save_user] = [Options[:user], o]}
-
+Options.on("--sound [SOUND]", "Specify the sound to use.  Can be a partial string as long as it is unambiguous enough.") { |o| Options[:sound] = o}
+Options.on("--sound_list", "Display the current list of available sounds.  Requires an app token.") { |o| Options[:sound_list] = true}
 Options.parse!
 bail = false
 
@@ -36,6 +37,14 @@ if Options[:save_user]
 	puts "Saved user #{Options[:save_user][0]} to #{Options[:save_user][1]}."
 	bail = true
 end
+
+if Options[:sound_list]
+	puts "Current Sound List:"
+	Pushover.sounds["sounds"].each { |k,v| puts "  #{v}" }
+	bail = true
+end
+
+exit if bail # We don't care if we have a message, we should exit here.
 
 if ARGV.empty?
 	puts "You must supply a message."
@@ -59,8 +68,25 @@ if !User.current_user?
 	bail = true
 end
 
-exit if bail
 
+if Options[:sound]
+	sounds = Pushover.sounds
+	match = sounds["sounds"].select { |k,v| v.downcase.start_with? Options[:sound].downcase}
+	if !match || match.count == 0
+		puts "No such sound: #{Options[:sound]}."
+		bail = true
+	elsif match.count > 1
+		print "Sound is ambiguous, possible matches: "
+		match.each {|k,v| print "#{v} "}
+		print "\n"
+		bail = true
+	else
+		Options[:sound] = match.first[0]
+		puts Options[:sound]
+	end
+end
+
+exit if bail
 # I do both just as an example, you can configure it this way and have it
 # pre-configured:
 Pushover.configure do |c|

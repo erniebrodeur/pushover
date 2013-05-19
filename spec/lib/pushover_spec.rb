@@ -85,6 +85,16 @@ describe "Pushover" do
         WebMock.should have_requested(:post, /api.pushover.net/).with { |req| req.body.include? 'timestamp=1' }
       end
     end
+
+    describe "Sounds" do
+      it "will cache the sounds locally for at least a day"
+      # I think I will
+      # rm the sound cache file
+      # test sounds list
+      # check if none is there (first fail)
+      # test sounds list again
+      # check if file is updated (second fail)
+    end
   end
 end
 
