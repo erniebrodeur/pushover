@@ -93,7 +93,11 @@ module Pushover
 
   # A [Array] of keys available in Pushover.
   def keys
-    keys ||= [:token, :user, :message, :title, :priority, :device, :timestamp, :url, :url_title]
+    Pushover.instance_methods.select do |m|
+      m =~ /=$/
+    end.map do |m|
+      m[0..-2]
+    end
   end
 
   private
