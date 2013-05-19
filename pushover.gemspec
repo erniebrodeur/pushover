@@ -27,5 +27,6 @@ Gem::Specification.new do |gem|
 
   # dependencies.
   gem.add_runtime_dependency 'yajl-ruby'
+  gem.add_runtime_dependency 'httparty'
   #gem.add_runtime_dependency 'bini'
 end

@@ -85,23 +85,18 @@ if Options[:sound]
 end
 
 exit if bail
-# I do both just as an example, you can configure it this way and have it
-# pre-configured:
-Pushover.configure do |c|
-	c.user 			= User.current_user
-	c.token	 		= App.current_app
-end
 
-# Or in real time, which will also overwrite the .configure block.
 options = Options[].select { |k,v| v}
+options[:token] = Pushover::App.current_app
+options[:user] = Pushover::User.current_user
+
 options.delete :config_file
 options.merge! message:message
 response = Pushover.notification options
 
-if response.code == "200"
-	puts "Message sent successfully!"
+j = Yajl.load response.body
+if response.code == 200
+	puts "Receipt: #{j['request']} for message sent."
 else
-	j = Yajl.load response.body
-	puts j
 	puts "ErrorCode (#{response.code}): #{j['errors'].first}."
 end
