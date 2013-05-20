@@ -54,9 +54,24 @@ if ENV["TEST_CLI"] =~ /^t/
       end
     end
     describe "sounds" do
-      it "will list sounds"
-      it "will play a sound (based on partial string)"
-      it "will fail if the sound is unavailble"
+      it "will list sounds" do
+        p = CLIProcess.new "#{CMD} --config_file #{CRED_FILE} --sound_list", 3, 3
+        p.run!
+        p.stdout.should include "Current Sound"
+        p.stdout.should include "Pushover (default)"
+        p.stdout.should include "None (silent)"
+      end
+      it "will play a sound (based on partial string)" do
+        p = CLIProcess.new "#{CMD} --config_file #{CRED_FILE} a message --sound none", 3, 3
+        p.run!
+        p.stdout.should include "Receipt"
+      end
+      it "will fail if the sound is unavailble" do
+        p = CLIProcess.new "#{CMD} --config_file #{CRED_FILE} a message --sound slkdjg", 3, 3
+        p.run!
+        p.stdout.should include "No such sound"
+      end
     end
   end
 end
+
