@@ -60,6 +60,18 @@ module Pushover
     HTTParty.post('https://api.pushover.net/1/messages.json', body:tokens)
   end
 
+  # Return a [Hash] of sounds.
+  def sounds
+    cache_file = "#{Bini.cache_dir}/sounds.json"
+    sounds = {}
+
+    cache_sounds unless File.exists?(cache_file) && File.stat(cache_file).mtime > Time.at(Time.now.day - 1)
+
+    return nil if !cache_sounds
+    sounds = Yajl.load open(cache_file).read
+    sounds["sounds"]
+  end
+
   # Adds a rails style configure method
   def configure
     yield self
@@ -95,21 +107,6 @@ module Pushover
     end
   end
 
-  def sounds
-    cache_file = "#{Bini.cache_dir}/sounds.json"
-    sounds = {}
-    unless File.exists?(cache_file) && File.stat(cache_file).mtime > Time.at(Time.now.day - 1)
-      content = open("https://api.pushover.net/1/sounds.json?token=#{Pushover::App.current_app}").read
-      FileUtils.mkdir_p Bini.cache_dir
-      f = open(cache_file, 'w')
-      f.write content
-      f.flush
-      f.close
-    end
-
-    sounds = Yajl.load open(cache_file).read
-    sounds["sounds"]
-  end
 
   private
 
@@ -138,6 +135,19 @@ module Pushover
     elsif level.class == Fixnum
       return level
     end
+  end
+
+  def cache_sounds
+    cache_file = "#{Bini.cache_dir}/sounds.json"
+    response = HTTParty.get('https://api.pushover.net/1/sounds.json', body:{token:Pushover::App.current_app})
+
+    return nil if response.code != 200
+    FileUtils.mkdir_p Bini.cache_dir
+    f = open(cache_file, 'w')
+    f.write response.body
+    f.flush
+    f.close
+    return true
   end
 end
 

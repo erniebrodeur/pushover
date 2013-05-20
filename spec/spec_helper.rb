@@ -32,7 +32,7 @@ def setup_webmocks
   sounds = '{"sounds":{"pushover":"Pushover (default)","bike":"Bike","bugle":"Bugle","cashregister":"Cash Register","classical":"Classical","cosmic":"Cosmic","falling":"Falling","gamelan":"Gamelan","incoming":"Incoming","intermission":"Intermission","magic":"Magic","mechanical":"Mechanical","pianobar":"Piano Bar","siren":"Siren","spacealarm":"Space Alarm","tugboat":"Tug Boat","alien":"Alien Alarm (long)","climb":"Climb (long)","persistent":"Persistent (long)","echo":"Pushover Echo (long)","updown":"Up Down (long)","none":"None (silent)"},"status":1,"request":"14ef413f6a3bf74efee3e140efe63df9"}'
 
   stub_request(:post, "https://api.pushover.net/1/messages.json").
-    with(body:hash_including(token:'good_token')).
+    with(body:hash_including(token:'good_token', user:'good_user')).
     to_return(body:good_result, code:200)
   stub_request(:post, "https://api.pushover.net/1/messages.json").
     with(body:hash_including(token:'bad_token')).
@@ -40,7 +40,7 @@ def setup_webmocks
   stub_request(:post, "https://api.pushover.net/1/messages.json").
     with(body:hash_including(user:'bad_user')).
     to_return(body:bad_user, code:400)
-  stub_request(:post, "https://api.pushover.net/1/sounds.json").
+  stub_request(:get, "https://api.pushover.net/1/sounds.json").
     with(body:/.*/).
     to_return(body:sounds, code:200)
 end

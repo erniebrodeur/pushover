@@ -38,11 +38,6 @@ if Options[:save_user]
 	bail = true
 end
 
-if Options[:sound_list]
-	puts "Current Sound List:"
-	Pushover.sounds.each { |k,v| puts "  #{v}" }
-	bail = true
-end
 
 exit if bail # We don't care if we have a message, we should exit here.
 
@@ -67,6 +62,11 @@ if !User.current_user?
 	bail = true
 end
 
+if Options[:sound_list]
+	puts "Current Sound List:"
+	Pushover.sounds.each { |k,v| puts "  #{v}" }
+	bail = true
+end
 
 if Options[:sound]
 	sounds = Pushover.sounds

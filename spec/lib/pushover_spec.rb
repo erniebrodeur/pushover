@@ -94,15 +94,15 @@ describe "Pushover" do
     describe "Sounds" do
       it "will cache the sounds locally for at least a day" do
         setup_webmocks
-        sounds.should_not be_nil
+        cache_file = "#{Bini.cache_dir}/sounds.json"
+        FileUtils.rm(cache_file) if File.exist?(cache_file)
+        Pushover.sounds.keys.should include("pushover")
+        stat = File.stat(cache_file)
+        Pushover.sounds.keys.should include("none")
+        stat.mtime.to_i.should eq File.stat(cache_file).mtime.to_i
       end
-      # I think I will
-      # rm the sound cache file
-      # test sounds list
-      # check if none is there (first fail)
-      # test sounds list again
-      # check if file is updated (second fail)
     end
   end
 end
+
 
