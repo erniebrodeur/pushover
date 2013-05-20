@@ -46,12 +46,6 @@ if ARGV.empty?
 	bail = true
 end
 
-message = ARGV.join(" ")
-if !message
-	puts "Must supply a message to be sent."
-	bail = true
-end
-
 if !App.current_app?
 	puts "Couldn't find an app via the cli or save file."
 	bail = true
@@ -82,6 +76,14 @@ if Options[:sound]
 	else
 		Options[:sound] = match.first[0]
 	end
+end
+
+exit if bail
+
+message = ARGV.join(" ")
+if !message
+	puts "Must supply a message to be sent."
+	bail = true
 end
 
 exit if bail
