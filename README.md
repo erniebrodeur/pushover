@@ -119,6 +119,20 @@ As far as I can tell, you can toss a ton of different things and get an output.
 * 14:30
 * Aug 21
 
+##### Sounds
+
+Get the available list of sounds:
+
+		$ pushover --sound_list
+
+Play a specific sound with a message:
+
+		$ pushover --sound Magic
+		$ pushover --sound per
+
+* You only need to supply an unambiguous partial string.
+* It is not case sensitive.
+
 #### Saving
 
 You can also save and use stored information.  The username/application are titles.  They can be anything you want to reference them.
