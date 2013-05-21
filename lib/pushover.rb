@@ -9,6 +9,8 @@ require 'open-uri'
 require "pushover/version"
 require "pushover/app"
 require "pushover/user"
+require "pushover/priority"
+
 # The primary pushover namespace.
 module Pushover
   # lets save our config to it's own dir, just because.
@@ -31,10 +33,6 @@ module Pushover
   attr_accessor :url_title
   # [optional,String, Fixnum] time a time stamp im one of three forms (epoch, strfmt, rails)
   attr_reader   :timestamp
-  attr_reader   :priority
-  def priority=(level)
-    @priority = priority_magic level
-  end
 
   # Stdlib time, seems to take a shitload of options.
   # rfc822: Tue, 14 Nov 2000 14:55:07 -0500
@@ -55,7 +53,7 @@ module Pushover
   # @return [String] the response from pushover.net, in json.
   def notification(tokens={})
     tokens[:timestamp] = timestamp_magic tokens[:timestamp] if tokens[:timestamp]
-    tokens[:priority]  = priority_magic tokens[:priority] if tokens[:priority]
+    tokens[:priority]  = Pushover::Priority.parse tokens[:priority] if tokens[:priority]
 
     HTTParty.post('https://api.pushover.net/1/messages.json', body:tokens)
   end
@@ -120,20 +118,6 @@ module Pushover
     elsif
       time_string.class == Fixnum
       return time_string
-    end
-  end
-
-  def priority_magic(level)
-    if level.class == String
-      if level =~ /^[lL]/
-        return -1
-      elsif level =~ /^[hH]/
-        return 1
-      else
-        return 0
-      end
-    elsif level.class == Fixnum
-      return level
     end
   end
 

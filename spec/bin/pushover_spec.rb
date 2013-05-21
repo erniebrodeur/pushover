@@ -72,6 +72,17 @@ if ENV["TEST_CLI"] =~ /^t/
         p.stdout.should include "No such sound"
       end
     end
+    describe "emergency notifications" do
+      it "will respond to --retry"
+      it "will respond to --expires"
+      it "will print the receipt"
+      it "will accept a callback url"
+    end
+    describe "receipts" do
+      it "will list receipts it knows about"
+      it "will return status of a receipt"
+    end
   end
 end
+
 

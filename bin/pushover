@@ -78,6 +78,14 @@ if Options[:sound]
 	end
 end
 
+if Options[:priority]
+	# Is this an emergency, did we include everything we need?
+	if Priority.is_emergency?(Options[:priority])
+		Options[:retry] = 30 if !Options[:retry]
+		Options[:expire] = 86400 if !Options[:expire]
+	end
+end
+
 exit if bail
 
 message = ARGV.join(" ")
@@ -98,7 +106,9 @@ response = Pushover.notification options
 j = Yajl.load response.body
 
 if response.code == 200
-	puts "Receipt: #{j['request']} for message sent."
+	puts "emergency notification #{response.body}" if Priority.is_emergency?(Options[:priority])
+	puts "Message sent successfully!"
 else
 	puts "ErrorCode (#{response.code}): #{j['errors'].first}."
 end
+
