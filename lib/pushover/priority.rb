@@ -1,9 +1,17 @@
 module Pushover
   module Priority
     extend self
-    attr_reader   :priority
 
-
+    # A sash for our receipts.
+    Receipts = Bini::Sash.new options:{
+      file:"#{Bini.cache_dir}/receipts.yaml", auto_load:true, auto_save:true
+    }
+    LEVELS = {
+      low:-1,
+      normal:0,
+      high:1,
+      emergency:2
+    }
 
     def priority=(level)
       @priority = parse level
@@ -12,31 +20,34 @@ module Pushover
     def parse(level)
       return level if level.class == Fixnum
       if level.class == String
-        LEVELS.each do |k,v|
-          return v if k.to_s.start_with? level.downcase
-        end
+        LEVELS.each { |k,v| return v if k.to_s.start_with? level.downcase }
       end
 
       return 0
     end
 
     # Pull one from cache, or fetch one if not available.
-    def process_receipt(receipt)
-      # find the receipt based on the prefix
-      # if it's not their get a new one
-      # if it's not expired and not ack'ed, get a new one
-      # if we have a new one (or update), store
+    def find_receipt(prefix)
+      results = Receipts.select { |k,v| k =~ /^#{prefix}/ }
+      return nil if results.empty?
+      return results.first
     end
 
-    # get the status of a receipt
-    def receipt_status(prefix)
-      process_receipt
-      # store
-      # return
+    def process_receipt(receipt)
+      r = find_receipt receipt
+      # complicated if warning.  If r isn't made, or if it is made and not expired or acked.
+      r = fetch_receipt(receipt) if !r
+
+      return nil if !r
+
+      Receipts[receipt] = r
+
+      return Receipts[receipt]
     end
 
     # returns a string suitable for CLI output.
-    def pretty_print_receipt
+    def pretty_print_receipt(receipt)
+
     end
 
     def is_emergency?(priority)
@@ -44,16 +55,11 @@ module Pushover
       return false
     end
 
-    # A sash for our receipts.
-    Receipts = Bini::Sash.new options:{
-      file:"#{Bini.cache_dir}/receipts.json", auto_load:true
-    }
-    LEVELS = {
-      low:-1,
-      normal:0,
-      high:1,
-      emergency:2
-    }
+    private
+    def fetch_receipt(receipt)
+      HTTParty.get "https://api.pushover.net/1/receipts/#{receipt}.json",
+        body:{token:Pushover::App.current_app}
+    end
   end
 end
 

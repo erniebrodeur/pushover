@@ -5,11 +5,14 @@ require 'bini'
 require 'bini/config'
 require 'bini/optparser'
 require 'open-uri'
+require 'pushover/sash.rb'
 
-require "pushover/version"
-require "pushover/app"
-require "pushover/user"
-require "pushover/priority"
+module Pushover
+  autoload :VERSION,  "pushover/version"
+  autoload :App,      "pushover/app"
+  autoload :User,     "pushover/user"
+  autoload :Priority, "pushover/priority"
+end
 
 # The primary pushover namespace.
 module Pushover
@@ -29,6 +32,7 @@ module Pushover
   attr_accessor :title
   # [optional,String] device to recieve the message.
   attr_accessor :device
+  attr_reader   :priority
   attr_accessor :url
   attr_accessor :url_title
   # [optional,String, Fixnum] time a time stamp im one of three forms (epoch, strfmt, rails)

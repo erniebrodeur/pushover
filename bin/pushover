@@ -106,7 +106,11 @@ response = Pushover.notification options
 j = Yajl.load response.body
 
 if response.code == 200
-	puts "emergency notification #{response.body}" if Priority.is_emergency?(Options[:priority])
+	if Priority.is_emergency?(Options[:priority])
+		j = Yajl.load response.body
+		Pushover::Priority.process_receipt j["receipt"]
+		puts "emergency notification receipt: #{j["receipt"]}"
+	end
 	puts "Message sent successfully!"
 else
 	puts "ErrorCode (#{response.code}): #{j['errors'].first}."
