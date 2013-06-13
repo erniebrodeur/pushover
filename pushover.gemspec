@@ -27,5 +27,5 @@ Gem::Specification.new do |gem|
 
   # dependencies.
   gem.add_runtime_dependency 'yajl-ruby'
-  gem.add_runtime_dependency 'bini'
+  gem.add_runtime_dependency 'bini', '~> 0.6.0'
 end
