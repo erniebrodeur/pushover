@@ -1,4 +1,8 @@
 #!/usr/bin/ruby
+# Must be an array
+test_cmd = [
+  "bundle exec pushover a message"
+]
 
 guard :bundler do
 	watch 'Gemfile'
@@ -14,4 +18,16 @@ end
 
 # guard :yard do
 #   watch(%r{^lib/(.+)\.rb$})
+# end
+
+# guard :shell do
+#   watch /.*/ do |m|
+#     puts "Time: #{Time.now}, file saved: #{m}"
+#     test_cmd.each do |cmd|
+
+#       puts "=" * 80
+#       puts "cmd: #{cmd}"
+#       puts `#{cmd}`
+#     end
+#   end
 # end

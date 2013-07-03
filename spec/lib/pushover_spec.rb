@@ -105,14 +105,6 @@ describe "Pushover" do
 
     describe "Emergency Notifications" do
       it "given a partial string, return receipt that begins with the string."
-      it "retry min 30"
-      it "expire max 86400"
-      it "callback url"
-    end
-    describe "Callbacks" do
-      it "receipt"
-      it "acknowledged"
-      it "acknowledged_at"
     end
   end
 end

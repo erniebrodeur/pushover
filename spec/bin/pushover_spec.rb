@@ -28,7 +28,7 @@ if ENV["TEST_CLI"] =~ /^t/
         it "sends messages" do
           p = CLIProcess.new "#{CMD} --config_file #{CRED_FILE} a message", 3, 3
           p.run!
-          p.stdout.should include("Receipt"), "#{p.stderr}"
+          p.stdout.should include("success"), "#{p.stderr}"
         end
       end
 
@@ -64,7 +64,7 @@ if ENV["TEST_CLI"] =~ /^t/
       it "will play a sound (based on partial string)" do
         p = CLIProcess.new "#{CMD} --config_file #{CRED_FILE} a message --sound none", 3, 3
         p.run!
-        p.stdout.should include "Receipt"
+        p.stdout.should include "success"
       end
       it "will fail if the sound is unavailble" do
         p = CLIProcess.new "#{CMD} --config_file #{CRED_FILE} a message --sound slkdjg", 3, 3
@@ -73,7 +73,11 @@ if ENV["TEST_CLI"] =~ /^t/
       end
     end
     describe "emergency notifications" do
-      it "will respond to --retry"
+      it "will respond to --retry" do
+        p = CLIProcess.new "#{CMD} --config_file #{CRED_FILE} an emergency message --priority 2 --retry 1", 3, 3
+        p.run!
+        p.stdout.should include "success"
+      end
       it "will respond to --expires"
       it "will print the receipt"
       it "will accept a callback url"

@@ -40,7 +40,7 @@ module Pushover
 
       return nil if !r
 
-      Receipts[receipt] = r
+      Receipts[receipt] = r.to_h
 
       return Receipts[receipt]
     end

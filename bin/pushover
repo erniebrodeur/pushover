@@ -17,6 +17,9 @@ Options.on("--save-app NAME", "Saves the application to the config file under NA
 Options.on("--save-user NAME", "Saves the user to the config file under NAME.") { |o| Options[:save_user] = [Options[:user], o]}
 Options.on("--sound [SOUND]", "Specify the sound to use.  Can be a partial string as long as it is unambiguous enough.") { |o| Options[:sound] = o}
 Options.on("--sound_list", "Display the current list of available sounds.  Requires an app token.") { |o| Options[:sound_list] = true}
+Options.on("--emergency_retry [TIME]", "The time in seconds between retries.") { |o| Options[:retry] = o}
+Options.on("--emergency_expire [TIME]", "How long the emergency notification will hang around.") { |o| Options[:expire] = o}
+Options.on("--emergency_callback_url [URL]", "A callback url to use when the notification is acknowledged.") { |o| Options[:callback] = o}
 Options.parse!
 bail = false
 
@@ -41,11 +44,6 @@ end
 
 exit if bail # We don't care if we have a message, we should exit here.
 
-if ARGV.empty?
-	puts "You must supply a message."
-	bail = true
-end
-
 if !App.current_app?
 	puts "Couldn't find an app via the cli or save file."
 	bail = true
@@ -58,12 +56,21 @@ end
 
 if Options[:sound_list]
 	puts "Current Sound List:"
-	Pushover.sounds.each { |k,v| puts "  #{v}" }
+	if Pushover.sounds
+		Pushover.sounds.each { |k,v| puts "  #{v}" }
+	else
+		puts "Error retrieving sound list, are you connected to the internet?  are your credentials correct?"
+		exit
+	end
 	bail = true
 end
 
 if Options[:sound]
 	sounds = Pushover.sounds
+	if !sounds
+		puts "Error retrieving sound list, are you connected to the internet?  are your credentials correct?"
+		exit
+	end
 	match = sounds.select { |k,v| v.downcase.start_with? Options[:sound].downcase}
 	if !match || match.count == 0
 		puts "No such sound: #{Options[:sound]}."

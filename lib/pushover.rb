@@ -16,6 +16,8 @@ end
 
 # The primary pushover namespace.
 module Pushover
+  # Unfuckingbelievable.  My code, and I still can't get it to work as expected.
+  Bini.long_name = 'pushover'
   # lets save our config to it's own dir, just because.
   Bini::Config.file = "#{Dir.home}/.config/pushover/credentials.yaml"
   Bini::Config.load
@@ -35,6 +37,9 @@ module Pushover
   attr_reader   :priority
   attr_accessor :url
   attr_accessor :url_title
+  attr_accessor :retry
+  attr_accessor :expire
+  attr_accessor :callback
   # [optional,String, Fixnum] time a time stamp im one of three forms (epoch, strfmt, rails)
   attr_reader   :timestamp
 
@@ -67,7 +72,7 @@ module Pushover
     cache_file = "#{Bini.cache_dir}/sounds.json"
     sounds = {}
 
-    cache_sounds unless File.exists?(cache_file) && File.stat(cache_file).mtime > Time.at(Time.now.day - 1)
+    cache_sounds if File.exists?(cache_file) && File.stat(cache_file).mtime < Time.at(Time.now.day - 1)
 
     return nil if !cache_sounds
     sounds = Yajl.load open(cache_file).read
@@ -127,7 +132,8 @@ module Pushover
 
   def cache_sounds
     cache_file = "#{Bini.cache_dir}/sounds.json"
-    response = HTTParty.get('https://api.pushover.net/1/sounds.json', body:{token:Pushover::App.current_app})
+
+    response = HTTParty.get('https://api.pushover.net/1/sounds.json', query:{token:Pushover::App.current_app})
 
     return nil if response.code != 200
     FileUtils.mkdir_p Bini.cache_dir
@@ -138,4 +144,3 @@ module Pushover
     return true
   end
 end
-
