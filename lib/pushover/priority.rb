@@ -34,6 +34,7 @@ module Pushover
     end
 
     def process_receipt(receipt)
+      puts
       r = find_receipt receipt
       # complicated if warning.  If r isn't made, or if it is made and not expired or acked.
       r = fetch_receipt(receipt) if !r
@@ -45,11 +46,6 @@ module Pushover
       return Receipts[receipt]
     end
 
-    # returns a string suitable for CLI output.
-    def pretty_print_receipt(receipt)
-
-    end
-
     def is_emergency?(priority)
       return true if priority && Pushover::Priority.parse(priority) == LEVELS[:emergency]
       return false
@@ -57,16 +53,8 @@ module Pushover
 
     private
     def fetch_receipt(receipt)
-      HTTParty.get "https://api.pushover.net/1/receipts/#{receipt}.json",
-        body:{token:Pushover::App.current_app}
+      HTTParty.get("https://api.pushover.net/1/receipts/#{receipt}.json",
+        body:{token:Pushover::App.current_app})
     end
   end
 end
-
-
-
-
-
-
-
-

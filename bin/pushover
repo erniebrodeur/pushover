@@ -20,6 +20,9 @@ Options.on("--sound_list", "Display the current list of available sounds.  Requi
 Options.on("--emergency_retry [TIME]", "The time in seconds between retries.") { |o| Options[:retry] = o}
 Options.on("--emergency_expire [TIME]", "How long the emergency notification will hang around.") { |o| Options[:expire] = o}
 Options.on("--emergency_callback_url [URL]", "A callback url to use when the notification is acknowledged.") { |o| Options[:callback] = o}
+Options.on("--receipt [RECEIPT]", "Return the status of a receipt.") {|o| Options[:receipt] = o}
+Options.on("--receipts", "List the receipts available.") {|o| Options[:receipts] = true}
+
 Options.parse!
 bail = false
 
@@ -40,7 +43,6 @@ if Options[:save_user]
 	puts "Saved user #{Options[:save_user][0]} to #{Options[:save_user][1]}."
 	bail = true
 end
-
 
 exit if bail # We don't care if we have a message, we should exit here.
 
@@ -63,6 +65,16 @@ if Options[:sound_list]
 		exit
 	end
 	bail = true
+end
+
+if Options[:receipts]
+	puts 'Updating receipts'
+	Pushover::Priority::Receipts.each do |k,v|
+		Pushover::Priority.process_receipt k
+
+		puts Pushover::Priority::Receipts[k]
+	end
+	exit
 end
 
 if Options[:sound]
@@ -110,6 +122,11 @@ options.delete :config_file
 options.merge! message:message
 
 response = Pushover.notification options
+if response.code == 500
+	puts "Something is broken at pushover.net and it is returning 500's (server errors).  Here is the response body."
+	puts response.body
+	exit
+end
 j = Yajl.load response.body
 
 if response.code == 200

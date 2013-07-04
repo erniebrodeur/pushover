@@ -5,6 +5,7 @@ require 'bini'
 require 'bini/config'
 require 'bini/optparser'
 require 'open-uri'
+require 'pushover/mixins.rb'
 require 'pushover/sash.rb'
 
 module Pushover
