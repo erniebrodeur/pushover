@@ -46,7 +46,7 @@ module Pushover
 			if Bini::Options[:apikey]
 				@current_app = find Bini::Options[:apikey]
 			else
-				@current_app = find Bini::Config[:applications].first[0] if Bini::Config[:applications]
+				@current_app = find Bini::Config[:applications].first if Bini::Config[:applications]
 			end
 			@current_app
 		end
