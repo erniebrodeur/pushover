@@ -1,6 +1,7 @@
 ## Unreleased
   * Sounds.
   * Emergency notifications.
+  * Will properly trap 500 (server errors) being returned from the server.
 
 ## 0.99.2:
   * Version constraint (thanks @freeatnet) on bini, I stupidily upgraded one without the other.
