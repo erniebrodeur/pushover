@@ -103,9 +103,6 @@ describe "Pushover" do
       end
     end
 
-    describe "Emergency Notifications" do
-      it "given a partial string, return receipt that begins with the string."
-    end
   end
 end
 

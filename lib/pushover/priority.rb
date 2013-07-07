@@ -34,7 +34,7 @@ module Pushover
     end
 
     def update_receipts
-      updates = Receipts.select {|k,v| v["acknowledged"] == 0}
+      updates = Receipts.select {|k,v| v["acknowledged"] == 0 && v["expired"] == 0}
       updates.keys.each do |key|
         process_receipt key
       end
@@ -44,7 +44,8 @@ module Pushover
       r = fetch_receipt(receipt)
 
       return nil if !r
-      Receipts.store receipt, r.to_h
+      Receipts[receipt] = r.to_h
+
       return Receipts[receipt]
     end
 

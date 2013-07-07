@@ -48,9 +48,10 @@ module Pushover
 			if Bini::Options[:token]
 				@current_user = find Bini::Options[:token]
 			elsif !@current_user
-				@current_user = find Bini::Config[:users].first if Bini::Config[:users]
+				@current_user = find Bini::Config[:users].values.first if Bini::Config[:users]
 			end
-			@current_user.values.first
+
+			@current_user
 		end
 
 		# Set the current_user to whatever you want it to be.

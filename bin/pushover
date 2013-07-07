@@ -70,10 +70,16 @@ if Options[:receipts]
 	puts 'Updating receipts'
 	Pushover::Priority.update_receipts
 	Pushover::Priority::Receipts.each do |k,v|
-		if v["acknowledged"]
-			puts "Receipt #{k} was acknowledged at #{Time.at v["acknowledged_at"]}."
+		if v["acknowledged"] != 0
+			print "Receipt #{k} was acknowledged at #{Time.at v["acknowledged_at"]}, "
 		else
-			puts "Receipt #{k} has not been acknowledged yet."
+			print "Receipt #{k} has not been acknowledged yet, "
+		end
+
+		if v["expired"] == 0
+			puts "and will expire at: #{Time.at v["expires_at"]}."
+		else
+			puts "and expired at: #{Time.at v["expires_at"]}."
 		end
 	end
 	exit
