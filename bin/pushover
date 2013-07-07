@@ -20,8 +20,7 @@ Options.on("--sound_list", "Display the current list of available sounds.  Requi
 Options.on("--emergency_retry [TIME]", "The time in seconds between retries.") { |o| Options[:retry] = o}
 Options.on("--emergency_expire [TIME]", "How long the emergency notification will hang around.") { |o| Options[:expire] = o}
 Options.on("--emergency_callback_url [URL]", "A callback url to use when the notification is acknowledged.") { |o| Options[:callback] = o}
-Options.on("--receipt [RECEIPT]", "Return the status of a receipt.") {|o| Options[:receipt] = o}
-Options.on("--receipts", "List the receipts available.") {|o| Options[:receipts] = true}
+Options.on("--receipts", "List the receipts cached and if they have been acknowledged or not.") {|o| Options[:receipts] = true}
 
 Options.parse!
 bail = false
