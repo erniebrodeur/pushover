@@ -48,7 +48,7 @@ module Pushover
 			else
 				@current_app = find Bini::Config[:applications].first if Bini::Config[:applications]
 			end
-			@current_app
+			@current_app.values.first
 		end
 
 		def current_app=(app)

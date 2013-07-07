@@ -33,16 +33,18 @@ module Pushover
       return results.first
     end
 
+    def update_receipts
+      updates = Receipts.select {|k,v| v["acknowledged"] == 0}
+      updates.keys.each do |key|
+        process_receipt key
+      end
+    end
+
     def process_receipt(receipt)
-      puts
-      r = find_receipt receipt
-      # complicated if warning.  If r isn't made, or if it is made and not expired or acked.
-      r = fetch_receipt(receipt) if !r
+      r = fetch_receipt(receipt)
 
       return nil if !r
-
-      Receipts[receipt] = r.to_h
-
+      Receipts.store receipt, r.to_h
       return Receipts[receipt]
     end
 

@@ -50,7 +50,7 @@ module Pushover
 			elsif !@current_user
 				@current_user = find Bini::Config[:users].first if Bini::Config[:users]
 			end
-			@current_user
+			@current_user.values.first
 		end
 
 		# Set the current_user to whatever you want it to be.

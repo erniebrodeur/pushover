@@ -65,7 +65,8 @@ module Pushover
     tokens[:timestamp] = timestamp_magic tokens[:timestamp] if tokens[:timestamp]
     tokens[:priority]  = Pushover::Priority.parse tokens[:priority] if tokens[:priority]
 
-    HTTParty.post('https://api.pushover.net/1/messages.json', body:tokens)
+    response = HTTParty.post('https://api.pushover.net/1/messages.json', body:tokens)
+    response
   end
 
   # Return a [Hash] of sounds.

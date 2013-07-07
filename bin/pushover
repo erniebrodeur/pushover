@@ -69,10 +69,13 @@ end
 
 if Options[:receipts]
 	puts 'Updating receipts'
+	Pushover::Priority.update_receipts
 	Pushover::Priority::Receipts.each do |k,v|
-		Pushover::Priority.process_receipt k
-
-		puts Pushover::Priority::Receipts[k]
+		if v["acknowledged"]
+			puts "Receipt #{k} was acknowledged at #{Time.at v["acknowledged_at"]}."
+		else
+			puts "Receipt #{k} has not been acknowledged yet."
+		end
 	end
 	exit
 end
