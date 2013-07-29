@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem "bini", git:"git://github.com/erniebrodeur/bini.git", branch:"development"
   gem 'psych'
   gem "pry"
   gem "pry-debugger"
