@@ -1,4 +1,4 @@
 module Pushover
 	# The current version of Pushover.
-  VERSION = "0.99.2"
+  VERSION = "1.0.0"
 end
