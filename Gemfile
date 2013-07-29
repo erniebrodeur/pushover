@@ -3,28 +3,32 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem 'psych'
-  gem "pry"
-  gem "pry-debugger"
-  gem "redcarpet"
-  gem "guard"
-  gem "guard-bundler"
-  gem "guard-rspec"
-  gem "guard-yard"
-  gem "guard-shell"
-  gem 'libnotify',  :require => false
-  gem 'growl',      :require => false
-  gem 'rb-inotify', :require => false
-  gem 'rb-fsevent', :require => false
-  gem 'rb-fchange', :require => false
+  gem "pry",           :require => false
+  gem "guard",         :require => false
+  gem "guard-bundler", :require => false
+  gem "guard-rspec",   :require => false
+  gem "guard-yard",    :require => false
+  gem "guard-shell",   :require => false
+  gem 'libnotify',     :require => false
+  gem 'growl',         :require => false
+  gem 'rb-inotify',    :require => false
+  gem 'rb-fsevent',    :require => false
+  gem 'rb-fchange',    :require => false
 end
 
 group :test do
-  gem "rspec"
-  gem "rake"
-  gem "webmock"
-  gem "childprocess"
-  gem 'simplecov', :require => false
-  gem 'simplecov-rcov', :require => false
+  gem "rspec", "~> 2.13.0"
+  gem "rspec-core", "~> 2.13.0"
+  gem "rspec-expectations", "~> 2.13.0"
+  gem "rspec-mocks", "~> 2.13.0"
+  gem "rake", "~> 10.1.0"
+  gem "webmock", "~> 1.13.0"
 end
+
+group :extended_testing do
+  gem "childprocess", "~> 0.3.9"
+  gem 'simplecov', "~> 0.7.1", :require => false
+  gem 'simplecov-rcov', "~> 0.2.3", :require => false
+end
+
 
