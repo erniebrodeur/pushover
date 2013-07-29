@@ -16,8 +16,9 @@ require 'pushover'
 
 include Pushover
 Bini.long_name = 'pushover'
+Bini::Config.options[:file] = "tmp/test.save"
+Bini::Config.load
 
-Bini::Config = Bini::Sash.new options:{file:"tmp/test.save", autoload:true}
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
