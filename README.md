@@ -81,6 +81,16 @@ Priority of the message, either (low,normal,high) or (-1,0,1).  For the string y
 
 		$ pushover --(p)riority -1
 
+#### Emergency Notifications
+
+Currently retry/expire is supported, currently these are in seconds.  Callback url's are not.
+
+		$ pushover --emergency_retry 60
+
+		$ pushover --emergency_expire 3600
+
+It won't pre-check values sent to the api, so you will need to tune for the current min/max values or check api documentation.
+
 #### Device
 
 Specific device to send the message too, must be registered at pushover.net
