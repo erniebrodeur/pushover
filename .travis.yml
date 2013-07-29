@@ -10,3 +10,5 @@ branches:
   only:
     - master
     - development
+
+script: bundle exec rspec
