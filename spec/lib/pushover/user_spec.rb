@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe "user" do
 	before(:each) do
-		Bini::Config.file = "tmp/test.save"
 		Bini::Config.clear
 		Bini::Options.clear
 		User.current_user = nil

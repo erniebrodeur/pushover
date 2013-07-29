@@ -2,6 +2,7 @@
   * Sounds.
   * Emergency notifications.
   * Will properly trap 500 (server errors) being returned from the server.
+  * Dropped the local sash in favor of the bini copy.
 
 ## 0.99.2:
   * Version constraint (thanks @freeatnet) on bini, I stupidily upgraded one without the other.

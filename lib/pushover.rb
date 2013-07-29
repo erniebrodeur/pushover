@@ -6,7 +6,6 @@ require 'bini/config'
 require 'bini/optparser'
 require 'open-uri'
 require 'pushover/mixins.rb'
-require 'pushover/sash.rb'
 
 module Pushover
   autoload :VERSION,  "pushover/version"
@@ -20,8 +19,7 @@ module Pushover
   # Unfuckingbelievable.  My code, and I still can't get it to work as expected.
   Bini.long_name = 'pushover'
   # lets save our config to it's own dir, just because.
-  Bini::Config.file = "#{Dir.home}/.config/pushover/credentials.yaml"
-  Bini::Config.load
+  Bini::Config = Bini::Sash.new options:{file:"#{Dir.home}/.config/pushover/credentials.yaml", autoload:true}
 
   extend self
 

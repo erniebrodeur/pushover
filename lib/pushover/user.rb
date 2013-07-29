@@ -35,7 +35,7 @@ module Pushover
 		# @return [Boolean] return the results of the save attempt.
 		def add(name, token)
 			User.new name, token
-			Bini::Config.save!
+			Bini::Config.save
 		end
 
 		def remove(name)
