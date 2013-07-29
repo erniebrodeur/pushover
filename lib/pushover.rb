@@ -38,9 +38,9 @@ module Pushover
   attr_reader   :priority
   attr_accessor :url
   attr_accessor :url_title
-  attr_accessor :retry
-  attr_accessor :expire
-  attr_accessor :callback
+  attr_accessor :emergency_retry
+  attr_accessor :emergency_expire
+  attr_accessor :emergency_callback
   # [optional,String, Fixnum] time a time stamp im one of three forms (epoch, strfmt, rails)
   attr_reader   :timestamp
 

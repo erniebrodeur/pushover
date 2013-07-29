@@ -73,18 +73,23 @@ if ENV["TEST_CLI"] =~ /^t/
       end
     end
     describe "emergency notifications" do
-      it "will respond to --retry" do
-        p = CLIProcess.new "#{CMD} --config_file #{CRED_FILE} an emergency message --priority 2 --retry 1", 3, 3
+      it "will respond to emergency parameters" do
+        p = CLIProcess.new "#{CMD} --config_file #{CRED_FILE} an emergency message retry test --priority em --emergency_retry 180", 3, 3
+        p.run!
+        p.stdout.should include "success"
+
+        p = CLIProcess.new "#{CMD} --config_file #{CRED_FILE} an emergency message expires test --priority em --emergency_expire 7200", 3, 3
         p.run!
         p.stdout.should include "success"
       end
-      it "will respond to --expires"
-      it "will print the receipt"
+
+      it "will print the receipt" do
+        p = CLIProcess.new "#{CMD} --config_file #{CRED_FILE} an emergency message --priority em", 3, 3
+        p.run!
+        p.stdout.should include "receipt"
+      end
+
       it "will accept a callback url"
-    end
-    describe "receipts" do
-      it "will list receipts it knows about"
-      it "will return status of a receipt"
     end
   end
 end
