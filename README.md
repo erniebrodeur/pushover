@@ -167,6 +167,11 @@ If you don't supply the application or user name, it will use the first one in t
 
 Anytime you supply tokens directly to the cli, it will ignore any saved information and try them.  This allows you to use it as a once-off tool while keeping credentials stored.
 
+## TODO
+
+* Callback urls.
+* Receipt testing.
+
 ## Contributing
 
 1. Fork it
