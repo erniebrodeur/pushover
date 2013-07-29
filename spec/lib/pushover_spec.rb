@@ -105,5 +105,3 @@ describe "Pushover" do
 
   end
 end
-
-

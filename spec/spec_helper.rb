@@ -40,6 +40,6 @@ def setup_webmocks
   stub_request(:post, "https://api.pushover.net/1/messages.json").
     with(body:hash_including(user:'bad_user')).
     to_return(body:bad_user, code:400)
-  stub_request(:get, "https://api.pushover.net/1/sounds.json").
+  stub_request(:get, /https:\/\/api.pushover.net\/1\/sounds.json.*/).
     to_return(body:sounds, code:200)
 end
