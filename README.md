@@ -169,8 +169,15 @@ Anytime you supply tokens directly to the cli, it will ignore any saved informat
 
 ## TODO
 
+### 1.0 tree
+
 * Callback urls.
 * Receipt testing.
+
+### 2.0 tree
+
+* Rebuild the CLI so it works more like a git/bundle command.
+* More argument/string magic.
 
 ## Contributing
 
