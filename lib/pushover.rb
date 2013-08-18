@@ -63,9 +63,10 @@ module Pushover
   def notification(tokens={})
     tokens[:timestamp] = timestamp_magic tokens[:timestamp] if tokens[:timestamp]
     tokens[:priority]  = Pushover::Priority.parse tokens[:priority] if tokens[:priority]
+    tokens[:user]      ||= @user
+    tokens[:token]     ||= @token
 
-    response = HTTParty.post('https://api.pushover.net/1/messages.json', body:tokens)
-    response
+    HTTParty.post('https://api.pushover.net/1/messages.json', body:tokens)
   end
 
   # Return a [Hash] of sounds.
