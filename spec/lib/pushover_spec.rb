@@ -57,6 +57,18 @@ describe "Pushover" do
         puts req.body hash_including(priority:'ajkasdfj')
       end
     end
+
+    it "can send a notification with preconfigured user and token" do
+      setup_webmocks
+      Pushover.configure do |c|
+        c.user = 'good_user'
+        c.token = 'good_token'
+      end
+      Pushover.notification message:'a message'
+      WebMock.should have_requested(:post, /.*api.pushover.net.*/).with do |req|
+        puts req.body hash_including(priority:'ajkasdfj')
+      end
+    end
   end
 
   describe "extra behavior" do
