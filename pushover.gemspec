@@ -8,6 +8,7 @@ Gem::Specification.new do |gem|
   gem.date          = Time.now.strftime('%Y-%m-%d')
   gem.version       = Pushover::VERSION
   gem.platform      = Gem::Platform::RUBY
+  gem.license       = "Beerware v42"
 
   # descriptions
   gem.description   = "Api (and CLI) to interface with pushover.net"

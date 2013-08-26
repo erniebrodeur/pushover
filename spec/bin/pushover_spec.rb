@@ -3,6 +3,7 @@
 # If you want to run these tests, add ENV["TEST_CLI"]
 # If you have a credentials file already, you might find it beeps you.
 
+# this should be a working cred file that can send messages for proper end to end testing.
 CRED_FILE = "#{Dir.home}/.config/pushover/credentials.yaml"
 FAKE_CRED_FILE = 'tmp/fake_credentials.yaml'
 CMD = 'bundle exec bin/pushover'
@@ -22,14 +23,22 @@ if ENV["TEST_CLI"] =~ /^t/
     end
 
     describe "send" do
-      if !File.exist? CRED_FILE
-        it "sends messages (no credentials file)"
-      else
-        it "sends messages" do
+      it "sends messages" do
           p = CLIProcess.new "#{CMD} --config_file #{CRED_FILE} a message", 3, 3
           p.run!
           p.stdout.should include("success"), "#{p.stderr}"
-        end
+      end
+
+      it "sends messages (no credentials file)" do
+          # for this trick, lets extract our creds from the cred file manually.
+          # store them locally,then pass them back as app/user arguments.
+          creds = YAML.load open(CRED_FILE).read
+
+          app =  creds[:applications].first.values.first
+          user = creds[:users].first.values.first
+          p = CLIProcess.new "#{CMD} -a #{app} -u #{user} a message", 3, 3
+          p.run!
+          p.stdout.should include("success"), "#{p.stderr}"
       end
 
       it "lets me know when a message fails" do
