@@ -27,7 +27,7 @@ bail = false
 
 # Order is important.
 if Options[:config_file]
-	Bini::Config.file = Options[:config_file]
+	Bini::Config.options[:file] = Options[:config_file]
 	puts "Selected config file: #{Options[:config_file]}"
 end
 

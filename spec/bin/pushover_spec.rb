@@ -3,6 +3,7 @@
 # If you want to run these tests, add ENV["TEST_CLI"]
 # If you have a credentials file already, you might find it beeps you.
 
+# this should be a working cred file that can send messages for proper end to end testing.
 CRED_FILE = "#{Dir.home}/.config/pushover/credentials.yaml"
 FAKE_CRED_FILE = 'tmp/fake_credentials.yaml'
 CMD = 'bundle exec bin/pushover'
