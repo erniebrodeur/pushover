@@ -43,8 +43,8 @@ module Pushover
 		# Return the current app selected, or the first one saved.
 		def current_app
 			# did something get supplied on the cli? try to find it.
-			if Bini::Options[:apikey]
-				@current_app = find Bini::Options[:apikey]
+			if Bini::Options[:token]
+				@current_app = find Bini::Options[:token]
 			else
 				@current_app = find Bini::Config[:applications].values.first if Bini::Config[:applications]
 			end
