@@ -30,20 +30,20 @@ describe "application" do
 
 	describe "#current_app" do
 		it "will look on the cli first" do
-			Bini::Options[:apikey] = 'anapikey'
+			Bini::Options[:token] = 'anapikey'
 			App.current_app.should eq "anapikey"
 		end
 		it "will grab the first app in the config as a last resort" do
 			App.add "foo", "bar2"
 			Bini::Config.save
-			Bini::Options[:apikey] = nil
+			Bini::Options[:token] = nil
 			App.current_app.should eq "bar2"
 		end
 	end
 
 	describe "#current_app?" do
 		it "Will return true if we have a current_app" do
-			Bini::Options[:apikey] = 'somethingsilly'
+			Bini::Options[:token] = 'somethingsilly'
 			App.current_app.should eq 'somethingsilly'
 		end
 		it "Will return nil otherwise" do

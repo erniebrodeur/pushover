@@ -27,7 +27,7 @@ bail = false
 
 # Order is important.
 if Options[:config_file]
-	Bini::Config.file = Options[:config_file]
+	Bini::Config.options[:file] = Options[:config_file]
 	puts "Selected config file: #{Options[:config_file]}"
 end
 
@@ -126,6 +126,7 @@ exit if bail
 options = Options[].select { |k,v| v}
 options[:token] = Pushover::App.current_app
 options[:user] = Pushover::User.current_user
+
 options.delete :config_file
 options.merge! message:message
 

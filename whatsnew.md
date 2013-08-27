@@ -1,4 +1,13 @@
-## Unreleased
+## unreleased
+  * hotfixes
+  * #13 added license to the gemspec
+  * #15 fixed the configfile not being configurable on the cli (and testing now)
+  * #16 fix for the --user option reading the app key (and tests).
+
+## 1.0.1
+  * hot fix (merge from @cptobvious) for optional notification parameters.
+
+## 1.0.0
   * Sounds.
   * Emergency notifications.
   * Will properly trap 500 (server errors) being returned from the server.

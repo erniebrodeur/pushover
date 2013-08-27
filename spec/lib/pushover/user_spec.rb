@@ -30,20 +30,20 @@ describe "user" do
 
 	describe "#current_user" do
 		it "will look on the cli first" do
-			Bini::Options[:token] = 'atoken'
+			Bini::Options[:user] = 'atoken'
 			User.current_user.should eq "atoken"
 		end
 		it "will grab the first user in the config as a last resort" do
 			User.add "foo", "bar2"
 			Bini::Config.save
-			Bini::Options[:token] = nil
+			Bini::Options[:user] = nil
 			User.current_user.should eq "bar2"
 		end
 	end
 
 	describe "#current_user?" do
 		it "Will return true if we have a current_user" do
-			Bini::Options[:token] = 'somethingsilly'
+			Bini::Options[:user] = 'somethingsilly'
 			User.current_user?.should be_true
 		end
 		it "Will return nil otherwise" do

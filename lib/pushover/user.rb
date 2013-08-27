@@ -45,8 +45,8 @@ module Pushover
 		# Return the current user selected, or the first one saved.
 		def current_user
 			# did something get supplied on the cli? try to find it.
-			if Bini::Options[:token]
-				@current_user = find Bini::Options[:token]
+			if Bini::Options[:user]
+				@current_user = Bini::Options[:user]
 			elsif !@current_user
 				@current_user = find Bini::Config[:users].values.first if Bini::Config[:users]
 			end
