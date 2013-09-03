@@ -13,7 +13,7 @@ Options.on("-c", "--config_file [FILE]", "Set the target config file.") {|o| Opt
 Options.on("--url [URL]", "Supplementary URL") { |o| Options[:url] = o }
 Options.on("--url_title [TITLE]", "Supplementary URL title.") { |o| Options[:url_title] = o }
 Options.on("--time [TIME]", "Set the messages time.") {|o| Options[:timestamp] = o}
-Options.on("--save-app NAME", "Saves the application to the config file under NAME.") { |o| Options[:save_app] = [Options[:appkey], o]}
+Options.on("--save-app NAME", "Saves the application to the config file under NAME.") { |o| Options[:save_app] = [Options[:token], o]}
 Options.on("--save-user NAME", "Saves the user to the config file under NAME.") { |o| Options[:save_user] = [Options[:user], o]}
 Options.on("--sound [SOUND]", "Specify the sound to use.  Can be a partial string as long as it is unambiguous enough.") { |o| Options[:sound] = o}
 Options.on("--sound_list", "Display the current list of available sounds.  Requires an app token.") { |o| Options[:sound_list] = true}
