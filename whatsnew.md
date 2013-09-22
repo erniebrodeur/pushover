@@ -1,4 +1,4 @@
-## unreleased
+## 1.0.2
   * hotfixes
   * #13 added license to the gemspec
   * #15 fixed the configfile not being configurable on the cli (and testing now)
