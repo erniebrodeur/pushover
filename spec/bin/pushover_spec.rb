@@ -50,16 +50,18 @@ if ENV["TEST_CLI"] =~ /^t/
 
     describe "saving" do
       it "saves app:key pairs" do
-        p = CLIProcess.new "#{CMD} --config_file #{FAKE_CRED_FILE} --save-app default --app default"
+        p = CLIProcess.new "#{CMD} --config_file #{FAKE_CRED_FILE} --save-app saveapp --app application"
         p.run!
         p.stdout.should include 'Saved'
-        open(FAKE_CRED_FILE).read.should include 'default'
+        output = YAML.load open(FAKE_CRED_FILE).read
+        output[:applications]["saveapp"].should eq 'application'
       end
       it "saves user:token pairs" do
-        p = CLIProcess.new "#{CMD} --config_file #{FAKE_CRED_FILE} --save-user default --user default"
+        p = CLIProcess.new "#{CMD} --config_file #{FAKE_CRED_FILE} --save-user saveuser --user user"
         p.run!
         p.stdout.should include 'Saved'
-        open(FAKE_CRED_FILE).read.should include 'default'
+        output = YAML.load open(FAKE_CRED_FILE).read
+        output[:users]["saveuser"].should eq 'user'
       end
     end
     describe "sounds" do

@@ -1,3 +1,6 @@
+## unreleased
+  * Fixed the save option to properly store the appkey and user key (@cptobvious for this).  As a result I added tests and cleaned up some internal code.
+
 ## 1.0.2
   * hotfixes
   * #13 added license to the gemspec
