@@ -1,5 +1,5 @@
 class Hash
-  def first
+  def first_pair
     self.each do |k,v|
     	return {k => v}
     end
