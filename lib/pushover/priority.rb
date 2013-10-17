@@ -30,7 +30,7 @@ module Pushover
     def find_receipt(prefix)
       results = Receipts.select { |k,v| k =~ /^#{prefix}/ }
       return nil if results.empty?
-      return results.first
+      return results.first_pair
     end
 
     def update_receipts
