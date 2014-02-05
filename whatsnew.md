@@ -1,3 +1,7 @@
+## 1.0.4
+  * Merged in github #18, don't break functionality defined in enumerable
+  * Updated for rubinius 2.1
+
 ## 1.0.3
   * Fixed the save option to properly store the appkey and user key (@cptobvious for this).  As a result I added tests and cleaned up some internal code.
 
