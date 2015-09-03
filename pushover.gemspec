@@ -28,6 +28,6 @@ Gem::Specification.new do |gem|
 
   # dependencies.
   gem.add_runtime_dependency 'yajl-ruby', "= 1.1.0"
-  gem.add_runtime_dependency 'httparty', "= 0.11.0"
+  gem.add_runtime_dependency 'httparty', '~> 0.13.5'
   gem.add_runtime_dependency 'bini', "= 0.7.0"
 end
