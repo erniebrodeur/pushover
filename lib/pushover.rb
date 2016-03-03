@@ -1,7 +1,0 @@
-require 'pushover/version.rb'
-require 'pushover/api/message.rb'
-require 'pushover/api/validation.rb'
-require 'pushover/api/receipt.rb'
-require 'pushover/api/subscription.rb'
-require 'pushover/api/groups.rb'
-require 'pushover/api/licenseing.rb'
