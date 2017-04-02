@@ -1,33 +1,39 @@
-#!/usr/bin/ruby
-# Must be an array
-test_cmd = [
-  "bundle exec pushover a message"
-]
-
 guard :bundler do
-	watch 'Gemfile'
-	watch '*.gemspec'
+  require 'guard/bundler'
+  require 'guard/bundler/verify'
+  helper = Guard::Bundler::Verify.new
+
+  files = ['Gemfile']
+  files += Dir['*.gemspec'] if files.any? { |f| helper.uses_gemspec?(f) }
+
+  # Assume files are symlinked from somewhere
+  files.each { |file| watch(helper.real_path(file)) }
 end
 
-guard :rspec do
-  watch(%r{^spec/.+_spec\.rb$})
-  watch(%r{^lib/(.+)\.rb$}) { |m| "spec/lib/#{m[1]}_spec.rb" }
-  watch(%r{^bin/(.+)\.rb$})         { |m| "spec/bin/#{m[1]}_spec.rb" }
-  watch('spec/spec_helper.rb')      { "spec" }
+guard :rspec, cmd: "bundle exec rspec" do
+  require "guard/rspec/dsl"
+  dsl = Guard::RSpec::Dsl.new(self)
+
+  # Feel free to open issues for suggestions and improvements
+
+  # RSpec files
+  rspec = dsl.rspec
+  watch(rspec.spec_helper) { rspec.spec_dir }
+  watch(rspec.spec_support) { rspec.spec_dir }
+  watch(rspec.spec_files)
+
+  # Ruby files
+  ruby = dsl.ruby
+  dsl.watch_spec_files_for(ruby.lib_files)
 end
 
-# guard :yard do
-#   watch(%r{^lib/(.+)\.rb$})
-# end
+guard :rubocop do
+  watch(%r{.+\.rb$})
+  watch(%r{(?:.+/)?\.rubocop\.yml$}) { |m| File.dirname(m[0]) }
+end
 
-# guard :shell do
-#   watch /.*/ do |m|
-#     puts "Time: #{Time.now}, file saved: #{m}"
-#     test_cmd.each do |cmd|
-
-#       puts "=" * 80
-#       puts "cmd: #{cmd}"
-#       puts `#{cmd}`
-#     end
-#   end
+# guard 'yard' do
+#   watch(%r{app\/.+\.rb})
+#   watch(%r{lib\/.+\.rb})
+#   watch(%r{ext\/.+\.c})
 # end

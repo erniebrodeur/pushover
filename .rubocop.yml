@@ -1,0 +1,74 @@
+require: rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.3
+  Exclude:
+    - 'vendor/**/*'
+    - 'spec/data/**/*'
+    - 'tmp/**/*'
+    - 'spec/spec_helper.rb'
+
+# # The defaults for these seem to be based on a rails env, this is not rails.
+# Metrics/ModuleLength:
+#   CountComments: false
+#   Max: 150
+#
+# Metrics/ClassLength:
+#   Max: 150
+#
+# Metrics/MethodLength:
+#   Max: 20
+#
+# Metrics/AbcSize:
+#   Max: 25
+#
+# Metrics/CyclomaticComplexity:
+#   Max: 12
+#
+# Metrics/PerceivedComplexity:
+#   Max: 10
+
+# it's 2017, people have wide monitors.
+Metrics/LineLength:
+  Enabled: false
+
+# we exclude these two files since they are generated, the rest of our projects
+# should use // style regexps.
+Style/RegexpLiteral:
+  EnforcedStyle: slashes
+  AllowInnerSlashes: true
+  Exclude:
+    - 'Guardfile'
+    - 'theplatform-aci.gemspec'
+
+# Prefer single-quoted strings when you don't need string interpolation or special symbols
+Style/StringLiterals:
+  Enabled: false
+
+Style/WordArray:
+  EnforcedStyle: brackets
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Purty hashes.
+Style/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+
+# Specs don't need inline documentation.
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+
+# RSpec is a little strict, lets loosen it a touch.
+RSpec/NestedGroups:
+  MaxNesting: 5
+
+# Data specs don't follow this pattern well.
+RSpec/MultipleExpectations:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
