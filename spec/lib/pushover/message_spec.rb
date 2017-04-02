@@ -1,8 +1,4 @@
 require 'spec_helper'
-#
-# it { is_expected.to have_attributes(state: a_kind_of(Symbol)) }
-# it { is_expected.to have_attributes(user: nil) }
-# it { is_expected.to have_attributes(schema: current_schema) }
 
 module Pushover
   describe Message do
@@ -18,11 +14,14 @@ module Pushover
     it { is_expected.to have_attributes(sound: a_kind_of(String)) }
 
     describe "#create" do
+      # specify { expect(described_class).to respond_to(:image_deployable?).with(1).arguments }
+
+      it "will return a new message object"
     end
 
     describe ".send" do
+      it "will return a new response object"
     end
 
-    # specify { expect(described_class).to respond_to(:image_deployable?).with(1).arguments }
   end
 end
