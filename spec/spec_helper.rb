@@ -1,7 +1,8 @@
+require 'excon'
+require 'pry'
 require 'simplecov'
 require 'simplecov-console'
-require 'pry'
-require 'excon'
+
 Excon.defaults[:mock] = true
 
 SimpleCov.formatters = [

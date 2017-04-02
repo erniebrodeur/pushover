@@ -1,3 +1,7 @@
+clearing :on
+
+watch 'Guardfile'
+
 guard :bundler do
   require 'guard/bundler'
   require 'guard/bundler/verify'
@@ -27,11 +31,10 @@ guard :rspec, cmd: "bundle exec rspec" do
   dsl.watch_spec_files_for(ruby.lib_files)
 end
 
-guard :rubocop do
-  watch(%r{.+\.rb$})
+guard :rubocop, cli: ['--format', 'simple'] do
+  watch(/.+\.rb$/)
   watch(%r{(?:.+/)?\.rubocop\.yml$}) { |m| File.dirname(m[0]) }
 end
-
 # guard 'yard' do
 #   watch(%r{app\/.+\.rb})
 #   watch(%r{lib\/.+\.rb})

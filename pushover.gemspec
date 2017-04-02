@@ -2,6 +2,8 @@
 
 require File.expand_path('../lib/pushover/version', __FILE__)
 
+# rubocop:disable Metrics/BlockLength
+# reason: silly for this.
 Gem::Specification.new do |spec|
   spec.name = 'pushover'
   spec.authors       = ['Ernie Brodeur']
@@ -47,3 +49,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'rubocop-rspec'
 end
+# rubocop:enable Metrics/BlockLength

@@ -22,6 +22,5 @@ module Pushover
     describe ".send" do
       it "will return a new response object"
     end
-
   end
 end
