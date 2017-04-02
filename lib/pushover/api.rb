@@ -12,10 +12,14 @@ module Pushover
         validate: 'https://api.pushover.net/1/validate'
       }
     end
+    # reason:  anything else would add bloat, might change my mind later.
+    def post(hash)
+      hash
+    end
 
-    def endpoint(endpoint); end
+    # rubocop: enable Metrics/ParameterLists
 
-    module_function :endpoint
+    module_function :post
     module_function :endpoints
   end
 end
