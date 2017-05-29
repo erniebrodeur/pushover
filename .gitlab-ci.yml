@@ -1,9 +1,9 @@
-image: ruby:2.4.1-alpine
+image: registry.ujami.net/ruby-2.4.1-git
 
 stages:
   - test
 
-rspec: 
+rspec:
   stage: test
   script:
     - bundle install
