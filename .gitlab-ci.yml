@@ -1,0 +1,10 @@
+image: ruby:2.4.1-alpine
+
+stages:
+  - test
+
+rspec: 
+  stage: test
+  script:
+    - bundle install
+    - bundle exec rspec
