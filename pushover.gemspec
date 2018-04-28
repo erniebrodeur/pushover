@@ -27,7 +27,7 @@ Gem::Specification.new do |gem|
   gem.has_rdoc = 'yard'
 
   # dependencies.
-  gem.add_runtime_dependency 'yajl-ruby', "= 1.1.0"
-  gem.add_runtime_dependency 'httparty', "= 0.11.0"
+  gem.add_runtime_dependency 'yajl-ruby', "= 1.4.0"
+  gem.add_runtime_dependency 'httparty', "= 0.16.2"
   gem.add_runtime_dependency 'bini', "= 0.7.0"
 end
