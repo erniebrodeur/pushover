@@ -1,7 +1,5 @@
 clearing :on
 
-watch 'Guardfile'
-
 guard :bundler do
   require 'guard/bundler'
   require 'guard/bundler/verify'
@@ -14,11 +12,9 @@ guard :bundler do
   files.each { |file| watch(helper.real_path(file)) }
 end
 
-guard :rspec, cmd: "bundle exec rspec" do
-  require "guard/rspec/dsl"
+guard :rspec, cmd: 'bundle exec rspec' do
+  require 'guard/rspec/dsl'
   dsl = Guard::RSpec::Dsl.new(self)
-
-  # Feel free to open issues for suggestions and improvements
 
   # RSpec files
   rspec = dsl.rspec
@@ -31,12 +27,17 @@ guard :rspec, cmd: "bundle exec rspec" do
   dsl.watch_spec_files_for(ruby.lib_files)
 end
 
-guard :rubocop, cli: ['--format', 'simple'] do
-  watch(/.+\.rb$/)
-  watch(%r{(?:.+/)?\.rubocop\.yml$}) { |m| File.dirname(m[0]) }
+unless ENV["DISABLE_RUBOCOP"] == 'true'
+  guard :rubocop do
+    watch(/.+\.rb$/)
+    watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
+  end
 end
-# guard 'yard' do
-#   watch(%r{app\/.+\.rb})
-#   watch(%r{lib\/.+\.rb})
-#   watch(%r{ext\/.+\.c})
-# end
+
+unless ENV["DISABLE_YARD"] == 'true'
+  guard 'yard' do
+    watch(%r{app\/.+\.rb})
+    watch(%r{lib\/.+\.rb})
+    watch(%r{ext\/.+\.c})
+  end
+end
