@@ -2,44 +2,40 @@ require 'spec_helper'
 
 module Pushover
   describe Api do
-    metadata[:api_messages] = %i(messages sounds limits validate receipts)
+    it { expect(described_class).to respond_to(:endpoints).with(0).argument }
+    it { expect(described_class).to respond_to(:connection).with(0).argument }
+    it { expect(described_class).to respond_to(:url).with(0).argument }
+    it { expect(described_class).to respond_to(:sounds).with(0).argument }
+    it { expect(described_class).to respond_to(:initialize).with(0).argument }
 
-    describe "#endpoints" do
-      specify { expect(described_class).to respond_to(:endpoints).with(0).arguments }
-      let(:result) { described_class.endpoints }
+    describe '::initialize' do
+      before { described_class.initialize }
 
-      it "is expected to return a hash" do
-        expect(result).to be_a Hash
+      it "is expected to set excon default Headers Content-Type to 'application/json'" do
+        expect(Excon.defaults[:headers]).to include('Content-Type' => 'application/json')
       end
 
-      metadata[:api_messages].each do |endpoint|
-        it "is expected to have #{endpoint} as a key" do
-          expect(result[endpoint]).not_to be_nil
-        end
+      it "is expected to set excon default Headers User-Agent to 'pushover (ruby gem) v#{Pushover::VERSION}'" do
+        expect(Excon.defaults[:headers]).to include('User-Agent' => "pushover (ruby gem) v#{Pushover::VERSION}")
       end
-
-      it "is expected to have a uri as the value"
     end
 
-    describe "#post" do
-      specify { expect(described_class).to respond_to(:post).with(2).argument }
+    describe '::endpoints' do
+      it { expect(described_class.endpoints).to be_a_kind_of(Array) & include(a_kind_of(Symbol)) }
+    end
 
-      it "is expected to accept an endpoint symbol as the first param"
-      it "is expected to accept a hash as the second param"
-      it "is expected to call Excon.post to post remotely"
-      it "is expected to return a response object"
-
-      context "when the argument is not a hash" do
-        it "is expected to raise an ArgumentError exception with message /hash/"
+    describe '::connection' do
+      it "is expected to return an excon connection" do
+        expect(described_class.connection).to be_a_kind_of Excon::Connection
       end
+    end
 
-      context "when the response is 4xx" do
-        it "is expected to raise an exception"
-      end
+    describe '::sounds' do
+      it { expect(described_class.sounds).to be_a_kind_of(Array) & include(a_kind_of(Symbol)) }
+    end
 
-      context "when the response is 5xx" do
-        it "is expected to raise an exception"
-      end
+    describe '::url' do
+      it { expect(described_class.url).to eq 'https://api.pushover.net' }
     end
   end
 end

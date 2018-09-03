@@ -1,25 +1,35 @@
-require 'spec_helper'
+require 'creatable'
+require 'excon'
+require 'oj'
+
+require 'pushover/response'
 
 module Pushover
   # Api module
   module Api
+    module_function
+
     def endpoints
-      {
-        messages: 'https://api.pushover.net/1/messages',
-        sounds:   'https://api.pushover.net/1/sounds',
-        limits:   'https://api.pushover.net/1/limits',
-        receipts: 'https://api.pushover.net/1/receipts',
-        validate: 'https://api.pushover.net/1/validate'
-      }
-    end
-    # reason:  anything else would add bloat, might change my mind later.
-    def post(hash)
-      hash
+      %i[messages sounds limits receipts validate]
     end
 
-    # rubocop: enable Metrics/ParameterLists
+    def sounds
+      %i[ pushover bike bugle cashregister classical cosmic falling gamelan incoming
+          intermission magic mechanical pianobar siren spacealarm tugboat alien
+          climb persistent echo updown none]
+    end
 
-    module_function :post
-    module_function :endpoints
+    def connection
+      Excon.new url
+    end
+
+    def initialize
+      Excon.defaults[:headers]['Content-Type'] = 'application/json'
+      Excon.defaults[:headers]['User-Agent'] = "pushover (ruby gem) v#{Pushover::VERSION}"
+    end
+
+    def url
+      "https://api.pushover.net"
+    end
   end
 end
