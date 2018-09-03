@@ -1,9 +1,4 @@
-# -*- encoding: utf-8 -*-
-
-require File.expand_path('../lib/pushover/version', __FILE__)
-
-# rubocop:disable Metrics/BlockLength
-# reason: silly for this.
+require File.expand_path('lib/pushover/version', __dir__)
 Gem::Specification.new do |spec|
   spec.name = 'pushover'
   spec.authors       = ['Ernie Brodeur']
@@ -11,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.date          = Time.now.strftime('%Y-%m-%d')
   spec.version       = Pushover::VERSION
   spec.platform      = Gem::Platform::RUBY
-  spec.license       = 'Beerware v42'
+  spec.license       = 'MIT'
 
   # descriptions
   spec.description   = 'Api (and CLI) to interface with pushover.net'
@@ -30,23 +25,22 @@ Gem::Specification.new do |spec|
   spec.has_rdoc = 'yard'
 
   # dependencies.
-  spec.add_runtime_dependency 'commander'
+  spec.add_runtime_dependency 'creatable'
   spec.add_runtime_dependency 'excon'
   spec.add_runtime_dependency 'oj'
 
-  spec.add_development_dependency 'yard'
-  spec.add_development_dependency 'pry'
   spec.add_development_dependency 'bundler'
-  spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'rspec'
-  spec.add_development_dependency 'simplecov'
-  spec.add_development_dependency 'simplecov-console'
   spec.add_development_dependency 'guard'
   spec.add_development_dependency 'guard-bundler'
   spec.add_development_dependency 'guard-rspec'
-  spec.add_development_dependency 'guard-yard'
   spec.add_development_dependency 'guard-rubocop'
+  spec.add_development_dependency 'guard-yard'
+  spec.add_development_dependency 'pry'
+  spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'rubocop-rspec'
+  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'simplecov-console'
+  spec.add_development_dependency 'yard'
 end
-# rubocop:enable Metrics/BlockLength
