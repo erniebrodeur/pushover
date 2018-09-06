@@ -30,8 +30,10 @@ module Pushover
 
       attributes.each { |e| body.store e[:name], instance_variable_get("@#{e[:name]}") if instance_variable_get("@#{e[:name]}") }
 
-      response = Api.connection.post path: '1/messages.json', body: Oj.dump(body)
-      response
+      excon_response = Api.connection.post path: '1/messages.json', body: Oj.dump(body)
+      response = Response.create original: excon_response
+      response.process
+      self
     end
   end
 end
