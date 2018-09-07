@@ -2,9 +2,9 @@ require 'spec_helper'
 
 module Pushover
   describe Response do
-    let(:body) { { "status": 1, "request": "647d2300-702c-4b38-8b2f-d56326ae460b" } }
-    let(:receipt_body) { { "status": 1, "request": "647d2300-702c-4b38-8b2f-d56326ae460b", "receipt": 'abcdefg' } }
-    let(:error_body) { { "user": "invalid", "errors": ["user identifier is invalid"], "status": 0, "request": "5042853c-402d-4a18-abcb-168734a801de" } }
+    let(:body) { { "status" => 1, "request" => "647d2300-702c-4b38-8b2f-d56326ae460b" } }
+    let(:receipt_body) { { "status" => 1, "request" => "647d2300-702c-4b38-8b2f-d56326ae460b", "receipt" => 'abcdefg' } }
+    let(:error_body) { { "user" => "invalid", "errors" => ["user identifier is invalid"], "status" => 0, "request" => "5042853c-402d-4a18-abcb-168734a801de" } }
     let(:headers) do
       {
         "X-Limit-App-Limit":     7500,
@@ -54,7 +54,7 @@ module Pushover
         let(:body) { receipt_body }
 
         it "is expected to set receipt" do
-          expect { response.process_body }.to change(response, :receipt).to body[:receipt]
+          expect { response.process_body }.to change(response, :receipt).to body["receipt"]
         end
       end
 
@@ -62,7 +62,7 @@ module Pushover
         let(:body) { error_body }
 
         it "is expected to set errors" do
-          expect { response.process_body }.to change(response, :errors).to body[:errors]
+          expect { response.process_body }.to change(response, :errors).to body["errors"]
         end
       end
 
@@ -73,11 +73,11 @@ module Pushover
       end
 
       it "is expected to set status" do
-        expect { response.process_body }.to change(response, :status).to body[:status]
+        expect { response.process_body }.to change(response, :status).to body["status"]
       end
 
       it "is expected to set request" do
-        expect { response.process_body }.to change(response, :request).to body[:request]
+        expect { response.process_body }.to change(response, :request).to body["request"]
       end
     end
 

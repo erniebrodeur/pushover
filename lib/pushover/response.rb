@@ -25,10 +25,10 @@ module Pushover
     def process_body
       body = Oj.load original[:body]
 
-      @status = body[:status]
-      @request = body[:request]
-      @receipt = body[:receipt] if body[:receipt]
-      @errors = body[:errors] if body[:errors]
+      @status = body["status"]
+      @request = body["request"]
+      @receipt = body["receipt"] if body["receipt"]
+      @errors = body["errors"] if body["errors"]
     end
 
     def process_headers
