@@ -40,7 +40,6 @@ module Pushover
         }
       end
 
-
       before do
         allow(Api).to receive(:connection).and_return excon_connection
         allow(excon_connection).to receive(:post).and_return excon_response
@@ -61,7 +60,7 @@ module Pushover
 
           it "is expected to add the #{param} to the query" do
             working_message.push
-            expect(excon_connection).to have_received(:post).with(body: a_string_including(param.to_s), path: '1/messages.json')
+            expect(excon_connection).to have_received(:post).with(query: a_hash_including(param.to_s => 'not_nil'), path: '1/messages.json')
           end
         end
       end
@@ -76,7 +75,7 @@ module Pushover
 
       it 'is expected to call Api.connection.get with query set' do
         working_message.push
-        expect(excon_connection).to have_received(:post).with(body: a_kind_of(String), path: '1/messages.json')
+        expect(excon_connection).to have_received(:post).with(query: a_kind_of(Hash), path: '1/messages.json')
       end
 
       it "is expected to call Response.create with the response set to original" do
