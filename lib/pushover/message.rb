@@ -26,15 +26,13 @@ module Pushover
       raise ArgumentError, 'token is a required parameter' unless token
       raise ArgumentError, 'message is a required parameter' unless message
 
-      body = {}
+      query = {}
 
-      attributes.each { |e| body.store e[:name], instance_variable_get("@#{e[:name]}") if instance_variable_get("@#{e[:name]}") }
+      attributes.each { |e| query.store e[:name], instance_variable_get("@#{e[:name]}") if instance_variable_get("@#{e[:name]}") }
 
-      excon_response = Api.connection.post path: '1/messages.json', query: body
-      response = Response.create original: excon_response
+      response = Request.create.push(:messages, query)
       response.process
       @response = response
-      self
     end
   end
 end

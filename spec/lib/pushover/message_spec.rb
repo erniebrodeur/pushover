@@ -18,6 +18,7 @@ module Pushover
       it { is_expected.to have_attributes(user: nil) }
     end
 
+    it { expect(described_class).to be_a_kind_of(Class) }
     it { is_expected.to be_a_kind_of Creatable }
 
     describe "Instance Signatures" do
@@ -25,20 +26,13 @@ module Pushover
     end
 
     describe "::push" do
-      let(:message) { described_class.new }
-      let(:required_params) { { user: '1234', token: '1234', message: 'abcd' } }
-      let(:working_message) { described_class.create required_params }
-      let(:excon_connection) { Excon.new Api.url }
       let(:body) { { "status": 1, "request": "647d2300-702c-4b38-8b2f-d56326ae460b" } }
-      let(:excon_response) { Excon::Response.new(body: Oj.dump(body), status: 200, headers: headers) }
+      let(:excon_connection) { Excon.new Api.url }
+      let(:excon_response) { Excon::Response.new(body: Oj.dump(body), status: 200) }
+      let(:params) { { user: '1234', token: '1234', message: 'abcd' } }
+      let(:request) { Request.create }
       let(:response) { Response.create original: excon_response }
-      let(:headers) do
-        {
-          "X-Limit-App-Limit":     7500,
-          "X-Limit-App-Remaining": 7496,
-          "X-Limit-App-Reset":     1_393_653_600
-        }
-      end
+      let(:working_message) { described_class.create params }
 
       before do
         allow(Api).to receive(:connection).and_return excon_connection
@@ -73,24 +67,14 @@ module Pushover
         include_examples 'extra_param', param
       end
 
-      it 'is expected to call Api.connection.get with query set' do
+      it "is expected to call Request.create with ..." do
+        allow(Request).to receive(:create).and_return(request)
         working_message.push
-        expect(excon_connection).to have_received(:post).with(query: a_kind_of(Hash), path: '1/messages.json')
+        expect(Request).to have_received(:create).with(no_args)
       end
 
-      it "is expected to call Response.create with the response set to original" do
-        working_message.push
-        expect(Response).to have_received(:create).with(original: a_kind_of(Excon::Response))
-      end
-
-      it "is expected to call response.process to populate the object" do
-        allow(response).to receive(:process).and_call_original
-        working_message.push
-        expect(response).to have_received(:process)
-      end
-
-      it "is expected to return self" do
-        expect(working_message.push).to eq working_message
+      it "is expected to return response" do
+        expect(working_message.push).to eq response
       end
     end
   end
