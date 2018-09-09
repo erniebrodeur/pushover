@@ -13,3 +13,8 @@ url: "http://erniebrodeur.github.io/" # the base hostname & protocol for your si
 
 # Build settings
 markdown: kramdown
+
+description: A gem to interface with pushover.net
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-midnight
