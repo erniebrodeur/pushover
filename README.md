@@ -18,6 +18,18 @@ and run bundle to make it available:
 
 ## Usage
 
+To get help:
+
+    pushover help
+
+supply a token:
+
+    pushover --token '...'
+
+supply an application key:
+
+    pushover --app_key '...'
+
 ## API
 
 ```ruby
