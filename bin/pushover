@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+require 'gli'
+require 'pushover'
+
+# pushover --token=<token> --app_key=<app_key> message --title=' a long title' the rest is message
+class App
+  extend GLI::App
+
+  program_desc 'Pushover'
+
+  version Pushover::VERSION
+
+  subcommand_option_handling :normal
+  arguments :strict
+
+  desc 'your individual user token'
+  flag %i[t token]
+
+  desc 'a specific app token'
+  flag %i[a app_token]
+end
+
+exit App.run(ARGV)

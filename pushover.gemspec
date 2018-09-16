@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   # descriptions
   spec.description   = 'Api (and CLI) to interface with pushover.net'
   spec.summary       = 'This spec provides both an API and CLI interface to pushover.net.'
-  spec.homepage      = 'https://github.com/erniebrodeur/pushover'
+  spec.homepage      = 'https://gitlab.com/erniebrodeur/pushover'
 
   # files
   spec.files         = `git ls-files`.split($OUTPUT_RECORD_SEPARATOR)
@@ -24,11 +24,13 @@ Gem::Specification.new do |spec|
   spec.rdoc_options = ['--line-numbers', '--inline-source', '--title', 'Pushover', '--main', 'README.md', '--encoding=UTF-8']
   spec.has_rdoc = 'yard'
 
-  # dependencies.
+  # dependencies
   spec.add_runtime_dependency 'creatable'
   spec.add_runtime_dependency 'excon'
+  spec.add_runtime_dependency 'gli'
   spec.add_runtime_dependency 'oj'
 
+  # development dependencies
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'guard'
   spec.add_development_dependency 'guard-bundler'
