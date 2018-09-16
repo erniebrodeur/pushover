@@ -69,6 +69,14 @@ Style/Documentation:
 RSpec/NamedSubject:
   Enabled: false
 
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/bin/pushover_spec.rb'
+
+RSpec/EmptyExampleGroup:
+  Exclude:
+    - 'spec/bin/pushover_spec.rb'
+
 Lint/Debugger:
   Enabled: false
 
