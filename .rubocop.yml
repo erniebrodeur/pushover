@@ -77,6 +77,14 @@ RSpec/EmptyExampleGroup:
   Exclude:
     - 'spec/bin/pushover_spec.rb'
 
+RSpec/BeforeAfterAll:
+  Exclude:
+    - 'spec/bin/pushover_spec.rb'
+
+Style/GlobalVars:
+  Exclude:
+    - 'spec/bin/pushover_spec.rb'
+
 Lint/Debugger:
   Enabled: false
 

@@ -1,4 +1,3 @@
-require 'rspec_command'
 require 'excon'
 require 'pry'
 require 'simplecov'
@@ -11,7 +10,6 @@ SimpleCov.formatters = [
 ]
 
 RSpec.configure do |config|
-  config.include RSpecCommand
   config.filter_run :focus
   config.run_all_when_everything_filtered = true
   config.example_status_persistence_file_path = "tmp/examples.txt"

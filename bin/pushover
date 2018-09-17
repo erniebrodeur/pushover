@@ -14,10 +14,36 @@ class App
   arguments :strict
 
   desc 'your individual user token'
-  flag %i[t token]
+  flag %i[k key], required: true, mask: true
 
   desc 'a specific app token'
-  flag %i[a app_token]
+  flag %i[a app-token], required: true, mask: true
+
+  desc 'send a message'
+  command 'message' do |c|
+    c.desc 'file to attach as an attachment'
+    c.flag 'attachment', arg_name: 'file-name'
+    c.desc 'specific device to send the message to'
+    c.flag 'device'
+    c.desc 'priority of the message'
+    c.flag 'priority', must_match: Pushover::Api.priorities
+    c.desc 'sound to play with message'
+    c.flag 'sound', must_match: Pushover::Api.sounds
+    c.desc 'timestamp of the message'
+    c.flag 'timestamp', default_value: Time.now
+    c.desc 'title of the message'
+    c.flag 'title'
+    c.desc 'supplementary url to send with the message'
+    c.flag 'url'
+    c.desc 'title of the supplementary url'
+    c.flag 'url-title'
+
+    c.action do |global_options, _options, _args|
+      require 'pry'
+      binding.pry
+      puts global_options
+    end
+  end
 end
 
 exit App.run(ARGV)
