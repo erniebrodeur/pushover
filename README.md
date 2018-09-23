@@ -1,20 +1,20 @@
 # Pushover
 
-This gem provides a CLI and an API interface to http://pushover.net.
+This gem provides a CLI and an API interface to https://pushover.net.
 
 ## Installation
 
 To install:
 
-  % gem install pushover
+    % gem install pushover
 
 To use inside of an application, add this to the your gemfile:
 
-  % gem 'pushover'
+    % gem 'pushover'
 
 and run bundle to make it available:
 
-  % bundle
+    % bundle
 
 ## Usage
 
@@ -37,7 +37,7 @@ message = Pushover.create {
 ### Send the message
 
 ```ruby
-  response = message.send
+response = message.send
 ```
 
 ### Response
@@ -46,8 +46,8 @@ message = Pushover.create {
 - When set, it will also include `errors` and `receipt`.
 
 ```ruby
-  response.status
-  response.request
+response.status
+response.request
 ```
 
 
