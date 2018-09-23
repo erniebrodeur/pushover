@@ -1,6 +1,6 @@
 # Pushover
 
-This gem provides a CLI and an API interface to http://pushover.net.
+This gem provides a CLI and an API interface to https://pushover.net.
 
 ## Installation
 
