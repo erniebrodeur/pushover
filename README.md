@@ -27,17 +27,17 @@ require 'pushover'
 ### Create a message
 
 ```ruby
-message = Pushover.create {
+message = Pushover::Message.create(
   user: '...',
   token: '...',
   message: '...'
-}
+)
 ```
 
 ### Send the message
 
 ```ruby
-response = message.send
+response = message.push
 ```
 
 ### Response
