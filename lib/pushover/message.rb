@@ -8,6 +8,8 @@ module Pushover
     attribute name: 'html', kind_of: TrueClass
     attribute name: 'message', kind_of: String
     attribute name: 'priority', kind_of: String
+    attribute name: 'expire', kind_of: Numeric
+    attribute name: 'retry', kind_of: Numeric
     attribute name: 'sound', kind_of: String
     attribute name: 'timestamp', kind_of: Numeric
     attribute name: 'title', kind_of: String
