@@ -1,12 +1,10 @@
 source 'https://rubygems.org'
-
 gemspec
 
-group :development do
+group :build do
   gem 'bump'
-  gem "bundler", "~> 1.16"
-  gem "rake", "~> 10.0"
-  gem "rspec", "~> 3.0"
+  gem 'bundler'
+  gem 'rake', '~> 10.0'
   gem 'rubocop'
   gem 'rubocop-rspec'
   gem 'simplecov'
@@ -19,7 +17,9 @@ group :development, optional: true do
   gem 'guard-bundler'
   gem 'guard-rspec'
   gem 'guard-rubocop'
+  gem 'guard-shell'
   gem 'guard-yard'
   gem 'pry'
-  gem 'solargraph'
+  gem "pry-inline"
+  gem "solargraph"
 end
