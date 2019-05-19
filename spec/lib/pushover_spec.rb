@@ -21,7 +21,7 @@ describe Pushover do
     end
   end
 
-  fdescribe Pushover::Response do
+  describe Pushover::Response do
     it { expect(described_class).to respond_to(:create_from_excon_response).with(1).argument }
 
     describe "::create_from_excon_response" do
