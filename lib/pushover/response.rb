@@ -1,5 +1,6 @@
 module Pushover
-  Response = Struct.new(:status, :request, :errors, :receipt, :headers, keyword_init: true) do
+  # Response encapsulates the response back from pushover.
+  Response = Struct.new(:status, :request, :errors, :receipt, :headers, :attributes, keyword_init: true) do
     def limits
       return '' unless headers.include? 'X-Limit-App-Limit'
 
@@ -9,7 +10,11 @@ module Pushover
     end
 
     def self.create_from_excon_response(excon_response)
-      Response.new(Oj.load(excon_response[:body]).merge('headers' => excon_response.headers))
+      json = Oj.load excon_response[:body]
+      values = json.select { |k, _v| members.include? k.to_sym }
+      attributes = json.reject { |k, _v| members.include? k.to_sym }
+
+      Response.new values.merge(headers: excon_response.headers, attributes: attributes)
     end
 
     def to_s
