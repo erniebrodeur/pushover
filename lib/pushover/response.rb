@@ -1,5 +1,18 @@
 module Pushover
   # Response encapsulates the response back from pushover.
+  # Class to wrap the user and basic functions related to it.
+  # @attribute status
+  #   @return [Numeric] status of the response
+  # @attribute request
+  #   @return [String] request is a UUID representing the specific call
+  # @attribute errors
+  #   @return [Array] errors includes any errors made
+  # @attribute receipt
+  #   @return [String] receipt returns a receipt if requested
+  # @attribute headers
+  #   @return [Hash] headers is the headers returned from the call.
+  # @attribute attributes
+  #   @return [String] attributes is any param returned from the service that is not one of the above.
   Response = Struct.new(:status, :request, :errors, :receipt, :headers, :attributes, keyword_init: true) do
     def limits
       return '' unless headers.include? 'X-Limit-App-Limit'
@@ -11,8 +24,9 @@ module Pushover
 
     def self.create_from_excon_response(excon_response)
       json = Oj.load excon_response[:body]
-      values = json.select { |k, _v| members.include? k.to_sym }
-      attributes = json.reject { |k, _v| members.include? k.to_sym }
+      values = {}
+      attributes = {}
+      json.each { |k, v| members.include?(k.to_sym) ? values.store(k, v) : attributes.store(k, v) }
 
       Response.new values.merge(headers: excon_response.headers, attributes: attributes)
     end
