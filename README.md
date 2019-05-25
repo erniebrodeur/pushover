@@ -18,29 +18,29 @@ and run bundle to make it available:
 
 ## Usage
 
-```ruby
-require 'pushover'
+``` ruby
+  require 'pushover'
 
-### message
-message = Pushover::Message.new(token: 'token', user: 'user_key', message: '...')
-message.push
+  ### message
+  message = Pushover::Message.new(token: 'token', user: 'user_key', message: '...')
+  message.push
 
-### Receipt
-Pushover::Message.new(token: 'token', user: 'user_key', message: '...', 'priority': 2, expire: 1, retry: 60).push
+  ### Receipt
+  Pushover::Message.new(token: 'token', user: 'user_key', message: '...', 'priority': 2, expire: 1, retry: 60).push
 
-receipt = Pushover::Receipt.new(receipt: "receipt", token: 'token')
-receipt.get
+  receipt = Pushover::Receipt.new(receipt: "receipt", token: 'token')
+  receipt.get
 
-### Responses
-response = Pushover::Message.new(token: 'token', user: 'user_key', message: '...').push
+  ### Responses
+  response = Pushover::Message.new(token: 'token', user: 'user_key', message: '...').push
 
-# the below data is populated from the response
-puts response.status     # return the status of the request, 0 or 1
-puts response.request    # uuid of the request
-puts response.errors     # array of errors (if any)
-puts response.receipt    # receipt (if requested)
-puts response.headers    # response headers (includes limits)
-puts response.attributes # any other k/v pair returned from pushover
+  # the below data is populated from the response
+  puts response.status     # return the status of the request, 0 or 1
+  puts response.request    # uuid of the request
+  puts response.errors     # array of errors (if any)
+  puts response.receipt    # receipt (if requested)
+  puts response.headers    # response headers (includes limits)
+  puts response.attributes # any other k/v pair returned from pushover
 ```
 
 ## Contributing

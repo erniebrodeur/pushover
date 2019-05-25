@@ -12,8 +12,10 @@ module Pushover
   # @attribute headers
   #   @return [Hash] headers is the headers returned from the call.
   # @attribute attributes
-  #   @return [String] attributes is any param returned from the service that is not one of the above.
+  #   @return [String] any extra k/v pairs from the server.
   Response = Struct.new(:status, :request, :errors, :receipt, :headers, :attributes, keyword_init: true) do
+    # Application limits
+    # @return [Array] 0: Remaining Calls, 1: Total Limit, 2: Limit Reset
     def limits
       return '' unless headers.include? 'X-Limit-App-Limit'
 
