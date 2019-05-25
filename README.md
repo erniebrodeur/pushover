@@ -6,17 +6,31 @@ This gem provides a CLI and an API interface to http://pushover.net.
 
 To install:
 
-  gem install pushover
+    gem install pushover
 
 To use inside of an application, add this to the your gemfile:
 
-  gem 'pushover'
+    gem 'pushover'
 
 and run bundle to make it available:
 
-  bundle
+    bundle
 
 ## Usage
+
+For now, not much is supported on the CLI.
+
+Sending a message:
+
+    pushover --token=your_app_token --user=user_key message here we go again, on my own.
+    pushover -tyour_app_token -uuser_key message here we go again, on my own.
+
+Currently unsupported message features:
+ - attachments
+ - callbacks
+ - setting timestamp
+
+### Api
 
 ``` ruby
   require 'pushover'

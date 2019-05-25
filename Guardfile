@@ -1,5 +1,10 @@
 clearing :on
 
+guard :shell do
+  # watch('exe/pushover') { `exe/pushover -h`}
+  watch('exe/pushover') { `exe/pushover message -h`}
+end
+
 guard :bundler do
   require 'guard/bundler'
   require 'guard/bundler/verify'
