@@ -2,20 +2,11 @@
 require 'pushover'
 require 'pry'
 
-Hash.define_singleton_method(:options_from_argv) do |argv = ARGV|
-  command = argv.shift
-  index = argv.find_index { |i| !i.start_with? '-' }
-  {
-    command: command,
-    options: argv[0..index - 1].map { |a| a.split(/-+(?<k>\w+)(?>=|)(?>'|"|)(?<v>.*?)(?>'|"|$)/)[1..2] }.to_h.merge(Hash.create_from_env('PUSHOVER')),
-    message: argv[index..-1]
-  }
-end
+argv = "--token='a' --user='b' message goes here".split
+index = argv.find_index { |i| !i.start_with? '-' }
+env_options = ENV.select { |k, _v| k.start_with? "PUSHOVER_" }.map { |k, v| [k.split("PUSHOVER_").last.downcase, v] }.to_h
+@options = argv[0..index - 1].map { |a| a.split(/-+(?<k>\w+)(?>=|)(?>'|"|)(?<v>.*?)(?>'|"|$)/)[1..2] }.to_h.merge(env_options)
+@message = argv[index..-1]
 
-Hash.define_singleton_method(:create_from_env) do |prefix|
-  ENV.select { |k, _v| k.start_with? "#{prefix.upcase}_" }.map { |k, v| [k.split("#{prefix.upcase}_").last.downcase, v] }.to_h
-end
-
-cli = Hash.options_from_argv "pushover --token='a' --user='b' message goes here".split
-
-puts cli
+puts @options
+puts @message
