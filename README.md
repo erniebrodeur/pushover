@@ -1,7 +1,7 @@
 # Pushover
 [![Build Status](https://travis-ci.org/erniebrodeur/pushover.svg?branch=master)](https://travis-ci.org/erniebrodeur/pushover) [![codecov](https://codecov.io/gh/erniebrodeur/pushover/branch/master/graph/badge.svg)](https://codecov.io/gh/erniebrodeur/pushover)
 
-This gem provides a CLI and an API interface to http://pushover.net.
+This gem provides a CLI and an API interface to https://pushover.net.
 
 ## Installation
 
@@ -17,6 +17,7 @@ and run bundle to make it available:
 
     bundle
 
+
 ## Usage
 
 For now, not much is supported on the CLI.
@@ -28,12 +29,14 @@ Sending a message:
 
 Getting receipt details:
 
+
     pushover -tyour_app_token receipt receipt-hash
 
 Currently unsupported message features:
  - attachments
  - callbacks
  - setting timestamp
+
 
 ### Api
 
@@ -43,6 +46,7 @@ Currently unsupported message features:
   ### message
   message = Pushover::Message.new(token: 'token', user: 'user_key', message: '...')
   message.push
+
 
   ### Receipt
   Pushover::Message.new(token: 'token', user: 'user_key', message: '...', 'priority': 2, expire: 1, retry: 60).push
