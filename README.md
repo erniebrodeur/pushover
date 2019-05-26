@@ -25,6 +25,10 @@ Sending a message:
     pushover --token=your_app_token --user=user_key message here we go again, on my own.
     pushover -tyour_app_token -uuser_key message here we go again, on my own.
 
+Getting receipt details:
+
+    pushover -tyour_app_token receipt receipt-hash
+
 Currently unsupported message features:
  - attachments
  - callbacks
