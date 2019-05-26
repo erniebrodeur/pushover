@@ -1,12 +1,7 @@
 require 'excon'
 require 'simplecov'
-require 'simplecov-console'
-
+require 'codecov'
 Excon.defaults[:mock] = true
-
-SimpleCov.formatters = [
-  SimpleCov::Formatter::HTMLFormatter
-]
 
 RSpec.configure do |config|
   config.filter_run :focus
@@ -16,8 +11,7 @@ end
 
 RSpec::Matchers.alias_matcher :return_a_kind_of, :be_a_kind_of
 
-SimpleCov.start do
-  add_filter "/spec/"
-end
+SimpleCov.formatters = [ SimpleCov::Formatter::HTMLFormatter, SimpleCov::Formatter::Codecov]
+SimpleCov.start { add_filter "/spec/" }
 
 require 'pushover'

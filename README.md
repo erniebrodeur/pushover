@@ -1,4 +1,5 @@
 # Pushover
+[![Build Status](https://travis-ci.org/erniebrodeur/pushover.svg?branch=master)](https://travis-ci.org/erniebrodeur/pushover) [![codecov](https://codecov.io/gh/erniebrodeur/pushover/branch/master/graph/badge.svg)](https://codecov.io/gh/erniebrodeur/pushover)
 
 This gem provides a CLI and an API interface to http://pushover.net.
 

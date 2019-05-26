@@ -4,6 +4,7 @@ gemspec
 gem 'excon'
 gem 'gli'
 gem 'oj'
+gem 'codecov', :require => false, :group => :test
 
 group :test do
   gem 'bump'
@@ -13,7 +14,6 @@ group :test do
   gem 'rubocop'
   gem 'rubocop-rspec'
   gem 'simplecov'
-  gem 'simplecov-console'
   gem 'yard'
 end
 
