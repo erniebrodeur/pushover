@@ -1,10 +1,14 @@
 source 'https://rubygems.org'
 gemspec
 
+gem 'excon'
+gem 'gli'
+gem 'oj'
+
 group :build do
-  gem 'bump'
   gem 'bundler'
-  gem 'rake', '~> 10.0'
+  gem 'bump'
+  gem 'rake'
   gem 'rubocop'
   gem 'rubocop-rspec'
   gem 'simplecov'
