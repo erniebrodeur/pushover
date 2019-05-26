@@ -1,20 +1,23 @@
 require 'spec_helper'
 
 describe Pushover::Receipt do
-  let(:params) { { 'token' => 't', 'key' => 'k', 'message' => 'message' } }
+  it { is_expected.to have_attributes(receipt: a_kind_of(String).or(be_nil)) }
+  it { is_expected.to have_attributes(token: a_kind_of(String).or(be_nil)) }
 
-  it { is_expected.to respond_to(:push).with(0).argument }
+  it { is_expected.to respond_to(:get).with(0).argument }
 
   describe "#push" do
-    let(:subject) { described_class.new(params).push }
+    let(:params) { { 'token' => 't', 'receipt' => 'receipt' } }
 
-    it { is_expected }
+    it "is expected to send" do
+      expect { described_class.new(params).get }.to raise_error Excon::Error::StubNotFound
+    end
 
-    ['token', 'key', 'message'].each do |param|
+    ['token', 'receipt'].each do |param|
       context "when #{param} is not supplied" do
         before { params.delete param }
 
-        it { expect { subject }.to raise_error RuntimeError, /#{param} must be supplied/ }
+        it { expect { described_class.new(params).get }.to raise_error RuntimeError, /#{param} must be supplied/ }
       end
     end
   end

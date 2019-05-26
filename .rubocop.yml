@@ -33,8 +33,9 @@ Metrics/LineLength:
 
 Metrics/BlockLength:
   Exclude:
-    - 'Guardfile'
     - '*.gemspec'
+    - 'Guardfile'
+    - 'Rakefile'
     - 'spec/**/*'
 
 # we exclude these two files since they are generated, the rest of our projects
@@ -59,6 +60,7 @@ Style/FrozenStringLiteralComment:
 Style/MixinUsage:
   Exclude:
   - 'bin/*'
+  - 'exe/*'
 
 # Specs don't need inline documentation.
 Style/Documentation:

@@ -21,7 +21,7 @@ desc "updates for various bits of the development environment."
 
 namespace :update do
   desc "update everything (multitasked)"
-  multitask(all: [:gemfile, :rakefile, :rubocop, :tasks, :vscode_formatter])
+  multitask(all: %i[gemfile rakefile rubocop tasks vscode_formatter])
 
   desc 'Update Gemfile from gist'
   task :gemfile do
@@ -58,6 +58,6 @@ namespace :update do
 end
 
 def grab_file(filename, uri)
-  File.write filename, open(uri).read
+  File.write filename, OpenURI.open_uri(uri).read
   puts "Updated #{filename} from: #{uri}"
 end
