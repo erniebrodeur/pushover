@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+require 'gli'
+require 'pushover'
+
+include GLI::App
+
+program_desc 'A simple todo list'
+subcommand_option_handling :normal
+
+flag %i[t token], type: String, desc: 'Application token'
+flag %i[u user], type: String, desc: 'User token'
+
+desc 'send a message'
+command :message do |c|
+  c.flag :device, type: String, desc: 'device to send too'
+  c.flag :title, type: String, desc: 'title of message'
+  c.flag :url, type: String, desc: 'url to include'
+  c.flag :url_title, type: String, desc: 'title of included url'
+  c.flag :priority, type: String, desc: 'numeric priority (-2,-1,0,1,2) from low to high'
+  c.flag :sound, type: String, desc: 'sound, see pushover api for list.'
+  c.flag :expire, type: String, desc: 'how long should a priority message live'
+  c.flag :retry, type: String, desc: 'how often should a resend be attempted (until acknowledged)'
+  c.action do |global_options, options, args|
+    puts Pushover::Message.new({
+      message: args.join(" "), user: global_options[:user], token: global_options[:token]
+    }.merge(GLI::Options.new(options).to_h.reject { |_k, v| v.nil? })).push
+  end
+end
+
+desc 'get a receipt'
+command :receipt do |c|
+  c.action do |global_options, _options, args|
+    puts Pushover::Receipt.new(token: global_options[:token], receipt: args[0]).get
+  end
+end
+
+run(ARGV)

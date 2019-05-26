@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+require 'bundler'
+require 'fileutils'
+
+# add files to lib and spec
+# takes one arg, the path from lib/spec + base filename
+# example: add models/something
+
+unless ARGV[0]
+  puts "example: add models/something"
+  exit
+end
+
+file = ARGV[0].dup
+root = Bundler.root.split.last.to_s
+
+file.chomp!(".rb")
+
+lib = "lib/#{root}/#{file}.rb"
+spec = "spec/#{root}/#{file}_spec.rb"
+
+[lib, spec].each do |s|
+  FileUtils.mkdir_p(File.dirname(s))
+  puts "created: #{FileUtils.touch(s).first}"
+end

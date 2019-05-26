@@ -1,40 +1,46 @@
 module Pushover
-  class Response
-    include Creatable
+  # Response encapsulates the response back from pushover.
+  # Class to wrap the user and basic functions related to it.
+  # @attribute status
+  #   @return [Numeric] status of the response
+  # @attribute request
+  #   @return [String] request is a UUID representing the specific call
+  # @attribute errors
+  #   @return [Array] errors includes any errors made
+  # @attribute receipt
+  #   @return [String] receipt returns a receipt if requested
+  # @attribute headers
+  #   @return [Hash] headers is the headers returned from the call.
+  # @attribute attributes
+  #   @return [String] any extra k/v pairs from the server.
+  Response = Struct.new(:status, :request, :errors, :receipt, :headers, :attributes, keyword_init: true) do
+    # New response object, from an excon_response
+    #   @return [Response] populated response object
+    def self.create_from_excon_response(excon_response)
+      json = Oj.load excon_response[:body]
+      values = {}
+      attributes = {}
+      json.each { |k, v| members.include?(k.to_sym) ? values.store(k, v) : attributes.store(k, v) }
 
-    attribute name: 'user', kind_of: String
-    attribute name: 'errors', kind_of: Array
-    attribute name: 'status', kind_of: Numeric
-    attribute name: 'receipt', kind_of: String
-    attribute name: 'request', kind_of: String
-    attribute name: 'original', kind_of: String
-    attribute name: 'limit', kind_of: String
-    attribute name: 'remaining', kind_of: String
-    attribute name: 'reset', kind_of: String
-
-    def initialize
-      @status = 0
-      @errors = []
+      Response.new values.merge(headers: excon_response.headers, attributes: attributes)
     end
 
-    def process
-      process_body
-      process_headers
+    # purty.
+    def to_s
+      "#{errors ? 'errors: ' + errors.join("\n") : 'status: ok'}, #{limits}"
     end
 
-    def process_body
-      body = Oj.load original[:body]
+    private
 
-      @status = body["status"]
-      @request = body["request"]
-      @receipt = body["receipt"] if body["receipt"]
-      @errors = body["errors"] if body["errors"]
-    end
+    # :nocov:
+    # Application limits
+    # @return [Array] 0: Remaining Calls, 1: Total Limit, 2: Limit Reset
+    def limits
+      return '' unless headers.include? 'X-Limit-App-Limit'
 
-    def process_headers
-      @limit = original.headers['X-Limit-App-Limit']
-      @remaining = original.headers['X-Limit-App-Remaining']
-      @reset = original.headers['X-Limit-App-Reset']
+      output = [headers['X-Limit-App-Remaining'], headers['X-Limit-App-Limit'], headers['X-Limit-App-Reset']]
+      output.define_singleton_method(:to_s) { "requests #{self[0]} of #{self[1]}, reset on #{Time.at(self[2].to_f)}" }
+      output
     end
   end
 end
