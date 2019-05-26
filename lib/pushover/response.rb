@@ -14,6 +14,8 @@ module Pushover
   # @attribute attributes
   #   @return [String] any extra k/v pairs from the server.
   Response = Struct.new(:status, :request, :errors, :receipt, :headers, :attributes, keyword_init: true) do
+    # New response object, from an excon_response
+    #   @return [Response] populated response object
     def self.create_from_excon_response(excon_response)
       json = Oj.load excon_response[:body]
       values = {}
@@ -28,7 +30,7 @@ module Pushover
       "#{errors ? 'errors: ' + errors.join("\n") : 'status: ok'}, #{limits}"
     end
 
-        private
+    private
 
     # :nocov:
     # Application limits
