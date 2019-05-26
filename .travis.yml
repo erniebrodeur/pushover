@@ -6,4 +6,3 @@ rvm:
   - 2.6.1
 before_install:
   - gem install --no-document bundler -v 2.0.1
-install: bundle install --with build --jobs=5

@@ -5,10 +5,11 @@ gem 'excon'
 gem 'gli'
 gem 'oj'
 
-group :build do
-  gem 'bundler'
+group :test do
   gem 'bump'
+  gem 'bundler'
   gem 'rake'
+  gem 'rspec'
   gem 'rubocop'
   gem 'rubocop-rspec'
   gem 'simplecov'
