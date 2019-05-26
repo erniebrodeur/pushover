@@ -1,5 +1,4 @@
 require 'excon'
-require 'pry'
 require 'simplecov'
 require 'simplecov-console'
 
