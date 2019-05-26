@@ -17,4 +17,4 @@ markdown: kramdown
 description: A gem to interface with pushover.net
 google_analytics: 
 show_downloads: true
-theme: jekyll-theme-midnight
+theme: jekyll-theme-hacker
