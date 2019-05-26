@@ -4,4 +4,6 @@ language: ruby
 cache: bundler
 rvm:
   - 2.6.1
-before_install: gem install --no-document rake bundler:2.0.1
+before_install:
+  - gem install --no-document bundler 2.0.1
+  - gem install rake
