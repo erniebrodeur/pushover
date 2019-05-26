@@ -20,7 +20,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   # dependencies.
-  spec.add_runtime_dependency 'creatable'
   spec.add_runtime_dependency 'excon'
   spec.add_runtime_dependency 'gli'
   spec.add_runtime_dependency 'oj'

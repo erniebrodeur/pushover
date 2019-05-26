@@ -1,5 +1,4 @@
 require 'oj'
-require 'creatable'
 require 'excon'
 
 require 'pushover/message'
