@@ -4,6 +4,7 @@ require 'excon'
 require 'pushover/message'
 require 'pushover/response'
 require 'pushover/receipt'
+require 'pushover/version'
 
 # pushover interface for ruby
 module Pushover
