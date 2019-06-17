@@ -1,6 +1,7 @@
 require 'oj'
 require 'excon'
 
+require 'pushover/version'
 require 'pushover/message'
 require 'pushover/response'
 require 'pushover/receipt'
