@@ -38,7 +38,7 @@ module Pushover
     def limits
       return '' unless headers.include? 'X-Limit-App-Limit'
 
-      output = [headers['X-Limit-App-Remaining'], headers['X-Limit-App-Limit'], headers['X-Limit-App-Reset']]
+      output = headers.values_at('X-Limit-App-Remaining', 'X-Limit-App-Limit', 'X-Limit-App-Reset')
       output.define_singleton_method(:to_s) { "requests #{self[0]} of #{self[1]}, reset on #{Time.at(self[2].to_f)}" }
       output
     end

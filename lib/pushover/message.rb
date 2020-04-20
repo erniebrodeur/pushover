@@ -27,6 +27,13 @@ module Pushover
   # @!attribute [rw] callback
   #   @return [String] callback url
   Message = Struct.new(:token, :user, :message, :attachment, :device, :title, :url, :url_title, :priority, :sound, :timestamp, :expire, :retry, :callback, keyword_init: true) do
+
+    def initialize(*)
+      super
+      self.user ||= ENV['PUSHOVER_USER']
+      self.token ||= ENV['PUSHOVER_TOKEN']
+    end
+
     # push the configured message to pushover.
     #   @return [Response] response for the receipt request
     def push

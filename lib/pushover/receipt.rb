@@ -5,6 +5,11 @@ module Pushover
   # @!attribute [rw] token
   #   @return [String] application token to check for a receipt
   Receipt = Struct.new(:receipt, :token, keyword_init: true) do
+    def initialize(*)
+      super
+      self.token ||= ENV['PUSHOVER_TOKEN']
+    end
+
     # Call pushover and return a response.
     # @return [Response] response for the receipt request
     def get

@@ -3,6 +3,7 @@
 
 This gem provides a CLI and an API interface to https://pushover.net.
 
+
 ## Installation
 
 To install:
@@ -28,7 +29,6 @@ Sending a message:
     pushover -tyour_app_token -uuser_key message here we go again, on my own.
 
 Getting receipt details:
-
 
     pushover -tyour_app_token receipt receipt-hash
 
@@ -65,6 +65,11 @@ Currently unsupported message features:
   puts response.headers    # response headers (includes limits)
   puts response.attributes # any other k/v pair returned from pushover
 ```
+
+### Credentials
+
+If credentials are not explicitly provided (i.e. via the `user` and `token` parameters), this gem will attempt
+to find the credentials in environment variables: `PUSHOVER_USER` and `PUSHOVER_TOKEN`.
 
 ## Contributing
 
