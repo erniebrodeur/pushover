@@ -23,4 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'excon'
   spec.add_runtime_dependency 'gli'
   spec.add_runtime_dependency 'oj'
+
+  # minimum ruby version
+  spec.required_ruby_version = '~> 2.5'
 end
