@@ -1,76 +1,94 @@
 # Pushover
-[![Build Status](https://travis-ci.org/erniebrodeur/pushover.svg?branch=master)](https://travis-ci.org/erniebrodeur/pushover) [![codecov](https://codecov.io/gh/erniebrodeur/pushover/branch/master/graph/badge.svg)](https://codecov.io/gh/erniebrodeur/pushover)
 
-This gem provides a CLI and an API interface to https://pushover.net.
+This gem provides a CLI and a Ruby API for [Pushover](https://pushover.net).
 
 ## Installation
 
-To install:
+Install the gem:
 
-    gem install pushover
+```shell
+gem install pushover
+```
 
-To use inside of an application, add this to the your gemfile:
+Or add it to your Gemfile and run `bundle install`:
 
-    gem 'pushover'
+```ruby
+gem 'pushover'
+```
 
-and run bundle to make it available:
+## Ruby API
 
-    bundle
+Create one client with your application token, then use its API resources:
 
+```ruby
+require 'pushover'
 
-## Usage
+client = Pushover::Client.new(token: 'app-token')
 
-For now, not much is supported on the CLI.
+response = client.messages.create(
+  user: 'user-or-group-key',
+  message: 'Deployment completed',
+  title: 'Production'
+)
+```
 
-Sending a message:
+`messages.create` supports the Pushover Message API's JSON parameters:
 
-    pushover --token=your_app_token --user=user_key message here we go again, on my own.
-    pushover -tyour_app_token -uuser_key message here we go again, on my own.
+- `user` and `message` are required.
+- `device`, `title`, `url`, `url_title`, `priority`, `sound`, `timestamp`, and `ttl` are optional.
+- `html` and `monospace` accept booleans or `1` and `0`, but cannot both be enabled.
+- Emergency priority (`priority: 2`) requires `retry` and `expire`, and may include `callback` and `tags`.
+- Attachments use `attachment_base64` with `attachment_type`, such as `image/png`, and are limited to 5 MiB after decoding.
 
-Getting receipt details:
+To encrypt the supported message fields end to end, pass the 64-character hexadecimal key configured on the receiving devices:
 
+```ruby
+response = client.messages.create(
+  user: 'user-or-group-key',
+  message: 'Encrypted message',
+  encryption_key: ENV.fetch('PUSHOVER_ENCRYPTION_KEY')
+)
+```
 
-    pushover -tyour_app_token receipt receipt-hash
+Deterministic request errors raise `ArgumentError` before a network request. Pushover API errors, including HTTP 4xx responses, are returned as `Pushover::Response` objects:
 
-Currently unsupported message features:
- - attachments
- - callbacks
- - setting timestamp
+```ruby
+response.status     # 0 or 1
+response.request    # Pushover request identifier
+response.errors     # API validation errors, if any
+response.receipt    # emergency message receipt, if any
+response.headers    # response headers, including application limits
+response.attributes # other response fields
+```
 
+The client does not automatically retry requests. Connection failures continue to raise Excon transport exceptions.
 
-### Api
+Receipt retrieval still uses the existing API until its client slice is implemented:
 
-``` ruby
-  require 'pushover'
+```ruby
+receipt = Pushover::Receipt.new(receipt: 'receipt-id', token: 'app-token')
+response = receipt.get
+```
 
-  ### message
-  message = Pushover::Message.new(token: 'token', user: 'user_key', message: '...')
-  message.push
+## CLI
 
+Send a message:
 
-  ### Receipt
-  Pushover::Message.new(token: 'token', user: 'user_key', message: '...', 'priority': 2, expire: 1, retry: 60).push
+```shell
+pushover --token=app-token --user=user-key message here we go again
+pushover -tapp-token -uuser-key message here we go again
+```
 
-  receipt = Pushover::Receipt.new(receipt: "receipt", token: 'token')
-  receipt.get
+Get receipt details:
 
-  ### Responses
-  response = Pushover::Message.new(token: 'token', user: 'user_key', message: '...').push
-
-  # the below data is populated from the response
-  puts response.status     # return the status of the request, 0 or 1
-  puts response.request    # uuid of the request
-  puts response.errors     # array of errors (if any)
-  puts response.receipt    # receipt (if requested)
-  puts response.headers    # response headers (includes limits)
-  puts response.attributes # any other k/v pair returned from pushover
+```shell
+pushover -tapp-token receipt receipt-id
 ```
 
 ## Contributing
 
-1. Fork it
-2. Switch to development (`git checkout development`)
-3. Create your feature branch (`git checkout -b my-new-feature`)
-4. Commit your changes (`git commit -am 'Added some feature'`)
-5. Push to the branch (`git push origin my-new-feature`)
-6. Create new Pull Request against `development`
+1. Fork the repository.
+2. Switch to `development`.
+3. Create a feature branch.
+4. Commit and push your changes.
+5. Open a pull request against `development`.

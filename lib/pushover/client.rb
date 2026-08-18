@@ -1,0 +1,17 @@
+module Pushover
+  # Client holds shared application credentials and exposes API resources.
+  class Client
+    attr_reader :connection, :token
+
+    def initialize(token:, connection: Pushover::Excon)
+      raise ArgumentError, 'token must be supplied' unless token.is_a?(String) && !token.empty?
+
+      @token = token
+      @connection = connection
+    end
+
+    def messages
+      @messages ||= Messages.new(self)
+    end
+  end
+end

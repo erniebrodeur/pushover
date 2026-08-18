@@ -1,7 +1,10 @@
 require 'oj'
 require 'excon'
 
-require 'pushover/message'
+require 'pushover/client'
+require 'pushover/message_encryption'
+require 'pushover/message_validator'
+require 'pushover/messages'
 require 'pushover/response'
 require 'pushover/receipt'
 require 'pushover/version'

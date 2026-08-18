@@ -14,11 +14,12 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/erniebrodeur/pushover'
 
   # files
-  spec.files         = `git ls-files`.split($OUTPUT_RECORD_SEPARATOR)
+  spec.files         = `git ls-files -z --cached --others --exclude-standard`.split("\0").select { |file| File.file?(file) }
   spec.executables   = spec.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
   # dependencies.
+  spec.add_dependency 'base64'
   spec.add_dependency 'excon'
   spec.add_dependency 'gli'
   spec.add_dependency 'oj'

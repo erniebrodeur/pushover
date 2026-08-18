@@ -21,9 +21,10 @@ command :message do |c|
   c.flag :expire, type: String, desc: 'how long should a priority message live'
   c.flag :retry, type: String, desc: 'how often should a resend be attempted (until acknowledged)'
   c.action do |global_options, options, args|
-    puts Pushover::Message.new({
-      message: args.join(" "), user: global_options[:user], token: global_options[:token]
-    }.merge(GLI::Options.new(options).to_h.compact)).push
+    params = { message: args.join(" "), user: global_options[:user] }.merge(GLI::Options.new(options).to_h.compact)
+    %i[priority expire retry].each { |key| params[key] = params[key].to_i if params.key?(key) }
+
+    puts Pushover::Client.new(token: global_options[:token]).messages.create(**params)
   end
 end
 
