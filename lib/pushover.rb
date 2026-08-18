@@ -6,7 +6,7 @@ require 'pushover/message_encryption'
 require 'pushover/message_validator'
 require 'pushover/messages'
 require 'pushover/response'
-require 'pushover/receipt'
+require 'pushover/receipts'
 require 'pushover/version'
 
 # pushover interface for ruby

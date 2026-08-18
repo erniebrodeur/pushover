@@ -13,5 +13,9 @@ module Pushover
     def messages
       @messages ||= Messages.new(self)
     end
+
+    def receipts
+      @receipts ||= Receipts.new(self)
+    end
   end
 end

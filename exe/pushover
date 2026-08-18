@@ -31,7 +31,7 @@ end
 desc 'get a receipt'
 command :receipt do |c|
   c.action do |global_options, _options, args|
-    puts Pushover::Receipt.new(token: global_options[:token], receipt: args[0]).get
+    puts Pushover::Client.new(token: global_options[:token]).receipts.get(receipt: args[0])
   end
 end
 

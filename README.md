@@ -61,14 +61,15 @@ response.headers    # response headers, including application limits
 response.attributes # other response fields
 ```
 
-The client does not automatically retry requests. Connection failures continue to raise Excon transport exceptions.
-
-Receipt retrieval still uses the existing API until its client slice is implemented:
+Retrieve the status of an emergency message receipt through the same client:
 
 ```ruby
-receipt = Pushover::Receipt.new(receipt: 'receipt-id', token: 'app-token')
-response = receipt.get
+response = client.receipts.get(receipt: 'AbCdEf0123456789GhIjKlMnOpQrSt')
 ```
+
+Receipt identifiers must contain exactly 30 alphanumeric characters. Receipt status fields are returned in `response.attributes`, including `acknowledged`, `acknowledged_at`, `acknowledged_by`, `acknowledged_by_device`, `last_delivered_at`, `expired`, `expires_at`, `called_back`, and `called_back_at`.
+
+Pushover permits receipt polling no more often than once every five seconds and retains receipt status for up to one week. The client does not enforce that interval or automatically retry requests. Connection failures continue to raise Excon transport exceptions.
 
 ## CLI
 
@@ -82,7 +83,7 @@ pushover -tapp-token -uuser-key message here we go again
 Get receipt details:
 
 ```shell
-pushover -tapp-token receipt receipt-id
+pushover -tapp-token receipt AbCdEf0123456789GhIjKlMnOpQrSt
 ```
 
 ## Contributing

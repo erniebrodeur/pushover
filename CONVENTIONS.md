@@ -11,3 +11,4 @@
 - Use Excon for Pushover HTTP requests. Do not introduce another HTTP client without a specific need.
 - Use Excon's request stubs for mocked HTTP tests.
 - Consult the installed Excon documentation or source before assuming library behavior.
+- it has no context 7 documentation, so read the source code for details.

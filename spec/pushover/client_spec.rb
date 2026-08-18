@@ -20,4 +20,18 @@ describe Pushover::Client do
       expect(client.messages).to equal messages
     end
   end
+
+  describe '#receipts' do
+    subject(:client) { described_class.new(token: 'token') }
+
+    it 'returns a receipt resource' do
+      expect(client.receipts).to be_a Pushover::Receipts
+    end
+
+    it 'reuses the receipt resource' do
+      receipts = client.receipts
+
+      expect(client.receipts).to equal receipts
+    end
+  end
 end
