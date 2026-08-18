@@ -129,6 +129,12 @@ describe Pushover::Messages do
       end.to raise_error ArgumentError, /callback must be an HTTP or HTTPS URL/
     end
 
+    it 'rejects a malformed callback URL' do
+      expect do
+        messages.create(user: 'user-key', message: 'Hello', priority: 2, retry: 30, expire: 60, callback: 'http://[')
+      end.to raise_error ArgumentError, /callback must be an HTTP or HTTPS URL/
+    end
+
     it 'does not allow HTML and monospace formatting together' do
       expect do
         messages.create(user: 'user-key', message: 'Hello', html: true, monospace: true)
