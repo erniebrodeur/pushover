@@ -18,3 +18,4 @@ tmp
 spec/test_config
 .rspec
 *.tmp
+CURRENT_WORK.md
