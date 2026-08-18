@@ -32,7 +32,9 @@ module Pushover
     def push
       %i[token user message].each { |param| raise "#{param} must be supplied" unless send param }
 
-      Response.create_from_excon_response Excon.post(path: '1/messages.json', query: to_h)
+      excon_response = Excon.post(path: '1/messages.json', body: to_json, headers: { "Content-Type" => "application/json" })
+
+      Response.create_from_excon_response excon_response
     end
   end
 end
