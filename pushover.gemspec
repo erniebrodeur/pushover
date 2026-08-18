@@ -6,6 +6,7 @@ Gem::Specification.new do |spec|
   spec.date          = Time.now.strftime('%Y-%m-%d')
   spec.version       = Pushover::VERSION
   spec.platform      = Gem::Platform::RUBY
+  spec.required_ruby_version = '>= 3.3.0'
   spec.license       = 'MIT'
 
   # descriptions
