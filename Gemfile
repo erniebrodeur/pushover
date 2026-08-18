@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 gemspec
 
+gem 'codecov', require: false, group: :test
 gem 'excon'
 gem 'gli'
 gem 'oj'
-gem 'codecov', :require => false, :group => :test
 
 group :test do
   gem 'bump'
@@ -13,7 +13,7 @@ group :test do
   gem 'rspec'
   gem 'rubocop'
   gem 'rubocop-rspec'
-  gem 'simplecov'
+  gem 'simplecov', '~> 1.0.3'
   gem 'yard'
 end
 

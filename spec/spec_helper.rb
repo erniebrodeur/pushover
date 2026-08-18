@@ -11,7 +11,7 @@ end
 
 RSpec::Matchers.alias_matcher :return_a_kind_of, :be_a_kind_of
 
-SimpleCov.formatters = [ SimpleCov::Formatter::HTMLFormatter, SimpleCov::Formatter::Codecov]
-SimpleCov.start { add_filter "/spec/" }
+SimpleCov.formatters = [SimpleCov::Formatter::HTMLFormatter, SimpleCov::Formatter::Codecov]
+SimpleCov.start { skip "/spec/" }
 
 require 'pushover'

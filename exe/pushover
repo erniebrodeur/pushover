@@ -23,7 +23,7 @@ command :message do |c|
   c.action do |global_options, options, args|
     puts Pushover::Message.new({
       message: args.join(" "), user: global_options[:user], token: global_options[:token]
-    }.merge(GLI::Options.new(options).to_h.reject { |_k, v| v.nil? })).push
+    }.merge(GLI::Options.new(options).to_h.compact)).push
   end
 end
 

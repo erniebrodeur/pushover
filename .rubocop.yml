@@ -1,15 +1,13 @@
-require: rubocop-rspec
+plugins: rubocop-rspec
 
 AllCops:
+  NewCops: enable
   TargetRubyVersion: 3.3
   Exclude:
-    - 'vendor/**/*'
     - 'tmp/**/*'
-    - 'spec/spec_helper.rb'
 
 # The defaults for these seem to be based on a rails env, this is not rails.
 Metrics/ModuleLength:
-  CountComments: false
   Max: 250
 
 Metrics/ClassLength:
@@ -27,8 +25,8 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Max: 10
 
-# it's 2016, people have wide monitors.
-Metrics/LineLength:
+# Line length is intentionally unrestricted.
+Layout/LineLength:
   Enabled: false
 
 Metrics/BlockLength:
@@ -47,7 +45,7 @@ Style/RegexpLiteral:
     - 'Guardfile'
     - '*.gemspec'
 
-# Prefer single-quoted strings when you don't need string interpolation or special symbols
+# String literal quote style is not enforced.
 Style/StringLiterals:
   Enabled: false
 
@@ -59,22 +57,10 @@ Style/FrozenStringLiteralComment:
 
 Style/MixinUsage:
   Exclude:
-  - 'bin/*'
-  - 'exe/*'
+    - 'bin/*'
+    - 'exe/*'
 
-# Specs don't need inline documentation.
-Style/Documentation:
-  Enabled: true
-  Exclude:
-    - 'spec/**/*'
-
-RSpec/NamedSubject:
-  Enabled: false
-
-Lint/Debugger:
-  Enabled: false
-
-# Purty hashes.
-Layout/AlignHash:
+# Align hash pairs as tables.
+Layout/HashAlignment:
   EnforcedHashRocketStyle: table
   EnforcedColonStyle: table

@@ -27,12 +27,12 @@ module Pushover
 
     # purty.
     def to_s
-      "#{errors ? 'errors: ' + errors.join("\n") : 'status: ok'}, #{limits}"
+      "#{errors ? "errors: #{errors.join("\n")}" : 'status: ok'}, #{limits}"
     end
 
     private
 
-    # :nocov:
+    # simplecov:disable
     # Application limits
     # @return [Array] 0: Remaining Calls, 1: Total Limit, 2: Limit Reset
     def limits
@@ -42,5 +42,6 @@ module Pushover
       output.define_singleton_method(:to_s) { "requests #{self[0]} of #{self[1]}, reset on #{Time.at(self[2].to_f)}" }
       output
     end
+    # simplecov:enable
   end
 end
