@@ -67,9 +67,15 @@ Retrieve the status of an emergency message receipt through the same client:
 response = client.receipts.get(receipt: 'AbCdEf0123456789GhIjKlMnOpQrSt')
 ```
 
+Cancel future retries for an emergency message before it expires:
+
+```ruby
+response = client.receipts.cancel(receipt: 'AbCdEf0123456789GhIjKlMnOpQrSt')
+```
+
 Receipt identifiers must contain exactly 30 alphanumeric characters. Receipt status fields are returned in `response.attributes`, including `acknowledged`, `acknowledged_at`, `acknowledged_by`, `acknowledged_by_device`, `last_delivered_at`, `expired`, `expires_at`, `called_back`, and `called_back_at`.
 
-Pushover permits receipt polling no more often than once every five seconds and retains receipt status for up to one week. The client does not enforce that interval or automatically retry requests. Connection failures continue to raise Excon transport exceptions.
+Cancellation stops future emergency-priority retries. Pushover permits receipt polling no more often than once every five seconds and retains receipt status for up to one week. The client does not enforce that interval or automatically retry requests. Connection failures continue to raise Excon transport exceptions.
 
 ## CLI
 
