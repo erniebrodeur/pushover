@@ -17,6 +17,16 @@ module Pushover
       Response.create_from_excon_response(response)
     end
 
+    # List delivery groups owned by the client's account or team.
+    # @return [Response] the Pushover API response
+    def list
+      response = @client.connection.get(
+        path:  '/1/groups.json',
+        query: { token: @client.token }
+      )
+      Response.create_from_excon_response(response)
+    end
+
     private
 
     def validate_name!(name)

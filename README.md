@@ -138,6 +138,15 @@ group_key = response.attributes['group']
 
 The application token may belong to any application on the account or team that will own the group. Group names must be unique within that account; Pushover validates uniqueness. The returned 30-character group key can be used as the `user` value when sending messages.
 
+List the delivery groups owned by the application token's account or team:
+
+```ruby
+response = client.groups.list
+group_entries = response.attributes['groups']
+```
+
+Each entry contains a `group` key and `name`. Pushover does not document a sort order or pagination contract, so callers should not depend on response ordering.
+
 ### Legacy API compatibility
 
 The former message and receipt interfaces remain available as deprecated compatibility wrappers, with no scheduled removal:
