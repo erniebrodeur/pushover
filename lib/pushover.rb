@@ -2,6 +2,7 @@ require 'oj'
 require 'excon'
 
 require 'pushover/client'
+require 'pushover/limits'
 require 'pushover/message_encryption'
 require 'pushover/message_validator'
 require 'pushover/messages'

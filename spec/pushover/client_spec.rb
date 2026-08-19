@@ -62,4 +62,18 @@ describe Pushover::Client do
       expect(client.sounds).to equal sounds
     end
   end
+
+  describe '#limits' do
+    subject(:client) { described_class.new(token: 'token') }
+
+    it 'returns a limits resource' do
+      expect(client.limits).to be_a Pushover::Limits
+    end
+
+    it 'reuses the limits resource' do
+      limits = client.limits
+
+      expect(client.limits).to equal limits
+    end
+  end
 end

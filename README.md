@@ -103,6 +103,17 @@ available_sounds = response.attributes['sounds']
 
 The sounds hash maps each value accepted by `messages.create(sound: ...)` to its display name. It includes Pushover's built-in sounds and custom sounds uploaded by the account that owns the application token. Omit `sound`, or pass a blank value, to use the recipient's default sound.
 
+Retrieve the current monthly message usage limits:
+
+```ruby
+response = client.limits.get
+monthly_limit = response.attributes['limit']
+remaining = response.attributes['remaining']
+reset_at = Time.at(response.attributes['reset'])
+```
+
+`limit` is the account or team's monthly allowance, including purchased capacity. `remaining` is the number of messages left, and `reset` is the Unix timestamp for the next reset. Despite the historical endpoint and header names, these values represent usage shared across all applications owned by the account or team.
+
 ### Legacy API compatibility
 
 The former message and receipt interfaces remain available as deprecated compatibility wrappers, with no scheduled removal:

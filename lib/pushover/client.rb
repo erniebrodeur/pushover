@@ -25,5 +25,9 @@ module Pushover
     def sounds
       @sounds ||= Sounds.new(self)
     end
+
+    def limits
+      @limits ||= Limits.new(self)
+    end
   end
 end
