@@ -164,4 +164,69 @@ describe Pushover::Receipts do
       end
     end
   end
+
+  describe '#cancel_by_tag' do
+    context 'with a valid tag' do
+      let(:request) { {} }
+      let(:response) { receipts.cancel_by_tag(tag: 'l=chicago/ops room') }
+
+      before do
+        captured_request = request
+        Excon.stub(method: :post, path: '/1/receipts/cancel_by_tag/l%3Dchicago%2Fops%20room.json') do |params|
+          captured_request.replace(params)
+          {
+            body:    Oj.dump(status: 1, request: 'request-id'),
+            headers: { 'X-Limit-App-Remaining' => '9' },
+            status:  200
+          }
+        end
+      end
+
+      it 'posts with the tag encoded as one path segment' do
+        response
+
+        expect(request.slice(:method, :path)).to eq(
+          method: :post, path: '/1/receipts/cancel_by_tag/l%3Dchicago%2Fops%20room.json'
+        )
+      end
+
+      it 'sends the application token as JSON' do
+        response
+
+        expect(Oj.strict_load(request[:body])).to eq('token' => 'app-token')
+      end
+
+      it 'uses the JSON content type' do
+        response
+
+        expect(request[:headers]).to include('Content-Type' => 'application/json')
+      end
+
+      it 'returns the response metadata' do
+        expect(response).to have_attributes(status: 1, request: 'request-id')
+      end
+
+      it 'preserves response headers' do
+        expect(response.headers).to include('X-Limit-App-Remaining' => '9')
+      end
+    end
+
+    context 'when Pushover rejects the request' do
+      before do
+        Excon.stub(method: :post, path: '/1/receipts/cancel_by_tag/l%3Dchicago%2Fops%20room.json') do |_params|
+          { body: Oj.dump(status: 0, errors: ['tag is invalid']), status: 400 }
+        end
+      end
+
+      it 'returns errors from a 4xx response' do
+        response = receipts.cancel_by_tag(tag: 'l=chicago/ops room')
+
+        expect(response).to have_attributes(status: 0, errors: ['tag is invalid'])
+      end
+    end
+
+    it 'requires a tag' do
+      expect { receipts.cancel_by_tag(tag: '') }.to raise_error ArgumentError, /tag must be supplied/
+    end
+  end
 end

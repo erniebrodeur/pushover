@@ -73,9 +73,15 @@ Cancel future retries for an emergency message before it expires:
 response = client.receipts.cancel(receipt: 'AbCdEf0123456789GhIjKlMnOpQrSt')
 ```
 
+Cancel future retries for all active emergency messages sent by the application with one tag:
+
+```ruby
+response = client.receipts.cancel_by_tag(tag: 'l=chicago')
+```
+
 Receipt identifiers must contain exactly 30 alphanumeric characters. Receipt status fields are returned in `response.attributes`, including `acknowledged`, `acknowledged_at`, `acknowledged_by`, `acknowledged_by_device`, `last_delivered_at`, `expired`, `expires_at`, `called_back`, and `called_back_at`.
 
-Cancellation stops future emergency-priority retries. Pushover permits receipt polling no more often than once every five seconds and retains receipt status for up to one week. The client does not enforce that interval or automatically retry requests. Connection failures continue to raise Excon transport exceptions.
+Cancellation stops future emergency-priority retries. `cancel_by_tag` accepts one nonempty tag and encodes it as a single URL path segment. Pushover permits receipt polling no more often than once every five seconds and retains receipt status for up to one week. The client does not enforce that interval or automatically retry requests. Connection failures continue to raise Excon transport exceptions.
 
 ## CLI
 
