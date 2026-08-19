@@ -15,6 +15,7 @@ require 'pushover/receipts'
 require 'pushover/receipt'
 require 'pushover/sounds'
 require 'pushover/subscriptions'
+require 'pushover/teams'
 require 'pushover/users'
 require 'pushover/version'
 

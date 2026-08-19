@@ -197,6 +197,42 @@ remaining_credits = response.attributes['credits']
 
 `licenses.assign` requires a valid 30-character `user` key or a nonblank `email`; the gem does not invent an e-mail format beyond that documented requirement. `os` may be blank, `Android`, `iOS`, or `Desktop`. A blank or omitted value assigns the license to the first platform the user registers. Each call assigns one permanent, nonrefundable license. Assignment failures remain structured in `response.errors`, and the client never automatically retries the assignment.
 
+Administer a Pushover for Teams organization with its Team API token:
+
+```ruby
+team = Pushover::Client.new(token: 'team-api-token').teams
+
+response = team.get
+team_name = response.attributes['name']
+members = response.attributes['users']
+```
+
+`client.teams` requires a Team API token, not an Application API Token. The client cannot distinguish the credential types locally, so Pushover returns an API error when the wrong token type is supplied. Team names, users, administrator flags, and nested device details are preserved in `response.attributes`.
+
+Add a team user with only an e-mail address, or include the documented invitation and administration options:
+
+```ruby
+response = team.add_user(
+  email: 'member@example.com',
+  name: 'Team Member',
+  password: '',
+  instant: true,
+  admin: false,
+  group: 'On-call'
+)
+```
+
+`email` must be a nonblank string. `name`, `password`, and `group` are optional strings. A blank or omitted password lets Pushover assign and e-mail a random password. `instant: true` requests a seven-day Instant Login link, and `admin: true` adds the user as an administrator. False flags are omitted. A named Delivery Group is created by Pushover if it does not exist; omitting `group` uses the auto-updating Team Delivery Group.
+
+Revoke an invitation that has not been accepted, or remove a current team user:
+
+```ruby
+team.revoke_invitation(email: 'invitee@example.com')
+team.remove_user(email: 'departing-member@example.com')
+```
+
+Removing a user does not delete their Pushover account, but Pushover removes them from the team's Delivery Groups. Pushover also enforces that at least one administrator remains. Membership, invitation, and group-creation state are validated by Pushover.
+
 ### Legacy API compatibility
 
 The former message and receipt interfaces remain available as deprecated compatibility wrappers, with no scheduled removal:

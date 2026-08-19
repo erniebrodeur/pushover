@@ -45,5 +45,9 @@ module Pushover
     def licenses
       @licenses ||= Licenses.new(self)
     end
+
+    def teams
+      @teams ||= Teams.new(self)
+    end
   end
 end

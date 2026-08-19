@@ -132,4 +132,18 @@ describe Pushover::Client do
       expect(client.licenses).to equal licenses
     end
   end
+
+  describe '#teams' do
+    subject(:client) { described_class.new(token: 'team-token') }
+
+    it 'returns a teams resource' do
+      expect(client.teams).to be_a Pushover::Teams
+    end
+
+    it 'reuses the teams resource' do
+      teams = client.teams
+
+      expect(client.teams).to equal teams
+    end
+  end
 end
