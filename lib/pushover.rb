@@ -5,8 +5,11 @@ require 'pushover/client'
 require 'pushover/message_encryption'
 require 'pushover/message_validator'
 require 'pushover/messages'
+require 'pushover/message'
 require 'pushover/response'
 require 'pushover/receipts'
+require 'pushover/receipt'
+require 'pushover/users'
 require 'pushover/version'
 
 # pushover interface for ruby

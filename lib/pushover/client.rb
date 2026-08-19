@@ -17,5 +17,9 @@ module Pushover
     def receipts
       @receipts ||= Receipts.new(self)
     end
+
+    def users
+      @users ||= Users.new(self)
+    end
   end
 end

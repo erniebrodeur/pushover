@@ -83,6 +83,28 @@ Receipt identifiers must contain exactly 30 alphanumeric characters. Receipt sta
 
 Cancellation stops future emergency-priority retries. `cancel_by_tag` accepts one nonempty tag and encodes it as a single URL path segment. Pushover permits receipt polling no more often than once every five seconds and retains receipt status for up to one week. The client does not enforce that interval or automatically retry requests. Connection failures continue to raise Excon transport exceptions.
 
+Validate a user or group identifier, optionally for one device:
+
+```ruby
+response = client.users.validate(
+  user: 'uQiRzpo4DXghDmr9QzzfQu27cmVRsG',
+  device: 'droid2'
+)
+```
+
+`user` must be a 30-character alphanumeric user or group identifier. `device` is optional and, when supplied, must be 1 to 25 characters using letters, numbers, underscores, or hyphens. Without a device, Pushover validates that the account has at least one active device. Successful validation returns active device names in `response.attributes['devices']` and licensed platforms in `response.attributes['licenses']`. Invalid or inactive users and devices are returned as Pushover API errors in the response.
+
+### Legacy API compatibility
+
+The former message and receipt interfaces remain available as deprecated compatibility wrappers, with no scheduled removal:
+
+```ruby
+Pushover::Message.new(token: 'app-token', user: 'user-key', message: 'Hello').push
+Pushover::Receipt.new(token: 'app-token', receipt: 'AbCdEf0123456789GhIjKlMnOpQrSt').get
+```
+
+Calling `push` or `get` emits a deprecation warning naming the replacement and delegates to the shared client resources. New code should use `client.messages.create` and `client.receipts.get`. The legacy raw `attachment` keyword remains accepted for constructor compatibility, but non-nil values are rejected because they cannot be safely translated to the supported `attachment_base64` and `attachment_type` interface.
+
 ## CLI
 
 Send a message:

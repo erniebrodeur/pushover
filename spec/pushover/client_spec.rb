@@ -34,4 +34,18 @@ describe Pushover::Client do
       expect(client.receipts).to equal receipts
     end
   end
+
+  describe '#users' do
+    subject(:client) { described_class.new(token: 'token') }
+
+    it 'returns a user resource' do
+      expect(client.users).to be_a Pushover::Users
+    end
+
+    it 'reuses the user resource' do
+      users = client.users
+
+      expect(client.users).to equal users
+    end
+  end
 end

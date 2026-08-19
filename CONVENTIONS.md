@@ -1,5 +1,10 @@
 # Project Conventions
 
+## Design
+
+- Prefer modern Ruby patterns over legacy implementation patterns.
+- Preserve released public behavior when practical, but do not preserve obsolete implementation details unless they are explicitly part of the supported contract.
+
 ## Ruby runtime
 
 - Run Ruby, Bundler, Rake, RSpec, RuboCop, and other Ruby commands through `/opt/homebrew/bin/rbenv exec`.
