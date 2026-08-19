@@ -76,4 +76,18 @@ describe Pushover::Client do
       expect(client.limits).to equal limits
     end
   end
+
+  describe '#glances' do
+    subject(:client) { described_class.new(token: 'token') }
+
+    it 'returns a glances resource' do
+      expect(client.glances).to be_a Pushover::Glances
+    end
+
+    it 'reuses the glances resource' do
+      glances = client.glances
+
+      expect(client.glances).to equal glances
+    end
+  end
 end

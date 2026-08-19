@@ -29,5 +29,9 @@ module Pushover
     def limits
       @limits ||= Limits.new(self)
     end
+
+    def glances
+      @glances ||= Glances.new(self)
+    end
   end
 end

@@ -114,6 +114,21 @@ reset_at = Time.at(response.attributes['reset'])
 
 `limit` is the account or team's monthly allowance, including purchased capacity. `remaining` is the number of messages left, and `reset` is the Unix timestamp for the next reset. Despite the historical endpoint and header names, these values represent usage shared across all applications owned by the account or team.
 
+Update one or more fields on a user's registered Glances widgets:
+
+```ruby
+response = client.glances.update(
+  user: 'uQiRzpo4DXghDmr9QzzfQu27cmVRsG',
+  title: 'Widgets Sold',
+  text: '30',
+  percent: 75
+)
+```
+
+`title`, `text`, and `subtext` accept up to 100 characters. `count` accepts any integer, including negative values, and `percent` accepts integers from 0 through 100. `device` may restrict the update to one device. At least one data field is required. Omitted data fields retain their previous values; pass an empty string to clear a field, including `count` or `percent`.
+
+Glances updates do not create notifications and may take up to 10 minutes to appear. Pushover recommends at least 20 minutes between Apple Watch updates, and watchOS limits them to 50 per day. The client does not throttle updates.
+
 ### Legacy API compatibility
 
 The former message and receipt interfaces remain available as deprecated compatibility wrappers, with no scheduled removal:
