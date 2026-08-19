@@ -14,9 +14,9 @@ module Pushover
     end
 
     def encrypt(params)
-      params.merge(encrypted: 1).tap do |encrypted|
-        FIELDS.each { |field| encrypted[field] = encrypt_field(params[field]) if params.key?(field) }
-      end
+      encrypted = params.merge(encrypted: 1)
+      FIELDS.each { |field| encrypted[field] = encrypt_field(params[field]) if params.key?(field) }
+      encrypted
     end
 
     private
