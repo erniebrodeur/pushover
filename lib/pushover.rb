@@ -3,6 +3,7 @@ require 'excon'
 
 require 'pushover/client'
 require 'pushover/glances'
+require 'pushover/groups'
 require 'pushover/limits'
 require 'pushover/message_encryption'
 require 'pushover/message_validator'

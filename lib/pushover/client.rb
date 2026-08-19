@@ -33,5 +33,9 @@ module Pushover
     def glances
       @glances ||= Glances.new(self)
     end
+
+    def groups
+      @groups ||= Groups.new(self)
+    end
   end
 end

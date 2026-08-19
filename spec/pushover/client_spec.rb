@@ -90,4 +90,18 @@ describe Pushover::Client do
       expect(client.glances).to equal glances
     end
   end
+
+  describe '#groups' do
+    subject(:client) { described_class.new(token: 'token') }
+
+    it 'returns a groups resource' do
+      expect(client.groups).to be_a Pushover::Groups
+    end
+
+    it 'reuses the groups resource' do
+      groups = client.groups
+
+      expect(client.groups).to equal groups
+    end
+  end
 end

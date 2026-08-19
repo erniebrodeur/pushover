@@ -129,6 +129,15 @@ response = client.glances.update(
 
 Glances updates do not create notifications and may take up to 10 minutes to appear. Pushover recommends at least 20 minutes between Apple Watch updates, and watchOS limits them to 50 per day. The client does not throttle updates.
 
+Create an empty delivery group:
+
+```ruby
+response = client.groups.create(name: 'On-call West')
+group_key = response.attributes['group']
+```
+
+The application token may belong to any application on the account or team that will own the group. Group names must be unique within that account; Pushover validates uniqueness. The returned 30-character group key can be used as the `user` value when sending messages.
+
 ### Legacy API compatibility
 
 The former message and receipt interfaces remain available as deprecated compatibility wrappers, with no scheduled removal:
