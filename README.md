@@ -94,6 +94,15 @@ response = client.users.validate(
 
 `user` must be a 30-character alphanumeric user or group identifier. `device` is optional and, when supplied, must be 1 to 25 characters using letters, numbers, underscores, or hyphens. Without a device, Pushover validates that the account has at least one active device. Successful validation returns active device names in `response.attributes['devices']` and licensed platforms in `response.attributes['licenses']`. Invalid or inactive users and devices are returned as Pushover API errors in the response.
 
+Retrieve the sounds available to the application account:
+
+```ruby
+response = client.sounds.get
+available_sounds = response.attributes['sounds']
+```
+
+The sounds hash maps each value accepted by `messages.create(sound: ...)` to its display name. It includes Pushover's built-in sounds and custom sounds uploaded by the account that owns the application token. Omit `sound`, or pass a blank value, to use the recipient's default sound.
+
 ### Legacy API compatibility
 
 The former message and receipt interfaces remain available as deprecated compatibility wrappers, with no scheduled removal:

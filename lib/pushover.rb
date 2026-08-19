@@ -9,6 +9,7 @@ require 'pushover/message'
 require 'pushover/response'
 require 'pushover/receipts'
 require 'pushover/receipt'
+require 'pushover/sounds'
 require 'pushover/users'
 require 'pushover/version'
 

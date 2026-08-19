@@ -21,5 +21,9 @@ module Pushover
     def users
       @users ||= Users.new(self)
     end
+
+    def sounds
+      @sounds ||= Sounds.new(self)
+    end
   end
 end

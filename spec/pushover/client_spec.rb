@@ -48,4 +48,18 @@ describe Pushover::Client do
       expect(client.users).to equal users
     end
   end
+
+  describe '#sounds' do
+    subject(:client) { described_class.new(token: 'token') }
+
+    it 'returns a sounds resource' do
+      expect(client.sounds).to be_a Pushover::Sounds
+    end
+
+    it 'reuses the sounds resource' do
+      sounds = client.sounds
+
+      expect(client.sounds).to equal sounds
+    end
+  end
 end
