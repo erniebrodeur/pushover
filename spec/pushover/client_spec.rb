@@ -104,4 +104,32 @@ describe Pushover::Client do
       expect(client.groups).to equal groups
     end
   end
+
+  describe '#subscriptions' do
+    subject(:client) { described_class.new(token: 'token') }
+
+    it 'returns a subscriptions resource' do
+      expect(client.subscriptions).to be_a Pushover::Subscriptions
+    end
+
+    it 'reuses the subscriptions resource' do
+      subscriptions = client.subscriptions
+
+      expect(client.subscriptions).to equal subscriptions
+    end
+  end
+
+  describe '#licenses' do
+    subject(:client) { described_class.new(token: 'token') }
+
+    it 'returns a licenses resource' do
+      expect(client.licenses).to be_a Pushover::Licenses
+    end
+
+    it 'reuses the licenses resource' do
+      licenses = client.licenses
+
+      expect(client.licenses).to equal licenses
+    end
+  end
 end

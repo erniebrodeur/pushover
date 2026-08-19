@@ -6,7 +6,7 @@ module Pushover
   # @attribute request
   #   @return [String] request is a UUID representing the specific call
   # @attribute errors
-  #   @return [Array] errors includes any errors made
+  #   @return [Array, Hash] errors includes any errors made
   # @attribute receipt
   #   @return [String] receipt returns a receipt if requested
   # @attribute headers
@@ -27,10 +27,14 @@ module Pushover
 
     # purty.
     def to_s
-      "#{errors ? "errors: #{errors.join("\n")}" : 'status: ok'}, #{limits}"
+      "#{errors ? "errors: #{formatted_errors}" : 'status: ok'}, #{limits}"
     end
 
     private
+
+    def formatted_errors
+      errors.respond_to?(:join) ? errors.join("\n") : errors
+    end
 
     # simplecov:disable
     # Application limits

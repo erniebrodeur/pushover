@@ -169,6 +169,34 @@ client.groups.rename(group: group_key, name: 'Operations')
 
 An added membership may include one device and a memo of up to 200 characters. Omitting `device`, or passing it as blank, creates an all-device membership. For removal, disabling, and enabling, an omitted or blank device affects every membership matching the user key; pass a device to target only that membership. Pushover enforces group-name uniqueness on the owning account or team.
 
+Optionally migrate an existing user key to an application subscription:
+
+```ruby
+response = client.subscriptions.migrate(
+  subscription: 'Forum-f504h08fhlasdfj',
+  user: 'uQiRzpo4DXghDmr9QzzfQu27cmVRsG',
+  device_name: 'droid2',
+  sound: 'pushover'
+)
+subscribed_user_key = response.attributes['subscribed_user_key']
+```
+
+Pushover calls this user-key migration, but it is only needed when voluntarily adopting subscription-managed recipients for previously collected user keys. `subscription` must be a nonempty subscription code, and `user` must be a 30-character alphanumeric user key. `device_name` is optional and follows the standard device-name rules. `sound` may be any string because Pushover supports account-specific custom sounds; a blank sound selects the user's default. Pushover validates live subscriptions, users, devices, and sound availability.
+
+Retrieve the application's available prepaid license credits, or permanently assign one credit:
+
+```ruby
+credits = client.licenses.get.attributes['credits']
+
+response = client.licenses.assign(
+  email: 'person@example.com',
+  os: 'Desktop'
+)
+remaining_credits = response.attributes['credits']
+```
+
+`licenses.assign` requires a valid 30-character `user` key or a nonblank `email`; the gem does not invent an e-mail format beyond that documented requirement. `os` may be blank, `Android`, `iOS`, or `Desktop`. A blank or omitted value assigns the license to the first platform the user registers. Each call assigns one permanent, nonrefundable license. Assignment failures remain structured in `response.errors`, and the client never automatically retries the assignment.
+
 ### Legacy API compatibility
 
 The former message and receipt interfaces remain available as deprecated compatibility wrappers, with no scheduled removal:

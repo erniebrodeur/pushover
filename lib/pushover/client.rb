@@ -37,5 +37,13 @@ module Pushover
     def groups
       @groups ||= Groups.new(self)
     end
+
+    def subscriptions
+      @subscriptions ||= Subscriptions.new(self)
+    end
+
+    def licenses
+      @licenses ||= Licenses.new(self)
+    end
   end
 end
