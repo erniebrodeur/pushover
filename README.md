@@ -147,6 +147,28 @@ group_entries = response.attributes['groups']
 
 Each entry contains a `group` key and `name`. Pushover does not document a sort order or pagination contract, so callers should not depend on response ordering.
 
+Retrieve a delivery group's name and memberships:
+
+```ruby
+response = client.groups.get(group: group_key)
+group_name = response.attributes['name']
+members = response.attributes['users']
+```
+
+Each member contains `user`, `device`, `memo`, and `disabled`. A `device` of `nil` represents an unrestricted membership. Team members also include `name` and `email`. Pushover does not document membership ordering or pagination.
+
+Manage group memberships and names:
+
+```ruby
+client.groups.add_user(group: group_key, user: user_key, device: 'iphone', memo: 'Primary on-call')
+client.groups.disable_user(group: group_key, user: user_key, device: 'iphone')
+client.groups.enable_user(group: group_key, user: user_key, device: 'iphone')
+client.groups.remove_user(group: group_key, user: user_key, device: 'iphone')
+client.groups.rename(group: group_key, name: 'Operations')
+```
+
+An added membership may include one device and a memo of up to 200 characters. Omitting `device`, or passing it as blank, creates an all-device membership. For removal, disabling, and enabling, an omitted or blank device affects every membership matching the user key; pass a device to target only that membership. Pushover enforces group-name uniqueness on the owning account or team.
+
 ### Legacy API compatibility
 
 The former message and receipt interfaces remain available as deprecated compatibility wrappers, with no scheduled removal:
