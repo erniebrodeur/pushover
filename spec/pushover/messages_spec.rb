@@ -22,8 +22,8 @@ describe Pushover::Messages do
       it 'posts all fields as JSON' do
         response
 
-        expect(Oj.load(request[:body])).to eq(
-          token: 'app-token', user: 'user-key', message: 'Hello', title: 'Greeting', html: 1
+        expect(Oj.strict_load(request[:body])).to eq(
+          'token' => 'app-token', 'user' => 'user-key', 'message' => 'Hello', 'title' => 'Greeting', 'html' => 1
         )
       end
 
@@ -175,17 +175,17 @@ describe Pushover::Messages do
         captured_request = request
         allow(SecureRandom).to receive(:random_bytes).and_return("\x01" * 16)
         Excon.stub(method: :post, path: '/1/messages.json') do |params|
-          captured_request.replace(Oj.load(params[:body]))
+          captured_request.replace(Oj.strict_load(params[:body]))
           { body: Oj.dump(status: 1, request: 'request-id'), status: 200 }
         end
         messages.create(user: 'user-key', message: 'secret', title: 'private', encryption_key: key)
       end
 
       it 'uses the documented deterministic wire format' do
-        expect(request.slice(:encrypted, :message, :title)).to eq(
-          encrypted: 1,
-          message:   'AQEBAQEBAQEBAQEBAQEBAU0FqlkYIHEPzHs0NklFY9QT8ZekMQAM/J6iku1rmOJcEcm1SgT5ASVxoQW5SUFLnyWhe0y1Tp7q0YmS2iTpk4k=',
-          title:     'AQEBAQEBAQEBAQEBAQEBAWWaD5zPUESFUncs7Hm+DBMTqpHx+n5zEHeQcvJiY+/LX/xd2rJVGXcosjBT23uEQ1TagEXt9wehyXozQxxYguw='
+        expect(request.slice('encrypted', 'message', 'title')).to eq(
+          'encrypted' => 1,
+          'message'   => 'AQEBAQEBAQEBAQEBAQEBAU0FqlkYIHEPzHs0NklFY9QT8ZekMQAM/J6iku1rmOJcEcm1SgT5ASVxoQW5SUFLnyWhe0y1Tp7q0YmS2iTpk4k=',
+          'title'     => 'AQEBAQEBAQEBAQEBAQEBAWWaD5zPUESFUncs7Hm+DBMTqpHx+n5zEHeQcvJiY+/LX/xd2rJVGXcosjBT23uEQ1TagEXt9wehyXozQxxYguw='
         )
       end
     end

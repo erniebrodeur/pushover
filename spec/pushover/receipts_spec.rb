@@ -121,7 +121,7 @@ describe Pushover::Receipts do
       it 'sends the application token as JSON' do
         response
 
-        expect(Oj.load(request[:body])).to eq(token: 'app-token')
+        expect(Oj.strict_load(request[:body])).to eq('token' => 'app-token')
       end
 
       it 'uses the JSON content type' do

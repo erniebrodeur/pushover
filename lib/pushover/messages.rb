@@ -11,7 +11,7 @@ module Pushover
       params = MessageValidator.new(user: user, message: message, **).validate
       encryption_key = params.delete(:encryption_key)
       params = MessageEncryption.new(encryption_key).encrypt(params) if encryption_key
-      body = { token: @client.token }.merge(params)
+      body = { 'token' => @client.token }.merge(params.transform_keys(&:to_s))
 
       response = @client.connection.post(path: '/1/messages.json', body: Oj.dump(body))
       Response.create_from_excon_response(response)

@@ -28,7 +28,7 @@ module Pushover
 
       response = @client.connection.post(
         path: "/1/receipts/#{receipt}/cancel.json",
-        body: Oj.dump(token: @client.token)
+        body: Oj.dump('token' => @client.token)
       )
       Response.create_from_excon_response(response)
     end
