@@ -1,6 +1,5 @@
 require 'excon'
 require 'simplecov'
-require 'codecov'
 Excon.defaults[:mock] = true
 
 RSpec.configure do |config|
@@ -11,7 +10,7 @@ end
 
 RSpec::Matchers.alias_matcher :return_a_kind_of, :be_a_kind_of
 
-SimpleCov.formatters = [SimpleCov::Formatter::HTMLFormatter, SimpleCov::Formatter::Codecov]
+SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
 SimpleCov.start { skip "/spec/" }
 
 require 'pushover'

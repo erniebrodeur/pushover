@@ -5,6 +5,7 @@ AllCops:
   TargetRubyVersion: 3.3
   Exclude:
     - 'tmp/**/*'
+    - 'vendor/bundle/**/*'
 
 # The defaults for these seem to be based on a rails env, this is not rails.
 Metrics/ModuleLength:
