@@ -15,7 +15,8 @@ Gem::Specification.new do |spec|
 
   # files
   spec.files         = `git ls-files -z --cached --others --exclude-standard`.split("\0").select { |file| File.file?(file) }
-  spec.executables   = spec.files.grep(%r{^bin/}).map { |f| File.basename(f) }
+  spec.bindir        = 'exe'
+  spec.executables   = spec.files.grep(%r{\Aexe/}) { |file| File.basename(file) }
   spec.require_paths = ['lib']
 
   # dependencies.

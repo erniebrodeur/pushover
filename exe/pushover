@@ -4,7 +4,7 @@ require 'pushover'
 
 include GLI::App
 
-program_desc 'A simple todo list'
+program_desc 'Send Pushover messages and retrieve receipts'
 subcommand_option_handling :normal
 
 flag %i[t token], type: String, desc: 'Application token'
