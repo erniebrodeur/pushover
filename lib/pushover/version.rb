@@ -1,3 +1,3 @@
 module Pushover
-  VERSION = "3.0.3".freeze # The current version of Pushover.
+  VERSION = "4.0.0".freeze # The current version of Pushover.
 end
