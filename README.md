@@ -262,7 +262,7 @@ pushover -tapp-token receipt AbCdEf0123456789GhIjKlMnOpQrSt
 ## Contributing
 
 1. Fork the repository.
-2. Switch to `development`.
-3. Create a feature branch.
+2. Create a feature branch from `main`.
+3. Run `bundle exec rake ci`.
 4. Commit and push your changes.
-5. Open a pull request against `development`.
+5. Open a pull request against `main`.
